@@ -5,22 +5,25 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
+import LogoCodechef from "./../../Assets/Logo/codechef_logo.png";
 import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 md:px-20">
+    <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 sm:px-8 md:px-16 lg:px-20">
       <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-10 md:space-y-0">
         {/* Logo and Description */}
-        <div className="md:w-1/3">
-          <img src={Logo} alt="Codebusters Logo" className="w-40 mb-4" />
-          <p className="text-sm pr-6">
+        <div className="md:w-1/3 text-center md:text-left">
+        <div className="flex items-center justify-around mb-10">
+          <img src={Logo} alt="Codebusters Logo" className="w-44 mb-4 mx-auto md:mx-0" />
+          <img src={LogoCodechef} alt="Codebusters Logo" className="w-40 mb-4 mx-auto md:mx-0" />
+          </div>
+          <p className="text-sm md:text-base px-6 mb-6">
             Codebusters Club is a community-driven group focused on empowering
             coders with a collaborative environment, exciting challenges, and
-            continuous learning. Join us and be a part of the future of
-            technology.
+            continuous learning. Join us and be a part of the future of technology.
           </p>
-          <p className="text-sm pr-6">
+          <p className="text-sm md:text-base px-6">
             Be a part of a vibrant community, where collaboration and innovation
             meet to shape the future of technology. Together, we can push the
             boundaries of what’s possible and make a lasting impact on the tech
@@ -29,7 +32,7 @@ function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="md:w-1/3 flex flex-col items-center md:items-start">
+        <div className="md:w-1/3 flex flex-col items-center md:items-start ml-52">
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
@@ -60,21 +63,17 @@ function Footer() {
           </ul>
         </div>
 
-        {/* Contact Form (Replaced Contact Us Section) */}
+        {/* Contact Form */}
         <div className="md:w-1/3 flex flex-col items-center md:items-start">
           <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
           <form
             action="https://formspree.io/f/myzydpyr"
             method="POST"
-            className="bg-slate-700 p-4 rounded-lg shadow-md w-72 h-auto"
+            className="bg-slate-700 p-4 rounded-lg shadow-md w-full sm:w-80 md:w-72 lg:w-80"
           >
-            <h2 className="text-xl font-semibold text-white mb-4">
-              Send Us a Message
-            </h2>
+            <h2 className="text-xl font-semibold text-white mb-4">Send Us a Message</h2>
             <label className="block mb-4">
-              <span className="block text-white font-semibold mb-2">
-                Your Email:
-              </span>
+              <span className="block text-white font-semibold mb-2">Your Email:</span>
               <input
                 type="email"
                 name="email"
@@ -84,9 +83,7 @@ function Footer() {
               />
             </label>
             <label className="block mb-4">
-              <span className="block text-white font-semibold mb-2">
-                Your Message:
-              </span>
+              <span className="block text-white font-semibold mb-2">Your Message:</span>
               <textarea
                 name="message"
                 required
@@ -108,7 +105,7 @@ function Footer() {
       {/* Social Media Links */}
       <div className="flex justify-center space-x-6 mt-8">
         <a
-          href="https://facebook.com"
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"
@@ -116,7 +113,7 @@ function Footer() {
           <FacebookIcon />
         </a>
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"
@@ -124,7 +121,7 @@ function Footer() {
           <InstagramIcon />
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/company/codebusters-glau/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"
@@ -151,10 +148,7 @@ function Footer() {
 
       {/* Copyright */}
       <div className="mt-8 text-center text-gray-500 text-sm">
-        <p>
-          &copy; {new Date().getFullYear()} Codebusters Club. All rights
-          reserved.
-        </p>
+        <p>&copy; {new Date().getFullYear()} Codebusters Club. All rights reserved.</p>
       </div>
     </footer>
   );

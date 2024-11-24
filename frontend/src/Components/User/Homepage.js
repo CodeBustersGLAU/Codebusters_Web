@@ -1,7 +1,8 @@
 import React from "react";
 import ParticlesComponent from "./Particles";
 import CB from "./../../Assets/Logo/nobgCB.png";
-
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 function Homepage() {
   return (
     <div className="relative">
@@ -22,21 +23,38 @@ function Homepage() {
               power of collaboration and are dedicated to providing a platform
               for everyone—from beginners to pros—to explore their potential.
             </p>
+            <div className="flex gap-10 ">
+            <a
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xl text-gray-400 hover:text-white"
+        >
+          <InstagramIcon fontSize="inherit" style={{ fontSize: 40 }} />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/codebusters-glau/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xl text-gray-400 hover:text-white"
+        >
+<LinkedInIcon fontSize="inherit" style={{ fontSize: 40 }} />
+        </a></div>
           </div>
           {/* Circular Image */}
           <div className="w-full lg:w-1/2 flex items-center justify-center">
-            <img
-              src={CB}
-              className="w-96 h-96 lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover"
-              alt="Codebusters Logo"
-            />
+          <img
+  src={CB}
+  alt="Codebusters Logo"
+  className="w-96 h-96 lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover animate-flip"
+/>
           </div>
         </section>
 
         {/* About Section */}
         <section className="py-16 px-6 lg:px-20 text-center backdrop-blur-sm bg-opacity-50 bg-blue-200 text-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h2 className="text-4xl lg:text-4xl font-bold text-blue-950 mb-6">
               About Codebusters Club
             </h2>
             <p className="text-white text-xl max-w-2xl mx-auto mb-12">
