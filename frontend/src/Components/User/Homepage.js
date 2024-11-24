@@ -25,11 +25,13 @@ function Homepage() {
           </div>
           {/* Circular Image */}
           <div className="w-full lg:w-1/2 flex items-center justify-center">
-            <img
-              src={CB}
-              className="w-96 h-96 lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover"
-              alt="Codebusters Logo"
-            />
+          <img
+  src={CB}
+  alt="Codebusters Logo"
+  className="w-96 h-96 lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover animate-flip"
+/>
+
+
           </div>
         </section>
 
