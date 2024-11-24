@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./../../Assets/Logo/Codebusters.png";
+import Logo from "./../../Assets/Logo/Codebusters02.png";
 import { Link } from "react-router-dom";
 
 function Header() {
