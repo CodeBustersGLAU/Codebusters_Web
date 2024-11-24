@@ -5,6 +5,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
+import LogoCodechef from "./../../Assets/Logo/codechef_logo.png";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -13,8 +14,11 @@ function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-10 md:space-y-0">
         {/* Logo and Description */}
         <div className="md:w-1/3 text-center md:text-left">
-          <img src={Logo} alt="Codebusters Logo" className="w-40 mb-4 mx-auto md:mx-0" />
-          <p className="text-sm md:text-base px-6">
+        <div className="flex items-center justify-around mb-10">
+          <img src={Logo} alt="Codebusters Logo" className="w-44 mb-4 mx-auto md:mx-0" />
+          <img src={LogoCodechef} alt="Codebusters Logo" className="w-40 mb-4 mx-auto md:mx-0" />
+          </div>
+          <p className="text-sm md:text-base px-6 mb-6">
             Codebusters Club is a community-driven group focused on empowering
             coders with a collaborative environment, exciting challenges, and
             continuous learning. Join us and be a part of the future of technology.
@@ -28,7 +32,7 @@ function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="md:w-1/3 flex flex-col items-center md:items-start">
+        <div className="md:w-1/3 flex flex-col items-center md:items-start ml-52">
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
@@ -101,7 +105,7 @@ function Footer() {
       {/* Social Media Links */}
       <div className="flex justify-center space-x-6 mt-8">
         <a
-          href="https://facebook.com"
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"
@@ -109,7 +113,7 @@ function Footer() {
           <FacebookIcon />
         </a>
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"
@@ -117,7 +121,7 @@ function Footer() {
           <InstagramIcon />
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/company/codebusters-glau/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-gray-400 hover:text-white"

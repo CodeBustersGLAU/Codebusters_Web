@@ -10,36 +10,36 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-opacity-50 backdrop-blur-sm bg-blue-300 z-50 fixed w-full top-0 left-0 shadow-md">
+    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 z-50 fixed w-full top-0 left-0 shadow-md">
       {/* Logo */}
       <Link to="/">
         <img src={Logo} className="h-12 cursor-pointe " alt="Codebusters Logo" />
       </Link>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex space-x-6 text-blue-950 font-semibold mr-20">
+      <div className="hidden md:flex space-x-6 text-white font-semibold mr-20">
         <Link to="/team-members">
-          <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             Our Team
           </button>
         </Link>
         <Link to="/joinUs">
-          <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             Join Us
           </button>
         </Link>
         <Link to="/UpcomingEvents">
-          <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             UpcomingEvents
           </button>
         </Link>
         <Link to="/past-events">
-          <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             Highlights
           </button>
         </Link>
         <Link to="/Alumni">
-          <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             Alumnies
           </button>
         </Link>

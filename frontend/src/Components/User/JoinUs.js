@@ -3,7 +3,7 @@ import ParticlesComponent from './ParticlesTwo';
 
 const JoinUs = () => {
   // State to control if we are hiring or not
-  const [hiring, setHiring] = useState(true); // Set to `true` when hiring
+  const [hiring, setHiring] = useState(false); // Set to `true` when hiring
 
   return (
     <div className="relative">
