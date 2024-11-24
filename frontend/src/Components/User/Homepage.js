@@ -1,7 +1,8 @@
 import React from "react";
 import ParticlesComponent from "./Particles";
 import CB from "./../../Assets/Logo/nobgCB.png";
-
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 function Homepage() {
   return (
     <div className="relative">
@@ -22,6 +23,23 @@ function Homepage() {
               power of collaboration and are dedicated to providing a platform
               for everyone—from beginners to pros—to explore their potential.
             </p>
+            <div className="flex gap-10 ">
+            <a
+          href="https://www.instagram.com/codebusters_glau/profilecard/?igsh=aWduNzQ0OTAydnpv"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xl text-gray-400 hover:text-white"
+        >
+          <InstagramIcon fontSize="inherit" style={{ fontSize: 40 }} />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/codebusters-glau/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xl text-gray-400 hover:text-white"
+        >
+<LinkedInIcon fontSize="inherit" style={{ fontSize: 40 }} />
+        </a></div>
           </div>
           {/* Circular Image */}
           <div className="w-full lg:w-1/2 flex items-center justify-center">
@@ -30,8 +48,6 @@ function Homepage() {
   alt="Codebusters Logo"
   className="w-96 h-96 lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover animate-flip"
 />
-
-
           </div>
         </section>
 

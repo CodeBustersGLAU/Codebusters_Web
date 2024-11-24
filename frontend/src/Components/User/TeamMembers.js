@@ -33,7 +33,9 @@ const TeamMember = ({ title, name, imgSrc }) => (
     <img
       src={imgSrc}
       alt={name}
-      className="w-48 h-48 rounded-full mb-2 mx-auto" // Increased size to 12rem x 12rem (192px)
+      className="w-48 h-48 rounded-full mb-2 mx-auto"
+      draggable="false" // Prevent dragging
+      onContextMenu={(e) => e.preventDefault()}
     />
     <p className="mb-4">{name}</p>
   </div>
@@ -53,7 +55,9 @@ const TeamMembers = () => {
         <img
       src={SpectraImage2}
       alt="Vinay Sir"
-      className="w-48 h-48 rounded-full mb-2 mx-auto" // Increased size to 12rem x 12rem (192px)
+      className="w-48 h-48 rounded-full mb-2 mx-auto"
+      draggable="false"
+      onContextMenu={(e) => e.preventDefault()}
     />
     <h2 className="text-center">Mr Vinay Agarwal</h2>
     <h3 className="text-center mb-8">Assistant Professor GLA University, Mathura</h3>
