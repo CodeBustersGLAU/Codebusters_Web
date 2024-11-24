@@ -38,7 +38,7 @@ function Homepage() {
         {/* About Section */}
         <section className="py-16 px-6 lg:px-20 text-center backdrop-blur-sm bg-opacity-50 bg-blue-200 text-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h2 className="text-4xl lg:text-4xl font-bold text-blue-950 mb-6">
               About Codebusters Club
             </h2>
             <p className="text-white text-xl max-w-2xl mx-auto mb-12">

@@ -10,10 +10,10 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-opacity-50 backdrop-blur-sm bg-blue-200 z-50 fixed w-full top-0 left-0 shadow-md">
+    <div className="flex justify-between items-center p-4 bg-opacity-50 backdrop-blur-sm bg-blue-300 z-50 fixed w-full top-0 left-0 shadow-md">
       {/* Logo */}
       <Link to="/">
-        <img src={Logo} className="h-12 cursor-pointe bg-gray-50" alt="Codebusters Logo" />
+        <img src={Logo} className="h-12 cursor-pointe " alt="Codebusters Logo" />
       </Link>
 
       {/* Desktop Menu */}
