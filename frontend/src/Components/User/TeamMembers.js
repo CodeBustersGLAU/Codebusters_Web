@@ -14,7 +14,7 @@ import Sauhard from './../../Assets/Profile pictures/Sauhard.jpg';
 import Sneha from './../../Assets/Profile pictures/Sneha.jpg';
 import Mohit from './../../Assets/Profile pictures/Mohit.jpg';
 import SpectraImage2 from './../../Assets/Spectra3.0/DSC_6640 (13).jpg';
-
+import Jatin from './../../Assets/Profile pictures/jatin-profile-picture-crop1.ccabd51028d488edc02f.png';
 import ParticlesComponent from "./ParticlesTwo";
 const AssociatesSection = ({ title, members }) => (
   <div className="mb-16">
@@ -46,7 +46,7 @@ const TeamMembers = () => {
       <ParticlesComponent />
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <h2 className="text-6xl font-bold text-center mb-12 mt-6 font-serif">Our Team</h2>
+        <h2 className="text-6xl font-bold text-center mb-12 mt-6 font-dosis">Our Team</h2>
 
         {/* Faculty Mentor */}
         <h1 className="text-center mb-6 text-xl font-semibold">Faculty Mentor</h1>
@@ -61,7 +61,7 @@ const TeamMembers = () => {
         <TeamMember
           title="President"
           name="Jatin Sharma"
-          imgSrc="/images/jatin.jpg"
+          imgSrc={Jatin}
         />
 
         {/* Vice President, Treasurer, General Secretary */}

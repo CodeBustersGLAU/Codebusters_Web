@@ -23,14 +23,14 @@ function Header() {
             Our Team
           </button>
         </Link>
-        <Link to="/Join-us">
+        <Link to="/joinUs">
           <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
             Join Us
           </button>
         </Link>
-        <Link to="/Future-events">
+        <Link to="/UpcomingEvents">
           <button className="px-6 py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
-            Future Events
+            UpcomingEvents
           </button>
         </Link>
         <Link to="/past-events">

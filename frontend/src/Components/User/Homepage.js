@@ -16,7 +16,7 @@ function Homepage() {
             <h1 className="text-3xl lg:text-5xl font-extrabold text-gray-300 mb-6 leading-tight font-playfair ">
               Welcome to Codebusters Club!
             </h1>
-            <p className="text-base lg:text-lg text-gray-300 leading-relaxed mx-6 lg:mx-0 mb-6 font-sans-serif">
+            <p className="text-base lg:text-lg text-gray-300 leading-relaxed mx-6 lg:mx-0 mb-6 font-dosis">
               Codebusters is a community where coders, dreamers, and innovators
               come together to build, learn, and inspire. We believe in the
               power of collaboration and are dedicated to providing a platform

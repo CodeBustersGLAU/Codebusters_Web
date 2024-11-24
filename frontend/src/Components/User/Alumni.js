@@ -96,7 +96,7 @@ function AlumniList() {
     <ParticlesComponent />
     <ParticlesComponent />
     <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-      <h2 className="text-5xl font-bold text-center text-gray-200 mb-8 mt-16">
+      <h2 className="text-5xl font-bold text-center text-gray-200 mb-8 mt-16 font-dosis">
         Our Alumni
       </h2>
       <div className="flex flex-wrap justify-center gap-8">

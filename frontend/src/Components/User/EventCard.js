@@ -3,13 +3,13 @@ import React from "react";
 function EventCard({ event, onClick }) {
   return (
     <div
-      className="bg-white shadow-lg rounded-lg p-6 mb-6 cursor-pointer transition-transform transform hover:scale-105 duration-300"
+className="bg-gradient-to-br from-blue-700 via-gray-300 to-gray-600 shadow-2xl rounded-xl h-96 p-6 mb-6 cursor-pointer transition-transform transform hover:scale-105 duration-300 hover:shadow-[0px_10px_25px_rgba(0,0,0,0.2)]"
       onClick={onClick}
     >
       <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">{event.title}</h3>
       <p className="text-gray-600 mb-6 text-center">{event.description}</p>
       <div className="flex flex-wrap gap-6 justify-center">
-        {event.images.slice(0, 4).map((image, index) => (
+        {event.images.slice(0, 3).map((image, index) => (
           <img
             key={index}
             src={image}

@@ -5,7 +5,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 md:px-20">
@@ -20,7 +21,11 @@ function Footer() {
             technology.
           </p>
           <p className="text-sm pr-6">
-          Be a part of a vibrant community, where collaboration and innovation meet to shape the future of technology. Together, we can push the boundaries of what’s possible and make a lasting impact on the tech world.</p>
+            Be a part of a vibrant community, where collaboration and innovation
+            meet to shape the future of technology. Together, we can push the
+            boundaries of what’s possible and make a lasting impact on the tech
+            world.
+          </p>
         </div>
 
         {/* Quick Links */}
@@ -28,35 +33,75 @@ function Footer() {
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-            <Link to="/team-members" className="hover:text-white">Our Team</Link>
+              <Link to="/team-members" className="hover:text-white">
+                Our Team
+              </Link>
             </li>
             <li>
-            <Link to="/team-members" className="hover:text-white">Join Us</Link>
+              <Link to="/team-members" className="hover:text-white">
+                Join Us
+              </Link>
             </li>
             <li>
-            <Link to="/team-members" className="hover:text-white">Future Events</Link>
+              <Link to="/team-members" className="hover:text-white">
+                Future Events
+              </Link>
             </li>
             <li>
-            <Link to="/team-members" className="hover:text-white">Highlights</Link>
-            </li><li>
-            <Link to="/team-members" className="hover:text-white">Alumni</Link>
+              <Link to="/team-members" className="hover:text-white">
+                Highlights
+              </Link>
             </li>
-            
+            <li>
+              <Link to="/team-members" className="hover:text-white">
+                Alumni
+              </Link>
+            </li>
           </ul>
         </div>
 
-        {/* Contact Information */}
+        {/* Contact Form (Replaced Contact Us Section) */}
         <div className="md:w-1/3 flex flex-col items-center md:items-start">
           <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-          <p className="text-sm mb-2">
-            Email:{" "}
-            <a
-              href="mailto:contact@codebusters.com"
-              className="hover:text-white"
+          <form
+            action="https://formspree.io/f/myzydpyr"
+            method="POST"
+            className="bg-slate-700 p-4 rounded-lg shadow-md w-72 h-auto"
+          >
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Send Us a Message
+            </h2>
+            <label className="block mb-4">
+              <span className="block text-white font-semibold mb-2">
+                Your Email:
+              </span>
+              <input
+                type="email"
+                name="email"
+                required
+                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-gray-400 bg-blue-100 text-gray-900"
+                placeholder="Enter your email"
+              />
+            </label>
+            <label className="block mb-4">
+              <span className="block text-white font-semibold mb-2">
+                Your Message:
+              </span>
+              <textarea
+                name="message"
+                required
+                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-gray-400 bg-blue-100 text-gray-900"
+                placeholder="Enter your message"
+                rows="4"
+              ></textarea>
+            </label>
+            <button
+              type="submit"
+              className="bg-gray-900 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 w-full"
             >
-              contact@codebusters.com
-            </a>
-          </p>
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
 
