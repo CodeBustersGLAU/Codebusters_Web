@@ -17,6 +17,7 @@ import SpectraImage5 from './../../Assets/Spectra3.0/IMG-20241124-WA0010.jpg';
 import SpectraImage6 from './../../Assets/Spectra3.0/DSC_6640 (17).jpg';
 
 import ParticlesComponent from "./ParticlesTwo";
+
 function PastEvents() {
   const [events] = useState([
     {
@@ -64,26 +65,24 @@ function PastEvents() {
 
   return (
     <div className="relative">
-    {/* Particles Background */}
-    <ParticlesComponent />
-    <ParticlesComponent />
-    <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-      <h2 className="text-5xl font-bold text-center text-white mb-12 mt-24 font-dosis">
-        Our Past Events
-      </h2>
-      <div className="flex items-center justify-center max-w-9xl mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {events.map((event, index) => (
-            <Link to={`/past-events/${index}`} key={index}>
-              <div className="w-full h-96">
-                <EventCard event={event} />
-              </div>
-            </Link>
-          ))}
+      {/* Particles Background */}
+      <ParticlesComponent />
+      <section className="relative z-10 text-gray-200 py-20 px-6 md:px-12 lg:px-20">
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-12 mt-24 font-dosis">
+          Our Past Events
+        </h2>
+        <div className="flex items-center justify-center max-w-full mx-auto px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+            {events.map((event, index) => (
+              <Link to={`/past-events/${index}`} key={index}>
+                <div className="w-full">
+                  <EventCard event={event} />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-      
-    </section>
+      </section>
     </div>
   );
 }
