@@ -2,7 +2,7 @@ import React from "react";
 
 function AlumniCard({ name, batch, email, profilePicture, bio }) {
   return (
-    <div className="flex flex-col items-center bg-white rounded-lg shadow-lg p-6 w-64 mx-auto">
+    <div className="flex flex-col items-center bg-gradient-to-br from-blue-700 via-gray-300 to-gray-600 rounded-lg shadow-lg p-6 w-64 mx-auto">
       {/* Profile Picture */}
       <img
         src={profilePicture}
