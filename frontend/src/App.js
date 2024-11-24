@@ -7,7 +7,7 @@ import PastEvents from "./Components/User/PastEvents";
 import EventDetails from "./Components/User/EventDetails";
 import TeamMembers from "./Components/User/TeamMembers";
 import AlumniList from "./Components/User/Alumni";
-
+import Spectra3 from './Components/User/Event/Spectra3'; 
 function App() {
   return (
     <Router>
@@ -65,6 +65,7 @@ function App() {
                 </>
               }
             ></Route>
+            <Route path="/past-events/:id" element={<Spectra3 />} />
           </Routes>
         </main>
       </div>

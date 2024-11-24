@@ -5,20 +5,22 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
-
+import { Link } from 'react-router-dom';
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-200 py-10 px-4 md:px-20">
+    <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 md:px-20">
       <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-10 md:space-y-0">
         {/* Logo and Description */}
         <div className="md:w-1/3">
-          <img src={Logo} alt="Codebusters Logo" className="w-32 mb-4" />
-          <p className="text-sm">
+          <img src={Logo} alt="Codebusters Logo" className="w-40 mb-4" />
+          <p className="text-sm pr-6">
             Codebusters Club is a community-driven group focused on empowering
             coders with a collaborative environment, exciting challenges, and
             continuous learning. Join us and be a part of the future of
             technology.
           </p>
+          <p className="text-sm pr-6">
+          Be a part of a vibrant community, where collaboration and innovation meet to shape the future of technology. Together, we can push the boundaries of what’s possible and make a lasting impact on the tech world.</p>
         </div>
 
         {/* Quick Links */}
@@ -26,30 +28,20 @@ function Footer() {
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#our-team" className="hover:text-white">
-                Our Team
-              </a>
+            <Link to="/team-members" className="hover:text-white">Our Team</Link>
             </li>
             <li>
-              <a href="#join-us" className="hover:text-white">
-                Join Us
-              </a>
+            <Link to="/team-members" className="hover:text-white">Join Us</Link>
             </li>
             <li>
-              <a href="#events" className="hover:text-white">
-                Future Events
-              </a>
+            <Link to="/team-members" className="hover:text-white">Future Events</Link>
             </li>
             <li>
-              <a href="#highlights" className="hover:text-white">
-                Highlights
-              </a>
+            <Link to="/team-members" className="hover:text-white">Highlights</Link>
+            </li><li>
+            <Link to="/team-members" className="hover:text-white">Alumni</Link>
             </li>
-            <li>
-              <a href="#alumni" className="hover:text-white">
-                Alumni
-              </a>
-            </li>
+            
           </ul>
         </div>
 
@@ -65,13 +57,6 @@ function Footer() {
               contact@codebusters.com
             </a>
           </p>
-          <p className="text-sm mb-2">
-            Phone:{" "}
-            <a href="tel:+1234567890" className="hover:text-white">
-              +1 (234) 567-890
-            </a>
-          </p>
-          <p className="text-sm">Address: 123 Code Street, Tech City, CA</p>
         </div>
       </div>
 
