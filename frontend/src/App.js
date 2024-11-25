@@ -7,9 +7,11 @@ import PastEvents from "./Components/User/PastEvents";
 import EventDetails from "./Components/User/EventDetails";
 import TeamMembers from "./Components/User/TeamMembers";
 import AlumniList from "./Components/User/Alumni";
-import Spectra3 from './Components/User/Event/Spectra3'; 
+import Spectra3 from "./Components/User/Event/Spectra3";
 import UpcomingEvents from "./Components/User/UpcomingEvents";
 import JoinUs from "./Components/User/JoinUs";
+import LogIn from "./Components/Admin/Auth";
+import Dashboard from "./Components/Admin/Dashboard";
 function App() {
   return (
     <Router>
@@ -84,6 +86,26 @@ function App() {
                 <>
                   <Header></Header>
                   <JoinUs />
+                  <Footer></Footer>
+                </>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                  <Header></Header>
+                  <LogIn />
+                  <Footer></Footer>
+                </>
+              }
+            />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <>
+                  <Header></Header>
+                  <Dashboard />
                   <Footer></Footer>
                 </>
               }

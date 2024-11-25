@@ -164,11 +164,14 @@ function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="mt-8 text-center text-gray-500 text-sm selection:text-blue-100">
+      <div className="mt-8 text-center text-gray-500 text-sm selection:text-blue-100 relative">
         <p>
           &copy; {new Date().getFullYear()} Codebusters Club. All rights
           reserved.
         </p>
+        <Link to="/login">
+          <button className="absolute right-0 hover:bg-blue-950 h-6 w-10 p-2 rounded-lg"></button>
+        </Link>
       </div>
     </footer>
   );
