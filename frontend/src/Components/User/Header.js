@@ -61,7 +61,7 @@ function Header() {
       <div
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } absolute top-16 left-0 w-full bg-gray-900 text-blue-950 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
+        } absolute top-16 left-0 w-full bg-gray-900 text-slate-300 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
       >
         <Link to="/team-members">
           <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
