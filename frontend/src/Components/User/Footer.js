@@ -170,7 +170,7 @@ function Footer() {
           reserved.
         </p>
         <Link to="/login">
-          <button className="absolute right-0 hover:bg-blue-950 h-6 w-10 p-2 rounded-lg"></button>
+          <button className="absolute right-0 hover:bg-blue-950 h-6 w-10 p-2 rounded-lg "></button>
         </Link>
       </div>
     </footer>
