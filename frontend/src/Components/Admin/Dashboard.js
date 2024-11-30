@@ -13,39 +13,43 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <div className="relative">
       <ParticlesComponent />
-      <div className="flex flex-row h-screen w-full x-10 relative mt-20">
-        <div className="bg-blue-300 bg-opacity-50 w-1/5 p-4">
-          <h1 className="text-xl font-bold">Dashboard</h1>
-          <div className="flex flex-col space-y-2 mt-6">
+      <section className="flex flex-row relative z-10 text-black pt-16 lg:pt-20">
+        {/* Sidebar */}
+        <div className="bg-blue-300 bg-opacity-50 w-1/4 p-4 rounded-lg shadow-lg">
+          <h1 className="text-2xl font-semibold mb-6 text-center">Dashboard</h1>
+          <div className="flex flex-col space-y-4">
             <button
-              className="p-2 bg-blue-500 text-white rounded"
+              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
               onClick={() => handleButtonClick(0)}
             >
               Members
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded"
+              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
               onClick={() => handleButtonClick(1)}
             >
               Events
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded"
+              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
               onClick={() => handleButtonClick(2)}
             >
               Alumnies
             </button>
             <button
-              className="p-2 bg-blue-500 text-white rounded"
+              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
               onClick={() => handleButtonClick(3)}
             >
               Highlights
             </button>
           </div>
         </div>
-        <div className="bg-green-300 bg-opacity-45 w-4/5 p-6">
+
+        {/* Content Area */}
+        <div className="bg-opacity-45 w-full lg:w-3/4 p-6 rounded-lg shadow-lg ml-4">
+          {/* Displaying the selected view */}
           {view === 0 ? (
             <Members />
           ) : view === 1 ? (
@@ -56,7 +60,7 @@ function Dashboard() {
             <Highlights />
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
