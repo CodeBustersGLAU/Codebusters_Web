@@ -69,7 +69,7 @@ function Members() {
   };
 
   return (
-    <div className="p-10 pl-32 pr-32 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
+    <div className="p-10 pl-8 pr-8 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
       {/* Header */}
       <h2 className="text-3xl font-bold text-white mb-6 text-center"> Manage Teams and Members</h2>
 
@@ -86,17 +86,17 @@ function Members() {
       {/* Add New Team Section */}
       <div className="bg-slate-300 shadow-sm rounded-lg p-4 mb-6">
         <h2 className="text-xl font-semibold mb-4 text-slate-700">Add a New Team</h2>
-        <div className="flex space-x-2 items-center">
+        <div className="flex flex-col sm:flex-row sm:space-x-2 items-center">
           <input
             type="text"
             placeholder="Team Name"
             value={newTeam}
             onChange={(e) => setNewTeam(e.target.value)}
-            className="p-2 border border-gray-300 rounded-lg w-2/3 text-sm"
+            className="p-2 border border-gray-300 rounded-lg w-full sm:w-2/3 text-sm mb-3 sm:mb-0"
           />
           <button
             onClick={addTeam}
-            className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 w-1/3 text-sm"
+            className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 sm:w-1/3 text-sm"
           >
             Add Team
           </button>
@@ -149,31 +149,31 @@ function Members() {
               }))
             }
             className="p-2 border border-gray-300 rounded-lg w-full text-sm"
-          /><div>
-          <label
-            htmlFor="file-upload"
-            className="p-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition duration-200 text-sm"
-          >
-            Add Image
-          </label>
-          
-          <input
-            type="file"
-            id="file-upload"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
           />
-          
-          {memberDetails.previewPic && (
-            <img
-              src={memberDetails.previewPic}
-              alt="Preview"
-              className="w-20 h-20 rounded-full mt-2 object-cover border border-gray-300"
+          <div>
+            <label
+              htmlFor="file-upload"
+              className="p-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition duration-200 text-sm"
+            >
+              Add Image
+            </label>
+
+            <input
+              type="file"
+              id="file-upload"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
             />
-          )}
-        </div>
-        
+
+            {memberDetails.previewPic && (
+              <img
+                src={memberDetails.previewPic}
+                alt="Preview"
+                className="w-20 h-20 rounded-full mt-2 object-cover border border-gray-300"
+              />
+            )}
+          </div>
         </div>
 
         <button

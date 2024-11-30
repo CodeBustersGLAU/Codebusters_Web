@@ -16,7 +16,7 @@ function Auth() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="bg-white bg-opacity-60 shadow-lg rounded-lg p-8 max-w-md w-full">
             <h2 className="text-2xl font-bold text-center text-gray-800">
-              Login
+              Admin Login
             </h2>
             <form className="mt-6">
               <div className="mb-4">

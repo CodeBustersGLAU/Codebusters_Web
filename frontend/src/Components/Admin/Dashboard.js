@@ -15,9 +15,9 @@ function Dashboard() {
   return (
     <div className="relative">
       <ParticlesComponent />
-      <section className="flex flex-row relative z-10 text-black pt-16 lg:pt-20">
+      <section className="flex flex-col lg:flex-row relative z-10 text-black pt-16 lg:pt-20">
         {/* Sidebar */}
-        <div className="bg-blue-300 bg-opacity-50 w-1/4 p-4 rounded-lg shadow-lg">
+        <div className="bg-blue-300 bg-opacity-50 w-full lg:w-1/4 p-4 rounded-lg shadow-lg mb-6 lg:mb-0">
           <h1 className="text-2xl font-semibold mb-6 text-center">Dashboard</h1>
           <div className="flex flex-col space-y-4">
             <button
@@ -48,7 +48,7 @@ function Dashboard() {
         </div>
 
         {/* Content Area */}
-        <div className="bg-opacity-45 w-full lg:w-3/4 p-6 rounded-lg shadow-lg ml-4">
+        <div className="bg-opacity-45 w-full lg:w-3/4 p-6 rounded-lg shadow-lg ml-0 lg:ml-4">
           {/* Displaying the selected view */}
           {view === 0 ? (
             <Members />

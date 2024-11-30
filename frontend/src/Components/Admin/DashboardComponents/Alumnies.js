@@ -70,10 +70,8 @@ function Alumnies() {
   };
 
   return (
-    <div className="p-10 pl-32 pr-32 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
+    <div className="p-4 sm:p-8 lg:p-10 pl-10 pr-10 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
       <h2 className="text-3xl font-bold text-white mb-6 text-center">Alumni Management Dashboard</h2>
-
-
       <div className="bg-slate-300 shadow-lg rounded-lg p-6 mt-10">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           {editIndex !== null ? "Edit Alumni Details" : "Add New Alumni"}
@@ -150,7 +148,7 @@ function Alumnies() {
           </button>
         </form>
       </div>
-      
+
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg mt-8">
         <table className="w-full text-left table-auto border-collapse">
           <thead className="bg-gray-300">
