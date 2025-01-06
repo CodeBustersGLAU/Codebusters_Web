@@ -1,4 +1,6 @@
 import React from "react";
+import { Tilt } from "react-tilt";
+import { motion } from "framer-motion";
 import Profile1 from './../../Assets/Profile pictures/1formal.JPG';
 import Akshat from './../../Assets/Profile pictures/Akshat.jpg';
 import Madushudan from './../../Assets/Profile pictures/Madushudan.jpg';
@@ -16,10 +18,41 @@ import Mohit from './../../Assets/Profile pictures/Mohit.jpg';
 import SpectraImage2 from './../../Assets/Spectra3.0/DSC_6640 (13).jpg';
 import Jatin from './../../Assets/Profile pictures/jatin-profile-picture-crop1.ccabd51028d488edc02f.png';
 import ParticlesComponent from "./ParticlesTwo";
+
+const TeamMember = ({ title, name, imgSrc }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+  >
+    <Tilt
+      options={{
+        max: 25,
+        scale: 1.05,
+        speed: 400,
+        transition: true,
+      }}
+      className="text-center"
+    >
+      <div className="bg-gradient-to-r from-indigo-300 via-blue-200 to-indigo-300 p-8 rounded-xl shadow-lg w-64 mx-auto mb-10">
+        <h3 className="text-2xl font-semibold mb-4 text-white">{title}</h3>
+        <img
+          src={imgSrc}
+          alt={name}
+          className="w-52 h-52 rounded-full mb-4 mx-auto"
+          draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
+        />
+        <p className="text-xl font-medium text-white mb-4">{name}</p>
+      </div>
+    </Tilt>
+  </motion.div>
+);
+
 const AssociatesSection = ({ title, members }) => (
   <div className="mb-16">
-    <h3 className="text-xl font-semibold mb-8 text-center">{title}</h3>
-    <div className="flex flex-wrap justify-around gap-6">
+    <h3 className="text-xl font-semibold mb-8 text-center text-white">{title}</h3>
+    <div className="flex flex-wrap justify-around gap-8">
       {members.map(({ name, imgSrc }, idx) => (
         <TeamMember key={idx} name={name} imgSrc={imgSrc} />
       ))}
@@ -27,165 +60,87 @@ const AssociatesSection = ({ title, members }) => (
   </div>
 );
 
-const TeamMember = ({ title, name, imgSrc }) => (
-  <div className="text-center">
-    <h3 className="text-2xl font-semibold mb-4">{title}</h3>
-    <img
-      src={imgSrc}
-      alt={name}
-      className="w-48 h-48 rounded-full mb-2 mx-auto"
-      draggable="false" // Prevent dragging
-      onContextMenu={(e) => e.preventDefault()}
-    />
-    <p className="mb-4">{name}</p>
-  </div>
-);
-
 const TeamMembers = () => {
   return (
     <div className="relative">
-      {/* Particles Background */}
-      <ParticlesComponent />
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <h2 className="text-6xl font-bold text-center mb-12 mt-6 font-dosis">Our Team</h2>
+        <h2 className="text-6xl font-bold text-center mb-12 mt-6 font-dosis text-white">Our Team</h2>
 
-        {/* Faculty Mentor */}
-        <h1 className="text-center mb-6 text-xl font-semibold">Faculty Mentor</h1>
-        <img
-      src={SpectraImage2}
-      alt="Vinay Sir"
-      className="w-48 h-48 rounded-full mb-2 mx-auto"
-      draggable="false"
-      onContextMenu={(e) => e.preventDefault()}
-    />
-    <h2 className="text-center">Mr Vinay Agarwal</h2>
-    <h3 className="text-center mb-8">Assistant Professor GLA University, Mathura</h3>
-        {/* President */}
-        <TeamMember
-          title="President"
-          name="Jatin Sharma"
-          imgSrc={Jatin}
-        />
+        <h1 className="text-center mb-6 text-xl font-semibold text-white">Faculty Mentor</h1>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <img
+            src={SpectraImage2}
+            alt="Vinay Sir"
+            className="w-52 h-52 rounded-full mb-4 mx-auto"
+            draggable="false"
+            onContextMenu={(e) => e.preventDefault()}
+          />
+        </motion.div>
+        <h2 className="text-center text-2xl font-semibold text-while">Mr Mridul Dixit</h2>
+        <h3 className="text-center mb-8 text-xl font-medium text-white">Assistant Professor GLA University, Mathura</h3>
 
-        {/* Vice President, Treasurer, General Secretary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center mb-10">
-          <TeamMember
-            title="Vice President"
-            name="Shiva Gaur"
-            imgSrc={Profile1}
-          />
-          <TeamMember
-            title="Treasurer"
-            name="Akshat Srivastava"
-            imgSrc={Akshat}
-          />
-          <TeamMember
-            title="General Secretary"
-            name="Madushudan Singh"
-            imgSrc={Madushudan}
-          />
+        <TeamMember title="President" name="Jatin Sharma" imgSrc={Jatin} />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mb-10">
+          <TeamMember title="Vice President" name="Shiva Gaur" imgSrc={Profile1} />
+          <TeamMember title="Treasurer" name="Akshat Srivastava" imgSrc={Akshat} />
+          <TeamMember title="General Secretary" name="Madushudan Singh" imgSrc={Madushudan} />
         </div>
 
-        {/* Core Teams */}
-        <div className="space-y-12">
-          {/* Technical Team */}
-          <div>
-            <h3 className="text-3xl font-semibold mb-9 text-center">
-              Technical Team
-            </h3>
-            <div className="flex items-center justify-around mb-16">
-              <TeamMember
-                title="Technical Team Head"
-                name="Prashant Pathak"
-                imgSrc={Prahsant}
-              />
-              <TeamMember
-                title="Technical Team Deputy Head"
-                name="Raunak Mishra"
-                imgSrc={Raunank}
-              />
-            </div>
+        <div className="space-y-16">
+        <div>
+            <h3 className="text-3xl font-semibold mb-9 text-center text-white">Technical Team</h3>
+            <div className="flex flex-col lg:flex-row items-center justify-around mb-16">
+  <TeamMember title="Technical Team Head" name="Prashant Pathak" imgSrc={Prahsant} />
+  <TeamMember title="Technical Team Deputy Head" name="Raunak Mishra" imgSrc={Raunank} />
+</div>
+
           </div>
 
-          {/* Design Team */}
           <div>
-            <h3 className="text-3xl font-semibold mb-9 text-center">
-              Design Team
-            </h3>
-            <TeamMember
-              title="Design Team Head"
-              name="Sneha Agarwal"
-              imgSrc={Sneha}
-            />
+            <h3 className="text-3xl font-semibold mb-9 text-center text-white">Design Team</h3>
+            <TeamMember title="Design Team Head" name="Sneha Agarwal" imgSrc={Sneha} />
           </div>
 
-          {/* Public Relation Team */}
           <div>
-            <h3 className="text-3xl font-semibold mb-9 text-center">
-              Public Relation Team
-            </h3>
-            <div className="flex items-center justify-around mb-16">
-              <TeamMember
-                title="Public Relation Team Head"
-                name="Saumya Bansal"
-                imgSrc={Saumya}
-              />
-              <TeamMember
-                title="Public Relation Team Deputy Head"
-                name="Vikas Singh"
-                imgSrc={Vikas}
-              />
+            <h3 className="text-3xl font-semibold mb-9 text-center text-white">Public Relation Team</h3>
+            <div className="flex flex-col lg:flex-row items-center items-center justify-around mb-16">
+              <TeamMember title="Public Relation Team Head" name="Saumya Bansal" imgSrc={Saumya} />
+              <TeamMember title="Public Relation Team Deputy Head" name="Vikas Singh" imgSrc={Vikas} />
             </div>
           </div>
 
           <div>
-            <h3 className="text-3xl font-semibold mb-9 text-center">
-              Event Management Team
-            </h3>
-            <div className="flex items-center justify-around mb-16">
-              <TeamMember
-                title="Event Management Team"
-                name="Pranjal"
-                imgSrc={Pranjal}
-              />
-              <TeamMember
-                title="Event Management Team Deputy Head"
-                name="Shubhneet"
-                imgSrc={Shubhneet}
-              />
+            <h3 className="text-3xl font-semibold mb-9 text-center text-white">Event Management Team</h3>
+            <div className="flex flex-col lg:flex-row items-center items-center justify-around mb-16">
+              <TeamMember title="Event Management Team" name="Pranjal" imgSrc={Pranjal} />
+              <TeamMember title="Event Management Team Deputy Head" name="Shubhneet" imgSrc={Shubhneet} />
             </div>
           </div>
+
           <div>
-            <h3 className="text-3xl font-semibold mb-9 text-center">
-              Content Team
-            </h3>
-            <div className="flex items-center justify-around mb-16">
-              <TeamMember
-                title="Content Team Head"
-                name="Mohit Kumar"
-                imgSrc={Mohit}
-              />
-              <TeamMember
-                title="Content Team Deputy Head"
-                name="Bhavana Jadon"
-                imgSrc={Bhavana}
-              />
+            <h3 className="text-3xl font-semibold mb-9 text-center text-white">Content Team</h3>
+            <div className="flex flex-col lg:flex-row items-center items-center justify-around mb-16">
+              <TeamMember title="Content Team Head" name="Mohit Kumar" imgSrc={Mohit} />
+              <TeamMember title="Content Team Deputy Head" name="Bhavana Jadon" imgSrc={Bhavana} />
             </div>
           </div>
 
           <AssociatesSection
-        title="Executive Heads"
-        members={[
-          { name: "Vidhi Khare", imgSrc: Saumya },
-          { name: "Sauhard", imgSrc: Sauhard },
-          { name: "Palash Agarwal", imgSrc: Palash },
-          // Add other members as needed
-        ]}
-      />
+            title="Executive Heads"
+            members={[
+              { name: "Vidhi Khare", imgSrc: Saumya },
+              { name: "Sauhard", imgSrc: Sauhard },
+              { name: "Palash Agarwal", imgSrc: Palash },
+            ]}
+          />
 
-
-          {/* Associates */}
           <AssociatesSection
             title="Technical Team Associates"
             members={[
@@ -206,32 +161,34 @@ const TeamMembers = () => {
               { name: "Ankita", imgSrc: "/images/ankita.jpg" },
             ]}
           />
-          <AssociatesSection
-          title="Public Relation Team Associates Head"
-          members={[
-            { name: "Divyanshi", imgSrc: "/images/divyanshi.jpg" },
-            { name: "Krishna", imgSrc: "/images/krishna.jpg" },
-          ]}
-        />
-        <AssociatesSection
-          title="Content Team Associates Head"
-          members={[
-            { name: "Divyanshu", imgSrc: "/images/divyanshu.jpg" },
-            { name: "Devanshi Bansal", imgSrc: "/images/devanshi.jpg" },
-          ]}
-        />
-        <AssociatesSection
-          title="Event Management Team Associates Head"
-          members={[
-            { name: "Rishi Srivastava", imgSrc: "/images/rishi.jpg" },
-            { name: "Ashutosh Divedi", imgSrc: "/images/ashutosh.jpg" },
-            { name: "Hardik", imgSrc: "/images/hardik.jpg" },
-            { name: "Astha", imgSrc: "/images/astha.jpg" },
-            { name: "Kirti", imgSrc: "/images/kirti.jpg" },
-            { name: "Priya", imgSrc: "/images/priya.jpg" },
-          ]}
-        />
 
+          <AssociatesSection
+            title="Public Relation Team Associates Head"
+            members={[
+              { name: "Divyanshi", imgSrc: "/images/divyanshi.jpg" },
+              { name: "Krishna", imgSrc: "/images/krishna.jpg" },
+            ]}
+          />
+
+          <AssociatesSection
+            title="Content Team Associates Head"
+            members={[
+              { name: "Divyanshu", imgSrc: "/images/divyanshu.jpg" },
+              { name: "Devanshi Bansal", imgSrc: "/images/devanshi.jpg" },
+            ]}
+          />
+
+          <AssociatesSection
+            title="Event Management Team Associates Head"
+            members={[
+              { name: "Rishi Srivastava", imgSrc: "/images/rishi.jpg" },
+              { name: "Ashutosh Divedi", imgSrc: "/images/ashutosh.jpg" },
+              { name: "Hardik", imgSrc: "/images/hardik.jpg" },
+              { name: "Astha", imgSrc: "/images/astha.jpg" },
+              { name: "Kirti", imgSrc: "/images/kirti.jpg" },
+              { name: "Priya", imgSrc: "/images/priya.jpg" },
+            ]}
+          />
         </div>
       </section>
     </div>

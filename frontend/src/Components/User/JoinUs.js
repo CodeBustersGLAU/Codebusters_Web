@@ -1,38 +1,56 @@
 import React, { useState } from 'react';
 import ParticlesComponent from './ParticlesTwo';
+import { motion } from 'framer-motion';
 
 const JoinUs = () => {
-  // State to control if we are hiring or not
-  const [hiring, setHiring] = useState(false); // Set to `true` when hiring
+  const [hiring, setHiring] = useState(true);
 
   return (
     <div className="relative">
-      {/* Particles Background */}
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <h2 className="text-3xl font-bold text-center mb-8">Join Codebusters Club</h2>
+        <motion.h2
+          className="text-3xl font-bold text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Join Codebusters Club
+        </motion.h2>
 
         {hiring ? (
           <>
-            <p className="text-lg mb-6 text-center">
-              Want to be a part of a vibrant coding community? Join Codebusters, a place where
-              creativity and innovation collide. Whether you’re passionate about coding, technology,
-              or problem-solving, there’s a place for you here!
-            </p>
+            <motion.p
+              className="text-lg mb-6 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              Want to be a part of a vibrant coding community? Join Codebusters, a place where creativity and innovation collide. Whether you’re passionate about coding, technology, or problem-solving, there’s a place for you here!
+            </motion.p>
             <div className="max-w-2xl mx-auto">
-              <h3 className="text-2xl font-semibold text-center mb-4">How to Join</h3>
-              <p className="text-center mb-6">
-                Fill out the form below to express your interest, and we’ll get in touch with you about
-                upcoming events, workshops, and opportunities.
-              </p>
+              <motion.h3
+                className="text-2xl font-semibold text-center mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              >
+                How to Join
+              </motion.h3>
+              <motion.p
+                className="text-center mb-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              >
+                Fill out the form below to express your interest, and we’ll get in touch with you about upcoming events, workshops, and opportunities.
+              </motion.p>
 
-              {/* Join Us Form */}
               <form
                 action="https://formspree.io/f/myzydpyr"
                 method="POST"
                 className="bg-slate-700 p-6 rounded-lg shadow-lg"
               >
-                {/* Name and Email */}
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-white font-semibold mb-2">Your Name</label>
                   <input
@@ -93,7 +111,6 @@ const JoinUs = () => {
                   />
                 </div>
 
-                {/* Questions */}
                 <div className="mb-4">
                   <label htmlFor="interest" className="block text-white font-semibold mb-2">Why are you interested in joining our club?</label>
                   <textarea
@@ -164,7 +181,6 @@ const JoinUs = () => {
                   />
                 </div>
 
-
                 <div className="mb-4">
                   <label htmlFor="hosteller" className="block text-white font-semibold mb-2">Are you a hosteller or a day scholar?</label>
                   <select
@@ -178,7 +194,6 @@ const JoinUs = () => {
                   </select>
                 </div>
 
-                {/* Additional Contact Info */}
                 <div className="mb-4">
                   <label htmlFor="whatsapp" className="block text-white font-semibold mb-2">WhatsApp Number</label>
                   <input
@@ -191,28 +206,46 @@ const JoinUs = () => {
                   />
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
                   className="bg-gray-900 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 w-full"
+                  whileHover={{ scale: 1.05 }}
                 >
                   Submit
-                </button>
+                </motion.button>
               </form>
             </div>
           </>
         ) : (
           <>
-            <p className="text-lg mb-6 text-center">
+            <motion.p
+              className="text-lg mb-6 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               We are not currently hiring. However, you can still become a part of our community by participating in our events and workshops. We’ll let you know when we are hiring again!
-            </p>
+            </motion.p>
 
-            <h3 className="text-2xl font-semibold text-center mb-4">Why Join Codebusters?</h3>
-            <ul className="list-disc list-inside text-center">
+            <motion.h3
+              className="text-2xl font-semibold text-center mb-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              Why Join Codebusters?
+            </motion.h3>
+            <motion.ul
+              className="list-disc list-inside text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               <li className="text-lg mb-2">Learn new technologies and coding techniques.</li>
               <li className="text-lg mb-2">Collaborate with like-minded peers on exciting projects.</li>
               <li className="text-lg mb-2">Participate in coding competitions and workshops.</li>
               <li className="text-lg mb-2">Get the chance to lead projects and grow your skills.</li>
-            </ul>
+            </motion.ul>
           </>
         )}
       </section>
