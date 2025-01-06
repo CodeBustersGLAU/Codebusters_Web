@@ -2,7 +2,9 @@ import React from "react";
 import ParticlesComponent from "./Particles";
 import CB from "./../../Assets/Logo/nobgCB.png";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Tilt } from "react-tilt";
 function Homepage() {
   return (
     <div className="relative">
@@ -56,73 +58,174 @@ function Homepage() {
             />
           </div>
         </section>
-
-        {/* About Section */}
-        <section className="py-16 px-6 lg:px-20 text-center backdrop-blur-lg bg-opacity-50 bg-blue-100 text-white">
+        <Tilt
+                options={{ max: 10, scale: 1.02, speed: 400 }}
+                className="tilt-box transition-transform duration-300 hover:scale-105"
+              >
+        <motion.section
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-16 px-6 lg:px-20 text-center backdrop-blur-md bg-gradient-to-r from-blue-500 via-blue-100 to-blue-500 rounded-xl shadow-xl"
+        >
+          
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl lg:text-4xl font-bold text-blue-950 mb-6">
+            <motion.h2
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl lg:text-5xl font-extrabold text-blue-700 mb-6 tracking-tight"
+            >
               About Codebusters Club
-            </h2>
-            <p className="text-blue-950 text-xl max-w-2xl mx-auto mb-12">
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-blue-800 text-lg lg:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
+            >
               Empowering future tech leaders at GLA University through
               innovation, collaboration, and hands-on coding experiences.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24">
-              <div>
-                <h3 className="text-2xl font-bold text-blue-950 mb-4">
-                  Our Mission
-                </h3>
-                <p className="text-blue-800 text-lg leading-relaxed">
-                  At Codebusters Club, we aim to create a nurturing environment
-                  for students passionate about coding and technology. Our
-                  mission is to bridge the gap between theoretical knowledge and
-                  practical skills by providing members with opportunities to
-                  participate in real-world projects, hackathons, and
-                  competitions.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-blue-950 mb-4">
-                  Our Core Values
-                </h3>
-                <ul className="text-blue-800 space-y-6">
-                  <li className="flex items-center justify-start">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=aMa5RfFHeMJg&format=png&color=000000"
-                      alt="Innovation Icon"
-                      className="h-8 mr-4"
-                    />
-                    <span className="text-lg">
-                      Innovation - Encouraging creative problem-solving and
-                      fresh ideas.
-                    </span>
-                  </li>
-                  <li className="flex items-center justify-start">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=4l0HjwFFbVRJ&format=png&color=000000"
-                      alt="Collaboration Icon"
-                      className="h-8 mr-4"
-                    />
-                    <span className="text-lg">
-                      Collaboration - Building a strong community through
-                      teamwork.
-                    </span>
-                  </li>
-                  <li className="flex items-center justify-start">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=16Ne6ZK7nvPI&format=png&color=000000"
-                      alt="Growth Icon"
-                      className="h-8 mr-4"
-                    />
-                    <span className="text-lg">
-                      Growth - Supporting personal and professional development.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            </motion.p>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, scale: 0.95 },
+                visible: {
+                  opacity: 1,
+                  scale: 1,
+                  transition: { staggerChildren: 0.3 },
+                },
+              }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16"
+            >
+              <Tilt
+                options={{ max: 10, scale: 1.02, speed: 400 }}
+                className="tilt-box transition-transform duration-300 hover:scale-105"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="bg-white p-8 rounded-lg shadow-lg relative overflow-hidden"
+                  style={{
+                    borderTop: "4px solid transparent",
+                    borderImageSource:
+                      "linear-gradient(to right, #1e3a8a, #7dd3fc)",
+                    borderImageSlice: 1,
+                  }}
+                >
+                  <motion.div
+                    className="absolute inset-0 rounded-lg blur-xl opacity-40" // Reduced opacity to make the background lighter
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(30, 58, 138, 0.2), rgba(125, 211, 252, 0.2))", // Make gradient colors lighter and more transparent
+                      filter: "blur(8px)",
+                    }}
+                    animate={{
+                      opacity: [0.2, 0.4, 0.2], // Slow, subtle opacity changes
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                    }}
+                  />
+                  <h3 className="text-2xl font-semibold text-blue-900 mb-4">
+                    Our Mission
+                  </h3>
+                  <p className="text-blue-700 text-base leading-relaxed">
+                    At Codebusters Club, we aim to create a nurturing
+                    environment for students passionate about coding and
+                    technology. Our mission is to bridge the gap between
+                    theoretical knowledge and practical skills by providing
+                    members with opportunities to participate in real-world
+                    hackathons and competitions.
+                  </p>
+                </motion.div>
+              </Tilt>
+              <Tilt
+                options={{ max: 10, scale: 1.02, speed: 400 }}
+                className="tilt-box transition-transform duration-300 hover:scale-105"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="bg-white p-8 rounded-lg shadow-lg relative overflow-hidden"
+                  style={{
+                    borderTop: "4px solid transparent",
+                    borderImageSource:
+                      "linear-gradient(to right, #1e3a8a, #7dd3fc)",
+                    borderImageSlice: 1,
+                  }}
+                >
+                  <motion.div
+                    className="absolute inset-0 rounded-lg blur-xl opacity-40"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(30, 58, 138, 0.2), rgba(125, 211, 252, 0.2))", // Lighter gradient
+                      filter: "blur(8px)",
+                    }}
+                    animate={{
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                    }}
+                  />
+                  <h3 className="text-2xl font-semibold text-blue-900 mb-4">
+                    Our Core Values
+                  </h3>
+                  <ul className="text-blue-700 space-y-3 text-xs lg:text-sm">
+                    {[
+                      {
+                        imgSrc:
+                          "https://img.icons8.com/?size=100&id=aMa5RfFHeMJg&format=png&color=000000",
+                        text: "Innovation - Encouraging creative problem-solving and fresh ideas.",
+                      },
+                      {
+                        imgSrc:
+                          "https://img.icons8.com/?size=100&id=4l0HjwFFbVRJ&format=png&color=000000",
+                        text: "Collaboration - Building a strong community through teamwork.",
+                      },
+                      {
+                        imgSrc:
+                          "https://img.icons8.com/?size=100&id=16Ne6ZK7nvPI&format=png&color=000000",
+                        text: "Growth - Supporting personal and professional development.",
+                      },
+                    ].map((value, index) => (
+                      <motion.li
+                        key={index}
+                        variants={{
+                          hidden: { opacity: 0, x: -30 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                        className="flex items-center justify-start hover:scale-105 transition-transform duration-300"
+                      >
+                        <img
+                          src={value.imgSrc}
+                          alt="Icon"
+                          className="h-8 w-8 mr-3"
+                        />
+                        <span className="text-sm lg:text-base">
+                          {value.text}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </Tilt>
+            </motion.div>
           </div>
-        </section>
+          <style jsx>{`
+            .tilt-box:hover {
+              box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+            }
+          `}</style>
+        </motion.section>
+        </Tilt>
       </div>
     </div>
   );

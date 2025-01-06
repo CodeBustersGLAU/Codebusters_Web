@@ -7,7 +7,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
 import LogoCodechef from "./../../Assets/Logo/codechef_logo.png";
 import { Link } from "react-router-dom";
-
 function Footer() {
   return (
     <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 sm:px-8 md:px-16 lg:px-20">
@@ -83,7 +82,7 @@ function Footer() {
             className="bg-slate-700 p-4 rounded-lg shadow-md w-full sm:w-80 md:w-72 lg:w-80"
           >
             <h2 className="text-xl font-semibold text-white mb-4">
-              Send Us a Message
+              Contact us via message
             </h2>
             <label className="block mb-4">
               <span className="block text-white font-semibold mb-2">

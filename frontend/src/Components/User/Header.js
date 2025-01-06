@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Logo from "./../../Assets/Logo/Codebusters02.png";
 import { Link } from "react-router-dom";
-
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,14 +17,15 @@ function Header() {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-6 text-white font-semibold mr-20">
-        <Link to="/team-members">
-          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
-            Our Team
-          </button>
-        </Link>
+        
         <Link to="/joinUs">
           <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
             Join Us
+          </button>
+        </Link>
+        <Link to="/team-members">
+          <button className="px-6 py-2 hover:bg-blue-400 rounded-md transition-all duration-300">
+            Our Team
           </button>
         </Link>
         <Link to="/UpcomingEvents">
@@ -47,7 +47,7 @@ function Header() {
 
       {/* Mobile Menu Button (Hamburger) */}
       <button
-        className="md:hidden text-blue-950"
+        className="md:hidden text-slate-300"
         onClick={toggleMenu}
       >
         {isMenuOpen ? (
@@ -61,7 +61,7 @@ function Header() {
       <div
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } absolute top-16 left-0 w-full bg-gray-900 text-blue-950 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
+        } absolute top-16 left-0 w-full bg-gray-900 text-slate-300 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
       >
         <Link to="/team-members">
           <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
@@ -73,6 +73,7 @@ function Header() {
             Join Us
           </button>
         </Link>
+        
         <Link to="/Future-events">
           <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
             Future Events
