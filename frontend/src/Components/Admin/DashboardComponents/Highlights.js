@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { updateHighlights } from "./../../../APIs/admin";
 function Highlights() {
   const [events, setEvents] = useState([
     {
@@ -75,9 +75,16 @@ function Highlights() {
     setEditIndex(null);
   };
 
+  const update = async () => {
+    console.log(events);
+    const res = await updateHighlights(events);
+  };
+
   return (
     <div className="p-10 pl-4 pr-4 sm:pl-8 sm:pr-8 md:pl-16 md:pr-16 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      <h2 className="text-3xl font-bold text-white mb-6 text-center">Club Highlights Dashboard</h2>
+      <h2 className="text-3xl font-bold text-white mb-6 text-center">
+        Club Highlights Dashboard
+      </h2>
 
       <div className="bg-slate-200 rounded-lg shadow-lg p-6 mb-8">
         <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
@@ -146,7 +153,9 @@ function Highlights() {
       </div>
 
       <div>
-        <h3 className="text-2xl font-semibold text-gray-200 mb-6">Highlighted Events</h3>
+        <h3 className="text-2xl font-semibold text-gray-200 mb-6">
+          Highlighted Events
+        </h3>
         {events.length === 0 ? (
           <p className="text-gray-100">No events added yet.</p>
         ) : (
@@ -156,7 +165,9 @@ function Highlights() {
                 key={event.id}
                 className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300"
               >
-                <h4 className="text-xl font-semibold text-gray-700 mb-2">{event.title}</h4>
+                <h4 className="text-xl font-semibold text-gray-700 mb-2">
+                  {event.title}
+                </h4>
                 <p className="text-gray-500 text-sm mb-4">{event.date}</p>
                 <p className="text-gray-700 mb-4">{event.description}</p>
                 {event.images.length > 0 && (
@@ -190,6 +201,9 @@ function Highlights() {
           </div>
         )}
       </div>
+      <button onClick={() => update()} className="bg-red-300 p-4">
+        Update Data
+      </button>
     </div>
   );
 }

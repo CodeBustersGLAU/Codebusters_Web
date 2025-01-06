@@ -20,9 +20,8 @@ function Members() {
   };
 
   const handleTeamUpdate = async () => {
-    if (!selectedTeam) return; // Optional check to ensure a team is selected
     try {
-      let res = await updateTeam(selectedTeam);
+      let res = await updateTeam(teams);
       console.log(res);
     } catch (error) {
       console.error("Failed to update team:", error);
@@ -71,7 +70,10 @@ function Members() {
   return (
     <div className="p-10 pl-8 pr-8 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
       {/* Header */}
-      <h2 className="text-3xl font-bold text-white mb-6 text-center"> Manage Teams and Members</h2>
+      <h2 className="text-3xl font-bold text-white mb-6 text-center">
+        {" "}
+        Manage Teams and Members
+      </h2>
 
       {/* Update Team Button */}
       <div className="text-right mb-4">
@@ -85,7 +87,9 @@ function Members() {
 
       {/* Add New Team Section */}
       <div className="bg-slate-300 shadow-sm rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-slate-700">Add a New Team</h2>
+        <h2 className="text-xl font-semibold mb-4 text-slate-700">
+          Add a New Team
+        </h2>
         <div className="flex flex-col sm:flex-row sm:space-x-2 items-center">
           <input
             type="text"
@@ -186,7 +190,9 @@ function Members() {
 
       {/* Teams and Members List */}
       <div>
-        <h2 className="text-xl font-semibold mb-4 text-white">Teams and Members</h2>
+        <h2 className="text-xl font-semibold mb-4 text-white">
+          Teams and Members
+        </h2>
         {teams.length === 0 ? (
           <p className="text-white">No teams added yet.</p>
         ) : (
@@ -196,7 +202,9 @@ function Members() {
                 key={index}
                 className="bg-white shadow-sm rounded-lg p-4 hover:shadow-lg transition duration-200"
               >
-                <h3 className="text-lg font-semibold text-gray-800">{team.name}</h3>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {team.name}
+                </h3>
                 {team.members.length === 0 ? (
                   <p className="text-gray-600 text-sm">No members added yet.</p>
                 ) : (
@@ -209,9 +217,15 @@ function Members() {
                           className="w-12 h-12 rounded-full object-cover"
                         />
                         <div>
-                          <p className="font-semibold text-gray-800 text-sm">{member.name}</p>
-                          <p className="text-gray-600 text-xs">{member.email}</p>
-                          <p className="text-sm text-gray-500">{member.position}</p>
+                          <p className="font-semibold text-gray-800 text-sm">
+                            {member.name}
+                          </p>
+                          <p className="text-gray-600 text-xs">
+                            {member.email}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {member.position}
+                          </p>
                         </div>
                       </li>
                     ))}

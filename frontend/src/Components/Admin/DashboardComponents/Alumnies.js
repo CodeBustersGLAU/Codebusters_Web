@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { updateAlumnies } from "./../../../APIs/admin";
 function Alumnies() {
   const [alumnies, setAlumnies] = useState([
     {
@@ -17,7 +17,8 @@ function Alumnies() {
       name: "Jane Smith",
       year: 2019,
       email: "jane.smith@example.com",
-      about: "Expert in AI and data modeling, currently innovating at DataWorks.",
+      about:
+        "Expert in AI and data modeling, currently innovating at DataWorks.",
       profession: "Data Scientist",
       company: "DataWorks",
       photo: "https://via.placeholder.com/100",
@@ -50,13 +51,13 @@ function Alumnies() {
   };
 
   const handleSave = () => {
-    const updatedAlumnies = [...alumnies];
+    const updateAlumnies = [...alumnies];
     if (editIndex !== null) {
-      updatedAlumnies[editIndex] = formData;
+      updateAlumnies[editIndex] = formData;
     } else {
-      updatedAlumnies.push({ ...formData, id: alumnies.length + 1 });
+      updateAlumnies.push({ ...formData, id: alumnies.length + 1 });
     }
-    setAlumnies(updatedAlumnies);
+    setAlumnies(updateAlumnies);
     setEditIndex(null);
     setFormData({
       name: "",
@@ -69,9 +70,16 @@ function Alumnies() {
     });
   };
 
+  const update = async () => {
+    console.log(alumnies);
+    const res = await updateAlumnies(alumnies);
+  };
+
   return (
     <div className="p-4 sm:p-8 lg:p-10 pl-10 pr-10 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      <h2 className="text-3xl font-bold text-white mb-6 text-center">Alumni Management Dashboard</h2>
+      <h2 className="text-3xl font-bold text-white mb-6 text-center">
+        Alumni Management Dashboard
+      </h2>
       <div className="bg-slate-300 shadow-lg rounded-lg p-6 mt-10">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           {editIndex !== null ? "Edit Alumni Details" : "Add New Alumni"}
@@ -153,19 +161,38 @@ function Alumnies() {
         <table className="w-full text-left table-auto border-collapse">
           <thead className="bg-gray-300">
             <tr>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Photo</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Name</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Year</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Email</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">About</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Profession</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Company</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Actions</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Photo
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Name
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Year
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Email
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                About
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Profession
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Company
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {alumnies.map((alumni, index) => (
-              <tr key={alumni.id} className="hover:bg-gray-50 transition duration-300">
+              <tr
+                key={alumni.id}
+                className="hover:bg-gray-50 transition duration-300"
+              >
                 <td className="border-b p-3">
                   <img
                     src={alumni.photo}
@@ -198,6 +225,9 @@ function Alumnies() {
           </tbody>
         </table>
       </div>
+      <button onClick={() => update()} className="bg-red-400 p-4">
+        Update
+      </button>
     </div>
   );
 }

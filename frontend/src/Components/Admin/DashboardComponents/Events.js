@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { updateEvents } from "./../../../APIs/admin";
 function Events() {
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
@@ -78,8 +78,21 @@ function Events() {
   };
 
   const addEvent = () => {
-    const { eventName, startDate, endDate, eventDescription, eventImage, subEvents } = eventDetails;
-    if (!eventName || !startDate || !endDate || !eventDescription || !eventImage) {
+    const {
+      eventName,
+      startDate,
+      endDate,
+      eventDescription,
+      eventImage,
+      subEvents,
+    } = eventDetails;
+    if (
+      !eventName ||
+      !startDate ||
+      !endDate ||
+      !eventDescription ||
+      !eventImage
+    ) {
       alert("Please fill out all fields and choose an image.");
       return;
     }
@@ -127,6 +140,11 @@ function Events() {
     setEvents(events.filter((event) => event.id !== id));
   };
 
+  const update = async () => {
+    console.log(events);
+    const res = await updateEvents(events);
+  };
+
   return (
     <div className="p-10 pl-4 pr-4 md:pl-32 md:pr-32 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
       {/* Header */}
@@ -147,30 +165,43 @@ function Events() {
             placeholder="Event Name"
             value={eventDetails.eventName}
             onChange={(e) =>
-              setEventDetails((prev) => ({ ...prev, eventName: e.target.value }))
+              setEventDetails((prev) => ({
+                ...prev,
+                eventName: e.target.value,
+              }))
             }
             className="p-3 border border-gray-300 rounded-lg w-full"
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Start Date
+            </label>
             <input
               type="date"
               value={eventDetails.startDate}
               onChange={(e) =>
-                setEventDetails((prev) => ({ ...prev, startDate: e.target.value }))
+                setEventDetails((prev) => ({
+                  ...prev,
+                  startDate: e.target.value,
+                }))
               }
               className="p-3 border border-gray-300 rounded-lg w-full"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              End Date
+            </label>
             <input
               type="date"
               value={eventDetails.endDate}
               onChange={(e) =>
-                setEventDetails((prev) => ({ ...prev, endDate: e.target.value }))
+                setEventDetails((prev) => ({
+                  ...prev,
+                  endDate: e.target.value,
+                }))
               }
               className="p-3 border border-gray-300 rounded-lg w-full"
             />
@@ -180,7 +211,10 @@ function Events() {
             placeholder="Event Description"
             value={eventDetails.eventDescription}
             onChange={(e) =>
-              setEventDetails((prev) => ({ ...prev, eventDescription: e.target.value }))
+              setEventDetails((prev) => ({
+                ...prev,
+                eventDescription: e.target.value,
+              }))
             }
             className="p-3 border border-gray-300 rounded-lg w-full col-span-full"
           />
@@ -250,7 +284,10 @@ function Events() {
               placeholder="Sub-Event Description"
               value={newSubEvent.description}
               onChange={(e) =>
-                setNewSubEvent((prev) => ({ ...prev, description: e.target.value }))
+                setNewSubEvent((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
               }
               className="p-3 border border-gray-300 rounded-lg w-full col-span-full"
             />
@@ -292,7 +329,9 @@ function Events() {
 
       {/* Event List */}
       <div>
-        <h2 className="text-3xl font-semibold text-gray-200 mb-6">Event List</h2>
+        <h2 className="text-3xl font-semibold text-gray-200 mb-6">
+          Event List
+        </h2>
         {events.length === 0 ? (
           <p className="text-gray-100">No events added yet.</p>
         ) : (
@@ -343,6 +382,9 @@ function Events() {
           </div>
         )}
       </div>
+      <button onClick={() => update()} className="bg-red-300 p-4">
+        Update Data
+      </button>
     </div>
   );
 }
