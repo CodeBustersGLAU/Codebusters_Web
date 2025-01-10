@@ -54,7 +54,7 @@ function PastEvents() {
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-12 lg:px-20">
         <div className="flex justify-center items-center">
         <motion.h2
-          className="text-4xl md:text-5xl font-bold text-center text-white mb-12 mt-12 cursor-pointer p-2"
+          className="text-6xl sm:text-5xl font-bold text-center mb-10 p-4 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}

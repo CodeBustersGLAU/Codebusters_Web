@@ -1,8 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
+import { useNavigate } from "react-router-dom";
 
 function UpcomingEventCard({ event }) {
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => {
+    alert("hello");
+    navigate(`/RegisterEvent/${event.id}`); 
+    
+  };
+
   return (
     <Tilt
       options={{ max: 25, scale: 1.05, speed: 400 }}
@@ -15,7 +24,7 @@ function UpcomingEventCard({ event }) {
         transition={{ duration: 0.8 }}
         style={{
           boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-          minHeight: "30px", 
+          minHeight: "30px",
         }}
       >
         <motion.h3
@@ -34,7 +43,6 @@ function UpcomingEventCard({ event }) {
         >
           {event.description}
         </motion.p>
-
         <div className="grid grid-cols-3 gap-2 mt-4 sm:mt-6">
           {event.images.map((image, index) => (
             <motion.img
@@ -48,6 +56,13 @@ function UpcomingEventCard({ event }) {
             />
           ))}
         </div>
+        <button
+  className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold text-sm sm:text-base focus:outline-none relative overflow-hidden"
+  onClick={handleRegisterClick}
+>
+  <span className="relative z-10">Register Now</span>
+</button>
+
 
         <motion.div
           className="absolute inset-0 border-2 border-transparent rounded-lg hover:border-blue-200 transition-all duration-300 ease-in-out"

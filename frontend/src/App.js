@@ -12,6 +12,7 @@ import UpcomingEvents from "./Components/User/UpcomingEvents";
 import JoinUs from "./Components/User/JoinUs";
 import LogIn from "./Components/Admin/Auth";
 import Dashboard from "./Components/Admin/Dashboard";
+import EventRegister from "./Components/User/EventRegister";  
 function App() {
   return (
     <Router>
@@ -90,6 +91,14 @@ function App() {
                 </>
               }
             />
+            <Route path="/RegisterEvent/:eventId" element={
+              <>
+              <Header></Header>
+              <EventRegister />
+              <Footer></Footer>
+              </>
+              } 
+              />
             <Route
               path="/login"
               element={

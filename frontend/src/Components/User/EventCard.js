@@ -4,8 +4,6 @@ import { Tilt } from "react-tilt";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 function EventCard({ event, onClick }) {
   const [imagesLoaded, setImagesLoaded] = useState(false);
-
-  // Handle image load event
   const handleImageLoad = () => {
     setImagesLoaded(true);
   };
@@ -66,7 +64,7 @@ function EventCard({ event, onClick }) {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.6 }}
-              onLoad={handleImageLoad} // Set loading state to false when image is loaded
+              onLoad={handleImageLoad}
             />
           ))}
         </div>
