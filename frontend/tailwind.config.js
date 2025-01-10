@@ -7,6 +7,7 @@ module.exports = {
         playfair: ["Playfair Display", "serif"],
         rubik: ["Rubik", "sans-serif"],
         dosis: ["Dosis", "sans-serif"],
+        dosis1: ["Dosis", "serif"],
       },
       animation: {
         flip: "flip 0.7s ease-in-out", // Flip animation with 0.7s duration

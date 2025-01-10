@@ -5,16 +5,16 @@ import { Tilt } from "react-tilt";
 function AlumniCard({ name, batch, email, profilePicture, bio }) {
   return (
     <Tilt
-      options={{ max: 15, scale: 1.05, speed: 400 }}
-      className="tilt-card mx-auto"
-    >
+    options={{ max: 20, scale: 1.1, speed: 400 }}
+    className="tilt-card mx-auto transition-transform duration-500 ease-out"
+  >
       <motion.div
-        className="flex flex-col items-center bg-gradient-to-br from-blue-700 via-gray-300 to-gray-600 rounded-lg shadow-lg p-6 w-64 cursor-pointer transition-all duration-300 relative"
+        className="flex flex-col items-center bg-slate-800 bg-opacity-30 rounded-lg shadow-md p-6 w-64 cursor-pointer transition-all duration-300 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{
-          boxShadow: "0 0 10px rgba(29, 78, 216, 0.7)", // Glowing shadow
+          boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
         }}
       >
         <motion.img
@@ -45,16 +45,19 @@ function AlumniCard({ name, batch, email, profilePicture, bio }) {
 
         <motion.a
           href={`mailto:${email}`}
-          className="text-blue-500 text-sm mt-2"
+          className="text-blue-300 text-sm mt-2 p-2 rounded-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
+          style={{
+            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+          }}
         >
           {email}
         </motion.a>
 
         <motion.p
-          className="text-gray-600 text-sm mt-4 text-center"
+          className="text-gray-200 text-sm mt-4 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}

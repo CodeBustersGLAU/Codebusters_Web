@@ -1,14 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
 const EventDetails = ({ event }) => {
   const navigate = useNavigate();
-
   const handleBackClick = () => {
     navigate("/past-events");
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
       <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-3xl">
@@ -46,7 +43,7 @@ const EventDetails = ({ event }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-        >
+          >
           Back to Events
         </motion.button>
       </div>
