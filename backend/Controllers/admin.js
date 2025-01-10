@@ -1,5 +1,4 @@
 import Codebusters from "./../Models/club.js";
-
 export const updateTeam = async (req, res) => {
   try {
     const allMembers = req.body

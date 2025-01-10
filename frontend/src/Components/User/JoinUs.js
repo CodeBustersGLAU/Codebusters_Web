@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const JoinUs = () => {
   const [hiring, setHiring] = useState(true);
-
+  // const hiring=true;
   return (
     <div className="relative">
       <ParticlesComponent />
