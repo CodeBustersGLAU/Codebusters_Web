@@ -51,9 +51,9 @@ function Header() {
         onClick={toggleMenu}
       >
         {isMenuOpen ? (
-          <span className="text-3xl">X</span>
+          <span className="text-4xl">X</span>
         ) : (
-          <span className="text-3xl">☰</span>
+          <span className="text-4xl">☰</span>
         )}
       </button>
 
@@ -64,28 +64,35 @@ function Header() {
         } absolute top-16 left-0 w-full bg-gray-900 text-slate-300 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
       >
         <Link to="/team-members">
-          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+        <button
+  className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300"
+  onClick={() => setIsMenuOpen(false)}
+>
             Our Team
           </button>
         </Link>
-        <Link to="/Join-us">
-          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+        <Link to="/joinUs">
+          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300"
+          onClick={() => setIsMenuOpen(false)}>
             Join Us
           </button>
         </Link>
         
-        <Link to="/Future-events">
-          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+        <Link to="/UpcomingEvents">
+          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300"
+          onClick={() => setIsMenuOpen(false)}>
             Future Events
           </button>
         </Link>
         <Link to="/past-events">
-          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300"
+          onClick={() => setIsMenuOpen(false)}>
             Highlights
           </button>
         </Link>
         <Link to="/Alumni">
-          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300">
+          <button className="w-full py-2 hover:bg-blue-300 rounded-md transition-all duration-300"
+          onClick={() => setIsMenuOpen(false)}>
             Alumnies
           </button>
         </Link>

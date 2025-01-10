@@ -22,7 +22,7 @@ function App() {
               path="/"
               element={
                 <>
-                  <Header></Header>
+                  <Header/>
                   <Homepage></Homepage>
                   <Footer></Footer>
                 </>

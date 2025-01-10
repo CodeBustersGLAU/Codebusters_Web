@@ -18,6 +18,9 @@ module.exports = {
           "50%": { transform: "rotateY(180deg)" }, // Rotate to 180 degrees (flipping)
           "100%": { transform: "rotateY(0deg)" }, // End back at 0 degrees (no rotation)
         },
+        colors: {
+          customGray: '#1a1a1a',
+        },
       },
     },
   },
