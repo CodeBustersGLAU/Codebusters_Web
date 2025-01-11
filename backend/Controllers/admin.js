@@ -2,10 +2,9 @@ import Codebusters from "./../Models/club.js";
 
 export const login = async (req, res) => {
   try {
-    let club = await Codebusters.findOne({ name: "Codebusters" });
-    console.log(club);
+    let club = await Codebusters.findOne({ name: req.body.name });
     if (!club)
-      return res.status(404).json({ message: "You are not authorized" });
+      return res.status(201).json({ message: "You are not authorized" });
     if (club.password == req.body.password)
       return res.status(200).json({ message: "Logged in successfully" });
     else return res.status(201).json({ message: "Wrong password" });
@@ -34,9 +33,9 @@ export const updateTeam = async (req, res) => {
     await club.save();
     return res
       .status(200)
-      .json({ message: "Members updated", members: allMembers });
+      .json({ message: "Members updated ✅", members: allMembers });
   } catch (error) {
-    console.error("Error updating members:", error);
+    // console.error("Error updating members:", error);
     return res.status(500).json({ message: "An error occurred" });
   }
 };
@@ -70,7 +69,7 @@ export const updateEvents = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Events updated", events: allEvents });
+      .json({ message: "Events updated ✅", events: allEvents });
   } catch (error) {
     console.error("Error updating events:", error);
     return res.status(500).json({ message: "An error occurred" });
@@ -100,7 +99,7 @@ export const updateAlumnies = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Alumnies updated", alumnies: allAlumnies });
+      .json({ message: "Alumnies updated ✅", alumnies: allAlumnies });
   } catch (error) {
     console.error("Error updating alumnies:", error);
     return res.status(500).json({ message: "An error occurred" });
@@ -117,7 +116,9 @@ export const updateHighlights = async (req, res) => {
     club.highlights = req.body;
     await club.save();
 
-    return res.status(200).json({ message: "Highlights updated successfully" });
+    return res
+      .status(200)
+      .json({ message: "Highlights updated successfully ✅" });
   } catch (error) {
     return res.status(500).json({ message: "Some error occurred" });
   }

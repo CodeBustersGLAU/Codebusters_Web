@@ -22,7 +22,7 @@ function Members() {
   const handleTeamUpdate = async () => {
     try {
       let res = await updateTeam(teams);
-      console.log(res);
+      alert(res.message || "Some error occured");
     } catch (error) {
       console.error("Failed to update team:", error);
     }

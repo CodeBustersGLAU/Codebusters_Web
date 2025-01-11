@@ -76,8 +76,8 @@ function Highlights() {
   };
 
   const update = async () => {
-    console.log(events);
     const res = await updateHighlights(events);
+    alert(res.message || "Some error occured");
   };
 
   return (

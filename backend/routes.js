@@ -5,6 +5,7 @@ import { updateTeam } from "./Controllers/admin.js";
 import { updateEvents } from "./Controllers/admin.js";
 import { updateAlumnies } from "./Controllers/admin.js";
 import { updateHighlights } from "./Controllers/admin.js";
+import { getClubData } from "./Controllers/public.js";
 
 const route = express.Router();
 
@@ -13,5 +14,6 @@ route.post("/updateTeam", updateTeam);
 route.post("/updateEvents", updateEvents);
 route.post("/updateAlumnies", updateAlumnies);
 route.post("/updateHighlights", updateHighlights);
+route.post("/getClubData", getClubData);
 
 export default route;

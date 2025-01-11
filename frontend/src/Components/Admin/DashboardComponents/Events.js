@@ -141,8 +141,8 @@ function Events() {
   };
 
   const update = async () => {
-    console.log(events);
     const res = await updateEvents(events);
+    alert(res.message || "Some error occured");
   };
 
   return (

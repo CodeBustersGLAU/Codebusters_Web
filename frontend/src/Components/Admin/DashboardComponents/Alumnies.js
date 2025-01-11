@@ -71,8 +71,8 @@ function Alumnies() {
   };
 
   const update = async () => {
-    console.log(alumnies);
     const res = await updateAlumnies(alumnies);
+    alert(res.message || "Some error occured");
   };
 
   return (

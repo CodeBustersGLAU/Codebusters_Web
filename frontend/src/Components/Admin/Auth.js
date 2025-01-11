@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import ParticlesComponent from "../User/Particles";
 import { useNavigate } from "react-router-dom";
 import { login } from "./../../APIs/admin";
+import { useUserContext } from "../../context";
 function Auth() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUserContext();
   const handleLogin = async () => {
-    let res = await login({ name: name, passowrd: password });
-    console.log(res);
+    let res = await login({ name: name, password: password });
+    if (res.status == 200) {
+      setUser({ name: name, passowrd: "password" });
+      navigate("/admin/dashboard");
+    } else {
+      alert(res.data.message);
+    }
   };
   return (
     <div className="relative">

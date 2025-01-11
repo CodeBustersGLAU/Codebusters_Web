@@ -18,13 +18,15 @@ import Mohit from "./../../Assets/Profile pictures/Mohit.jpg";
 import SpectraImage2 from "./../../Assets/Spectra3.0/DSC_6640 (13).jpg";
 import Jatin from "./../../Assets/Profile pictures/jatin-profile-picture-crop1.ccabd51028d488edc02f.png";
 import ParticlesComponent from "./ParticlesTwo";
+import { useUserContext } from "../../context";
+
 const TeamMember = ({ title, name, imgSrc }) => (
   <motion.div
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8 }}
     style={{
-      cursor: "pointer"
+      cursor: "pointer",
     }}
   >
     <Tilt
@@ -63,23 +65,26 @@ const AssociatesSection = ({ title, members }) => (
   </div>
 );
 const TeamMembers = () => {
+  const { club } = useUserContext();
+  console.log(club);
+
   return (
     <div className="relative">
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
         <div className=" flex items-center justify-center mt-16">
-                        <motion.h2
-                          className="text-6xl font-bold text-center mb-16 mt-8 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
-                          initial={{ opacity: 0, y: -40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                          style={{
-                            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-                          }}
-                        >
-                          Our Team
-                        </motion.h2>
-                        </div>
+          <motion.h2
+            className="text-6xl font-bold text-center mb-16 mt-8 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+            }}
+          >
+            Our Team
+          </motion.h2>
+        </div>
         <div className="team-member-wrapper">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -177,7 +182,7 @@ const TeamMembers = () => {
           </div>
 
           <div>
-          <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -207,7 +212,7 @@ const TeamMembers = () => {
           </div>
 
           <div>
-          <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -244,7 +249,7 @@ const TeamMembers = () => {
           </div>
 
           <div>
-          <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -281,7 +286,7 @@ const TeamMembers = () => {
           </div>
 
           <div>
-          <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
