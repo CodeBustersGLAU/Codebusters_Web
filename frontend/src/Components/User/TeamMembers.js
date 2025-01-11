@@ -23,6 +23,9 @@ const TeamMember = ({ title, name, imgSrc }) => (
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8 }}
+    style={{
+      cursor: "pointer"
+    }}
   >
     <Tilt
       options={{ max: 16, scale: 1.1, speed: 400 }}
@@ -64,9 +67,19 @@ const TeamMembers = () => {
     <div className="relative">
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <h2 className="text-6xl font-bold text-center mb-12 mt-6 font-dosis text-white">
-          Our Team
-        </h2>
+        <div className=" flex items-center justify-center mt-16">
+                        <motion.h2
+                          className="text-6xl font-bold text-center mb-16 mt-8 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+                          initial={{ opacity: 0, y: -40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                          style={{
+                            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+                          }}
+                        >
+                          Our Team
+                        </motion.h2>
+                        </div>
         <div className="team-member-wrapper">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
