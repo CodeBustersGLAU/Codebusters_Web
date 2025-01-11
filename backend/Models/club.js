@@ -85,6 +85,11 @@ const clubSchema = new mongoose.Schema({
   name: {
     type: String,
     default: "Codebusters",
+    unique: true,
+  },
+  password: {
+    type: String,
+    default: "xyz",
   },
   members: {
     type: [memberSchema],

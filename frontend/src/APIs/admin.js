@@ -1,5 +1,15 @@
 import axios from "axios";
 const URL = "http://localhost:8000";
+
+export const login = async (data) => {
+  try {
+    let res = await axios.post(`${URL}/login`, data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const updateTeam = async (data) => {
   try {
     let res = await axios.post(`${URL}/updateTeam`, data);

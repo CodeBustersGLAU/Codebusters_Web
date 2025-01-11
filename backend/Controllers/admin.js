@@ -1,4 +1,19 @@
 import Codebusters from "./../Models/club.js";
+
+export const login = async (req, res) => {
+  try {
+    let club = await Codebusters.findOne({ name: "Codebusters" });
+    console.log(club);
+    if (!club)
+      return res.status(404).json({ message: "You are not authorized" });
+    if (club.password == req.body.password)
+      return res.status(200).json({ message: "Logged in successfully" });
+    else return res.status(201).json({ message: "Wrong password" });
+  } catch (error) {
+    return res.status(500).json({ message: "Authentication failed" });
+  }
+};
+
 export const updateTeam = async (req, res) => {
   try {
     const allMembers = req.body
@@ -28,8 +43,6 @@ export const updateTeam = async (req, res) => {
 
 export const updateEvents = async (req, res) => {
   try {
-    console.log(req.body);
-
     const allEvents = req.body.map((event) => ({
       eventName: event.eventName,
       startDate: event.startDate,
@@ -66,8 +79,6 @@ export const updateEvents = async (req, res) => {
 
 export const updateAlumnies = async (req, res) => {
   try {
-    console.log(req.body);
-
     const allAlumnies = req.body.map((alumnie) => ({
       id: alumnie.id,
       name: alumnie.name,
