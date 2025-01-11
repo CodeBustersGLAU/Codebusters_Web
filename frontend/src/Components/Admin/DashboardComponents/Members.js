@@ -77,12 +77,13 @@ function Members() {
 
       {/* Update Team Button */}
       <div className="text-right mb-4">
-        <button
-          onClick={handleTeamUpdate}
-          className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        >
-          Update Team
-        </button>
+      <button
+  onClick={handleTeamUpdate}
+  className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
+>
+  Update Team
+</button>
+
       </div>
 
       {/* Add New Team Section */}
