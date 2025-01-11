@@ -384,9 +384,10 @@ function Events() {
       </div>
       <button
   onClick={() => update()}
-  className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
+  className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-400 ease-in-out"
 >
   Update Data
+
 </button>
 
     </div>
