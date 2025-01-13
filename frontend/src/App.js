@@ -7,7 +7,6 @@ import PastEvents from "./Components/User/PastEvents";
 import EventDetails from "./Components/User/EventDetails";
 import TeamMembers from "./Components/User/TeamMembers";
 import AlumniList from "./Components/User/Alumni";
-import Spectra3 from "./Components/User/Event/Spectra3";
 import UpcomingEvents from "./Components/User/UpcomingEvents";
 import JoinUs from "./Components/User/JoinUs";
 import LogIn from "./Components/Admin/Auth";
@@ -70,7 +69,7 @@ function App() {
                 </>
               }
             ></Route>
-            <Route path="/past-events/:id" element={<Spectra3 />} />
+            <Route path="/past-events/:id" element={<EventDetails />} />
             <Route
               path="/UpcomingEvents"
               element={

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-function EventCard({ event, onClick }) {
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+import LoadingAnimation from './LoadingAnimation';
+function EventCard({ event,   onClick }) {
+  const [loading, setLoading] = useState(true);
   const handleImageLoad = () => {
-    setImagesLoaded(true);
+    setLoading(false);
   };
-
   return (
     <Tilt
       options={{ max: 25, scale: 1.05, speed: 400 }}
@@ -25,7 +24,7 @@ function EventCard({ event, onClick }) {
         }}
       >
         <motion.h3
-          className="text-3xl sm:text-2xl font-semibold text-gray-900"
+          className="text-3xl sm:text-2xl font-semibold"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -34,41 +33,30 @@ function EventCard({ event, onClick }) {
         </motion.h3>
 
         <motion.p
-          className="text-gray-500 text-xs sm:text-sm text-center mt-2"
+          className="text-slate-200 text-xs sm:text-sm text-center mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
           {event.description}
         </motion.p>
-
-        {/* Lottie loader animation while images are loading */}
-        {!imagesLoaded && (
-          <div className="absolute inset-0 flex justify-center items-center bg-slate-800 bg-opacity-50 rounded-lg z-10">
-            <DotLottieReact
-              src="https://lottie.host/fafe3273-ccc7-4a0e-a027-80ad253344c5/8nQjFoScrB.lottie"
-              loop
-              autoplay
-              style={{ width: "60px", height: "60px" }}
-            />
-          </div>
-        )}
-
         <div className="grid grid-cols-2 gap-3 mt-6 sm:mt-8">
           {event.images.slice(0, 4).map((image, index) => (
-            <motion.img
-              key={index}
-              src={image}
-              alt={`Event Image ${index + 1}`}
-              className="w-40 h-36 sm:w-40 sm:h-36 rounded-md object-cover"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6 }}
-              onLoad={handleImageLoad}
-            />
+            <div key={index} className="relative">
+              {loading && <LoadingAnimation />}
+              <motion.img
+                src={image}
+                alt={`Event Image ${index + 1}`}
+                className="w-40 h-36 sm:w-40 sm:h-36 rounded-md object-cover"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.6 }}
+                onLoad={handleImageLoad}
+                style={{ display: loading ? "none" : "block" }}
+              />
+            </div>
           ))}
         </div>
-
         <motion.div
           className="absolute inset-0 border-2 border-transparent rounded-lg hover:border-blue-200 transition-all duration-300 ease-in-out"
         ></motion.div>

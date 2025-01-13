@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ParticlesComponent from "./Particles";
 import CB from "./../../Assets/Logo/nobgCB.png";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -6,6 +6,16 @@ import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Tilt } from "react-tilt";
 function Homepage() {
+  const [logoLoading, setLogoLoading] = useState(true);
+  const [featureLoading, setFeatureLoading] = useState([true, true, true]);
+
+  const handleFeatureLoad = (index) => {
+    setFeatureLoading((prev) => {
+      const newState = [...prev];
+      newState[index] = false;
+      return newState;
+    });
+  };
   return (
     <div className="relative">
       {/* Particles Background */}
@@ -55,12 +65,22 @@ function Homepage() {
             className="tilt-card mx-auto transition-transform duration-500 ease-out"
           >
             <div className="w-full flex items-center justify-center">
+            {logoLoading && (
+                <div className="relative w-[400px] h-[400px] rounded-full flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="absolute w-24 h-24 border-4 border-blue-500 rounded-full animate-pulseCircle"></div>
+                  <div className="absolute w-16 h-16 border-4 border-blue-400 rounded-full animate-pulseCircle [animation-delay:0.2s]"></div>
+                  <div className="absolute w-8 h-8 border-4 border-blue-300 rounded-full animate-pulseCircle [animation-delay:0.4s]"></div>
+                </div>
+              )}
               <img
                 src={CB}
                 alt="Codebusters Logo"
-                className="w-[400px] h-[400px] md:w-[400px] md:h-[400px] lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover animate-flip bg-black bg-opacity-50"
+                className={`w-[400px] h-[400px] md:w-[400px] md:h-[400px] lg:w-[400px] lg:h-[400px] rounded-full border-4 border-gray-300 shadow-lg object-cover bg-black bg-opacity-50 ${
+                  logoLoading ? "hidden" : "animate-flip"
+                }`}
+                onLoad={() => setLogoLoading(false)}
               />
-            </div>
+    </div>
           </Tilt>
         </section>
         <motion.section
@@ -189,11 +209,14 @@ function Homepage() {
                         }}
                         className="flex items-center hover:scale-105 transition-transform duration-300"
                       >
-                        <img
-                          src={value.imgSrc}
-                          alt="Icon"
-                          className="h-8 w-8 mr-3"
-                        />
+                      <img
+                    src={value.imgSrc}
+                    alt="Icon"
+                    className={`h-8 w-8 mr-3 ${
+                      featureLoading[index] ? "hidden" : "block"
+                    }`}
+                    onLoad={() => handleFeatureLoad(index)}
+                  />
                         <span>{value.text}</span>
                       </motion.li>
                     ))}

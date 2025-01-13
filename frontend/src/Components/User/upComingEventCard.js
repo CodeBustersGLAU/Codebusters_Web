@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
 import { useNavigate } from "react-router-dom";
+import LoadingAnimation from "./LoadingAnimation"; // You can import your loading animation component here
 
 function UpcomingEventCard({ event }) {
   const navigate = useNavigate();
+  const [loadingImages, setLoadingImages] = useState(
+    event.images.map(() => true) // Initially, set all images to be loading
+  );
+
+  const handleImageLoad = (index) => {
+    setLoadingImages((prevState) => {
+      const newState = [...prevState];
+      newState[index] = false; // Mark the image at index as loaded
+      return newState;
+    });
+  };
 
   const handleRegisterClick = () => {
-    alert("hello");
-    navigate(`/RegisterEvent/${event.id}`); 
-    
+    navigate(`/RegisterEvent/${event.id}`);
   };
 
   return (
@@ -43,26 +53,38 @@ function UpcomingEventCard({ event }) {
         >
           {event.description}
         </motion.p>
+
         <div className="grid grid-cols-3 gap-2 mt-4 sm:mt-6">
           {event.images.map((image, index) => (
-            <motion.img
+            <motion.div
               key={index}
-              src={image}
-              alt={`Event Image ${index + 1}`}
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-md object-cover"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.6 }}
-            />
+              className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-md overflow-hidden"
+            >
+              {loadingImages[index] ? (
+                <div className="absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50">
+                  <LoadingAnimation /> {/* Display loading animation */}
+                </div>
+              ) : (
+                <motion.img
+                  src={image}
+                  alt={`Event Image ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.6 }}
+                  onLoad={() => handleImageLoad(index)} // Mark image as loaded
+                />
+              )}
+            </motion.div>
           ))}
         </div>
-        <button
-  className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold text-sm sm:text-base focus:outline-none relative overflow-hidden"
-  onClick={handleRegisterClick}
->
-  <span className="relative z-10">Register Now</span>
-</button>
 
+        <button
+          className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold text-sm sm:text-base focus:outline-none relative overflow-hidden"
+          onClick={handleRegisterClick}
+        >
+          <span className="relative z-10">Register Now</span>
+        </button>
 
         <motion.div
           className="absolute inset-0 border-2 border-transparent rounded-lg hover:border-blue-200 transition-all duration-300 ease-in-out"

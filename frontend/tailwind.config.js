@@ -10,17 +10,22 @@ module.exports = {
         dosis1: ["Dosis", "serif"],
       },
       animation: {
-        flip: "flip 0.7s ease-in-out", // Flip animation with 0.7s duration
+        flip: "flip 0.7s ease-in-out", // Flip animation
+        pulseCircle: "pulseCircle 1.5s ease-in-out infinite", // Pulsing circle animation
       },
       keyframes: {
         flip: {
-          "0%": { transform: "rotateY(0deg)" }, // Start at 0 degrees (no rotation)
-          "50%": { transform: "rotateY(180deg)" }, // Rotate to 180 degrees (flipping)
-          "100%": { transform: "rotateY(0deg)" }, // End back at 0 degrees (no rotation)
+          "0%": { transform: "rotateY(0deg)" },
+          "50%": { transform: "rotateY(180deg)" },
+          "100%": { transform: "rotateY(0deg)" },
         },
-        colors: {
-          customGray: '#1a1a1a',
+        pulseCircle: {
+          "0%, 100%": { transform: "scale(1)", opacity: "1" },
+          "50%": { transform: "scale(1.2)", opacity: "0.5" },
         },
+      },
+      colors: {
+        customGray: "#1a1a1a",
       },
     },
   },

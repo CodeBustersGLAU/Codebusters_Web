@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
-
+import LoadingAnimation from './LoadingAnimation'; 
 function AlumniCard({ name, batch, email, profilePicture, bio }) {
+  const [loading, setLoading] = useState(true);
+  const handleImageLoad = () => {
+    setLoading(false);
+  };
   return (
     <Tilt
     options={{ max: 20, scale: 1.1, speed: 400 }}
@@ -17,15 +21,17 @@ function AlumniCard({ name, batch, email, profilePicture, bio }) {
           boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
         }}
       >
-        <motion.img
-          src={profilePicture}
-          alt={`${name}'s Profile`}
-          className="w-24 h-24 rounded-full object-cover mb-4"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.6 }}
-        />
-
+      {loading && <LoadingAnimation />}
+      <motion.img
+        src={profilePicture}
+        alt={`${name}'s Profile`}
+        className="w-24 h-24 rounded-full object-cover mb-4"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.6 }}
+        onLoad={handleImageLoad}
+        style={{ display: loading ? 'none' : 'block' }}
+      />
         <motion.h3
           className="text-xl font-semibold text-gray-900"
           initial={{ opacity: 0 }}
