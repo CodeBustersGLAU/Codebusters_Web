@@ -2,7 +2,6 @@ import React from "react";
 
 const Modal_Member = ({ isOpen, onClose, member }) => {
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg w-96 transform transition-all duration-500 ease-in-out hover:scale-105 hover:rotate-2">

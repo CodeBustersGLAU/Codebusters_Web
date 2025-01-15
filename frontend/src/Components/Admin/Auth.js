@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import ParticlesComponent from "../User/Particles";
 import { useNavigate } from "react-router-dom";
+import { login } from "./../../APIs/admin";
+import { useUserContext } from "../../context";
 function Auth() {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUserContext();
   const handleLogin = async () => {
-    navigate("/admin/dashboard");
+    let res = await login({ name: name, password: password });
+    if (res.status == 200) {
+      setUser({ name: name, passowrd: "password" });
+      navigate("/admin/dashboard");
+    } else {
+      alert(res.data.message);
+    }
   };
   return (
     <div className="relative">
@@ -18,19 +27,20 @@ function Auth() {
             <h2 className="text-2xl font-bold text-center text-gray-800">
               Admin Login
             </h2>
-            <form className="mt-6">
+            <div className="mt-6">
               <div className="mb-4">
                 <label
-                  htmlFor="email"
+                  htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email
+                  Name
                 </label>
                 <input
-                  type="email"
-                  id="email"
+                  type="name"
+                  id="name"
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your email"
+                  placeholder="Enter your name"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="mb-4">
@@ -45,6 +55,7 @@ function Auth() {
                   id="password"
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -65,9 +76,9 @@ function Auth() {
                 className="w-full mt-6 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 onClick={handleLogin}
               >
-                Sign In
+                Login
               </button>
-            </form>
+            </div>
             <p className="mt-6 text-sm text-center text-gray-600">
               Don't have an account?{" "}
               <p

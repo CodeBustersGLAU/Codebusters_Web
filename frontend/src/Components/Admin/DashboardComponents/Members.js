@@ -1,96 +1,71 @@
 import React, { useState } from "react";
 import { updateTeam } from "./../../../APIs/admin";
+import { useUserContext } from "./../../../context";
 
 function Members() {
-  const [teams, setTeams] = useState([]);
+  const { club, setClub } = useUserContext();
+  const [team, setTeam] = useState(club?.team || []);
   const [newTeam, setNewTeam] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [memberDetails, setMemberDetails] = useState({
     name: "",
     email: "",
     position: "",
-    profilePic: null,
-    previewPic: null,
+    photo: "",
   });
 
   const addTeam = () => {
     if (newTeam.trim() === "") return;
-    setTeams([...teams, { name: newTeam, members: [] }]);
+    const updatedTeam = [...team, { name: newTeam, members: [] }];
+    setTeam(updatedTeam);
     setNewTeam("");
+    setClub({ ...club, team: updatedTeam });
   };
-
-  const handleTeamUpdate = async () => {
-    try {
-      let res = await updateTeam(teams);
-      console.log(res);
-    } catch (error) {
-      console.error("Failed to update team:", error);
-    }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setMemberDetails((prev) => ({
-          ...prev,
-          profilePic: file,
-          previewPic: event.target.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
+  
   const addMember = () => {
-    const { name, email, position, profilePic } = memberDetails;
-
-    // Check for all necessary fields
-    if (!selectedTeam || !name || !email || !position || !profilePic) {
-      alert("Please fill out all fields and select an image.");
+    const { name, email, position, photo } = memberDetails;
+    if (!selectedTeam || !name || !email || !position || !photo) {
+      alert("Please fill in all fields.");
       return;
     }
-
-    const updatedTeams = teams.map((team) =>
-      team.name === selectedTeam
-        ? { ...team, members: [...team.members, memberDetails] }
-        : team
-    );
-    setTeams(updatedTeams);
-    setMemberDetails({
-      name: "",
-      email: "",
-      position: "",
-      profilePic: null,
-      previewPic: null,
+  
+    const updatedTeam = team.map((t) => {
+      if (t.name === selectedTeam) {
+        return {
+          ...t,
+          members: [...t.members, { name, email, position, photo }],
+        };
+      }
+      return t;
     });
+  
+    setTeam(updatedTeam);
+    setClub({ ...club, team: updatedTeam });
+    setMemberDetails({ name: "", email: "", position: "", photo: "" });
   };
-
+  
+  const handleTeamUpdate = async () => {
+    try {
+      const res = await updateTeam(team);
+      alert(res.message || "Some error occurred");
+    } catch (error) {
+      console.error("Failed to update team:", error);
+      alert("Failed to update team.");
+    }
+  };
   return (
     <div className="p-10 pl-8 pr-8 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      {/* Header */}
-      <h2 className="text-3xl font-bold text-white mb-6 text-center">
-        {" "}
-        Manage Teams and Members
-      </h2>
-
-      {/* Update Team Button */}
+      <h2 className="text-3xl font-bold text-white mb-6 text-center">Manage Teams and Members</h2>
       <div className="text-right mb-4">
-      <button
-  onClick={handleTeamUpdate}
-  className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
->
-  Update Team
-</button>
-
+        <button
+          onClick={handleTeamUpdate}
+          className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
+        >
+          Update Team
+        </button>
       </div>
-
-      {/* Add New Team Section */}
       <div className="bg-slate-300 shadow-sm rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-slate-700">
-          Add a New Team
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-slate-700">Add a New Team</h2>
         <div className="flex flex-col sm:flex-row sm:space-x-2 items-center">
           <input
             type="text"
@@ -107,8 +82,6 @@ function Members() {
           </button>
         </div>
       </div>
-
-      {/* Add Member Section */}
       <div className="bg-white shadow-sm rounded-lg p-4 mb-6">
         <h2 className="text-xl font-semibold mb-4">Add Member to a Team</h2>
         <select
@@ -117,7 +90,7 @@ function Members() {
           className="p-2 border border-gray-300 rounded-lg w-full mb-4 text-sm"
         >
           <option value="">Select Team</option>
-          {teams.map((team, index) => (
+          {team.map((team, index) => (
             <option key={index} value={team.name}>
               {team.name}
             </option>
@@ -155,30 +128,15 @@ function Members() {
             }
             className="p-2 border border-gray-300 rounded-lg w-full text-sm"
           />
-          <div>
-            <label
-              htmlFor="file-upload"
-              className="p-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition duration-200 text-sm"
-            >
-              Add Image
-            </label>
-
-            <input
-              type="file"
-              id="file-upload"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {memberDetails.previewPic && (
-              <img
-                src={memberDetails.previewPic}
-                alt="Preview"
-                className="w-20 h-20 rounded-full mt-2 object-cover border border-gray-300"
-              />
-            )}
-          </div>
+          <input
+            type="text"
+            placeholder="Member Photo URL"
+            value={memberDetails.photo}
+            onChange={(e) =>
+              setMemberDetails((prev) => ({ ...prev, photo: e.target.value }))
+            }
+            className="p-2 border border-gray-300 rounded-lg w-full text-sm"
+          />
         </div>
 
         <button
@@ -188,17 +146,13 @@ function Members() {
           Add Member
         </button>
       </div>
-
-      {/* Teams and Members List */}
       <div>
-        <h2 className="text-xl font-semibold mb-4 text-white">
-          Teams and Members
-        </h2>
-        {teams.length === 0 ? (
+        <h2 className="text-xl font-semibold mb-4 text-white">Teams and Members</h2>
+        {team.length === 0 ? (
           <p className="text-white">No teams added yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teams.map((team, index) => (
+            {team.map((team, index) => (
               <div
                 key={index}
                 className="bg-white shadow-sm rounded-lg p-4 hover:shadow-lg transition duration-200"
@@ -213,7 +167,7 @@ function Members() {
                     {team.members.map((member, i) => (
                       <li key={i} className="flex items-center space-x-3 mb-3">
                         <img
-                          src={member.previewPic}
+                          src={member.photo}
                           alt={member.name}
                           className="w-12 h-12 rounded-full object-cover"
                         />
