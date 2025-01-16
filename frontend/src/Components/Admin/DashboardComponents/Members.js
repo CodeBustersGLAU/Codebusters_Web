@@ -46,6 +46,7 @@ function Members() {
   
   const handleTeamUpdate = async () => {
     try {
+      console.log(team);
       const res = await updateTeam(team);
       alert(res.message || "Some error occurred");
     } catch (error) {

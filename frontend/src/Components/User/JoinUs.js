@@ -3,11 +3,7 @@ import ParticlesComponent from "./ParticlesTwo";
 import { motion } from "framer-motion";
 import { useUserContext } from "../../context";
 const JoinUs = () => {
-  const [hiring, setHiring] = useState(true);
   const { club } = useUserContext();
-  useEffect(() => {
-    setHiring(club.hire===true);
-  }, [club.hire]);
   return (
     <div className="relative">
       <ParticlesComponent />
@@ -23,7 +19,7 @@ const JoinUs = () => {
             Join Codebusters
           </motion.h2>
         </div>
-        {hiring ? (
+        {club?.hire==='true' ? (
           <>
             <div className="flex items-center justify-center text-center">
               <motion.p

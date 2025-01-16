@@ -1,30 +1,13 @@
 import mongoose from "mongoose";
-const Team = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  photo: {
-    type: String, 
-    required: true,
-  },
-  position: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true, 
-  },
-});
+
+
 const teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
   members: {
-    type: [Team],
+    type: [Object],
     default: [],
   },
 });

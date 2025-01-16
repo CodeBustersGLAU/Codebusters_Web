@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ParticlesComponent from "./ParticlesTwo";
 import LoadingAnimation from "./LoadingAnimation";
 import { useUserContext } from "../../context";
-const TeamMember = ({ title, name, imgSrc }) => (
+const TeamMember = ({ name, imgSrc,position,email }) => (
   <motion.div
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
@@ -18,12 +18,12 @@ const TeamMember = ({ title, name, imgSrc }) => (
       className="tilt-card mx-auto transition-transform duration-500 ease-out text-center"
     >
       <div
-        className="bg-slate-800 bg-opacity-30 rounded-lg p-5 rounded-xl shadow-lg w-64 mx-auto mb-20 transition-all duration-300 relative hover:border-2 hover:border-white"
+        className="bg-slate-800 bg-opacity-30 rounded-lg p-5 shadow-lg w-64 mx-auto mb-20 transition-all duration-300 relative hover:border-2 hover:border-white"
         style={{
           boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
         }}
       >
-        <h3 className="text-2xl font-semibold mb-4 text-white">{title}</h3>
+        <h3 className="text-md font-semibold mb-4 text-white ">[ {position} ]</h3>
         <img
           src={imgSrc}
           alt={name}
@@ -32,6 +32,8 @@ const TeamMember = ({ title, name, imgSrc }) => (
           onContextMenu={(e) => e.preventDefault()}
         />
         <p className="text-xl font-medium text-white mb-4">{name}</p>
+        <p className="text-[12px] font-medium text-white mb-4">{email}</p>
+
       </div>
     </Tilt>
   </motion.div>
@@ -59,7 +61,7 @@ else{
             Our Team
           </motion.h2>
         </div>
-        {club.map((team, idx) => (
+        {club.members.map((team, idx) => (
           <div key={idx} className="mb-8">
             <div className="flex justify-center items-center">
               <motion.h3
@@ -71,16 +73,18 @@ else{
                   boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
                 }}
               >
-                {team.team}
+                {team.name}
               </motion.h3>
             </div>
             <div className="flex flex-wrap justify-around gap-8">
               {team.members.map((member, idx) => (
                 <TeamMember
                   key={idx}
-                  title={member.post}
                   name={member.name}
                   imgSrc={member.photo}
+                  position={member.position}
+                  email={member.email}
+
                 />
               ))}
             </div>

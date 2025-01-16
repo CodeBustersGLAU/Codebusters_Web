@@ -12,29 +12,38 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Authentication failed" });
   }
 };
+
+
 export const updateTeam = async (req, res) => {
   try {
-    const allMembers = req.body.flatMap((team) =>
-      team.members.map((member) => ({
+    const inputTeams = req.body;
+
+    if (!Array.isArray(inputTeams) || inputTeams.length === 0) {
+      return res.status(400).json({ message: "Invalid or empty input data" });
+    }
+    const club = await Codebusters.findOne({ name: 'Codebusters' });
+    if (!club) {
+      return res.status(404).json({ message: "Club not found" });
+    }
+    const newTeams = inputTeams.map((team) => ({
+      name: team.name,
+      members: team.members.map((member) => ({
         name: member.name,
         email: member.email,
         position: member.position,
         photo: member.photo,
-        team: team.name,
-      }))
-    );
-
-    let club = await Codebusters.findOne({ name: 'Codebusters' });
-    if (!club) return res.status(404).json({ message: "Club not found" });
-    club.members = allMembers;
-    club.team = req.body;
+      })),
+    }));
+    club.members = newTeams;
+    console.log(club);
     await club.save();
 
-    return res.status(200).json({ message: "Members updated ✅", members: allMembers });
+    return res.status(200).json({ message: "Teams added successfully ✅", teams: club.teams });
   } catch (error) {
-    return res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: "An error occurred", error: error.message });
   }
 };
+
 
 export const updateEvents = async (req, res) => {
   try {
