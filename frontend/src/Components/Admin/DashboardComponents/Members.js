@@ -3,7 +3,7 @@ import { updateTeam } from "./../../../APIs/admin";
 import { useUserContext } from "./../../../context";
 
 function Members() {
-  const { club, setClub } = useUserContext();
+  const { club, setClub, user } = useUserContext();
   const [members, setMembers] = useState(club?.members || []);
   const [newTeam, setNewTeam] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -77,7 +77,11 @@ function Members() {
   // Update the backend with the latest members
   const handleTeamUpdate = async () => {
     try {
-      const res = await updateTeam(members);
+      const res = await updateTeam({
+        name: user.name,
+        password: user.password,
+        members: members,
+      });
       alert(res.message || "Team updated successfully!");
     } catch (error) {
       console.error("Failed to update team:", error);
@@ -101,7 +105,9 @@ function Members() {
 
       {/* Add New Team Section */}
       <div className="bg-slate-300 shadow-sm rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-slate-700">Add a New Team</h2>
+        <h2 className="text-xl font-semibold mb-4 text-slate-700">
+          Add a New Team
+        </h2>
         <div className="flex flex-col sm:flex-row sm:space-x-2 items-center">
           <input
             type="text"
@@ -190,7 +196,9 @@ function Members() {
 
       {/* Display Teams and Members */}
       <div>
-        <h2 className="text-xl font-semibold mb-4 text-white">Teams and Members</h2>
+        <h2 className="text-xl font-semibold mb-4 text-white">
+          Teams and Members
+        </h2>
         {members.length === 0 ? (
           <p className="text-white">No teams added yet.</p>
         ) : (
@@ -200,13 +208,18 @@ function Members() {
                 key={teamIndex}
                 className="bg-white shadow-sm rounded-lg p-4 hover:shadow-lg transition duration-200"
               >
-                <h3 className="text-lg font-semibold text-gray-800">{team.name}</h3>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {team.name}
+                </h3>
                 {team.members.length === 0 ? (
                   <p className="text-gray-600 text-sm">No members added yet.</p>
                 ) : (
                   <ul className="mt-3">
                     {team.members.map((member, memberIndex) => (
-                      <li key={memberIndex} className="flex items-center space-x-3 mb-3">
+                      <li
+                        key={memberIndex}
+                        className="flex items-center space-x-3 mb-3"
+                      >
                         <img
                           src={member.photo}
                           alt={member.name}
@@ -216,11 +229,17 @@ function Members() {
                           <p className="font-semibold text-gray-800 text-sm">
                             {member.name}
                           </p>
-                          <p className="text-gray-600 text-xs">{member.email}</p>
-                          <p className="text-sm text-gray-500">{member.position}</p>
+                          <p className="text-gray-600 text-xs">
+                            {member.email}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {member.position}
+                          </p>
                         </div>
                         <button
-                          onClick={() => startEditingMember(teamIndex, memberIndex)}
+                          onClick={() =>
+                            startEditingMember(teamIndex, memberIndex)
+                          }
                           className="ml-auto text-sm text-blue-600 underline"
                         >
                           Edit

@@ -11,7 +11,7 @@ function Auth() {
   const handleLogin = async () => {
     let res = await login({ name: name, password: password });
     if (res.status == 200) {
-      setUser({ name: name, passowrd: "password" });
+      setUser({ name: name, password: password });
       navigate("/admin/dashboard");
     } else {
       alert(res.data.message);

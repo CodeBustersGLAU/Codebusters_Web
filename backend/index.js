@@ -3,6 +3,8 @@ import Database from "./db.js";
 import Routes from "./routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
@@ -16,6 +18,6 @@ app.use("/", Routes);
 
 Database();
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Backend connected on http://localhost:8000");
 });

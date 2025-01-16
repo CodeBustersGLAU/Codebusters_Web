@@ -3,7 +3,7 @@ import { useUserContext } from "./../../../context";
 import { updateAlumnies } from "../../../APIs/admin";
 import LoadingAnimation from "./../../User/LoadingAnimation";
 function Alumnies() {
-  const { club } = useUserContext();
+  const { club, user } = useUserContext();
   const [alumnies, setAlumnies] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -60,7 +60,11 @@ function Alumnies() {
   };
 
   const update = async () => {
-    const res = await updateAlumnies(alumnies);
+    const res = await updateAlumnies({
+      name: user.name,
+      password: user.password,
+      alumnies: alumnies,
+    });
     alert(res.message || "Some error occurred");
   };
 
@@ -151,19 +155,38 @@ function Alumnies() {
         <table className="w-full text-left table-auto border-collapse">
           <thead className="bg-gray-300">
             <tr>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Photo</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Name</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Graduation Year</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Email</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">About</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Profession</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Company</th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">Actions</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Photo
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Name
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Graduation Year
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Email
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                About
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Profession
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Company
+              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {alumnies.map((alumni, index) => (
-              <tr key={alumni.id} className="hover:bg-gray-50 transition duration-300">
+              <tr
+                key={alumni.id}
+                className="hover:bg-gray-50 transition duration-300"
+              >
                 <td className="border-b p-3">
                   <img
                     src={alumni.photo}
@@ -172,7 +195,9 @@ function Alumnies() {
                   />
                 </td>
                 <td className="border-b p-3 text-sm">{alumni.name}</td>
-                <td className="border-b p-3 text-sm">{alumni.graduationYear}</td>
+                <td className="border-b p-3 text-sm">
+                  {alumni.graduationYear}
+                </td>
                 <td className="border-b p-3 text-sm">{alumni.email}</td>
                 <td className="border-b p-3 text-sm">{alumni.about}</td>
                 <td className="border-b p-3 text-sm">{alumni.profession}</td>

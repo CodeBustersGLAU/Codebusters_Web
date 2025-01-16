@@ -4,7 +4,7 @@ import { updateHighlights } from "../../../APIs/admin";
 import LoadingAnimation from "./../../User/LoadingAnimation";
 
 function Highlights() {
-  const { club } = useUserContext();
+  const { club, user } = useUserContext();
   const [events, setEvents] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -28,8 +28,8 @@ function Highlights() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name.startsWith('image')) {
-      const index = parseInt(name.split('-')[1], 10);
+    if (name.startsWith("image")) {
+      const index = parseInt(name.split("-")[1], 10);
       const updatedImages = [...formData.images];
       updatedImages[index] = value;
       setFormData({
@@ -84,7 +84,11 @@ function Highlights() {
   };
 
   const update = async () => {
-    const res = await updateHighlights(events);
+    const res = await updateHighlights({
+      name: user.name,
+      password: user.password,
+      highlights: events,
+    });
     alert(res.message || "Some error occurred");
   };
 
@@ -212,55 +216,55 @@ function Highlights() {
       </div>
 
       <div>
-      <h3 className="text-2xl font-semibold text-gray-200 mb-6">
-  Highlighted Events
-</h3>
-{events.length === 0 ? (
-  <p className="text-gray-100">No events added yet.</p>
-) : (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    {events.map((event) => (
-      <div
-        key={event.id}
-        className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300"
-      >
-        <h4 className="text-xl font-semibold text-gray-700 mb-2">
-          {event.title}
-        </h4>
-        <p className="text-gray-500 text-sm mb-4">
-          {event.date} - {event.endDate}
-        </p>
-        <p className="text-gray-700 mb-4">{event.description}</p>
-        {event.images.length > 0 && (
-          <div className="flex space-x-2 overflow-hidden">
-            {event.images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Event preview`}
-                className="w-20 h-20 object-contain rounded-md"
-              />
+        <h3 className="text-2xl font-semibold text-gray-200 mb-6">
+          Highlighted Events
+        </h3>
+        {events.length === 0 ? (
+          <p className="text-gray-100">No events added yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {events.map((event) => (
+              <div
+                key={event.id}
+                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300"
+              >
+                <h4 className="text-xl font-semibold text-gray-700 mb-2">
+                  {event.title}
+                </h4>
+                <p className="text-gray-500 text-sm mb-4">
+                  {event.date} - {event.endDate}
+                </p>
+                <p className="text-gray-700 mb-4">{event.description}</p>
+                {event.images.length > 0 && (
+                  <div className="flex space-x-2 overflow-hidden">
+                    {event.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Event preview`}
+                        className="w-20 h-20 object-contain rounded-md"
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="mt-4 flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(events.indexOf(event))}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(events.indexOf(event))}
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         )}
-        <div className="mt-4 flex space-x-2">
-          <button
-            onClick={() => handleEdit(events.indexOf(event))}
-            className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDelete(events.indexOf(event))}
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-)}
       </div>
 
       <button

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const teamSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -30,9 +29,9 @@ const eventSchema = new mongoose.Schema({
     default: [],
     registrationLink: "",
   },
-  registrationLink:{
+  registrationLink: {
     type: String,
-  }
+  },
 });
 const alumnieSchema = new mongoose.Schema({
   name: {
@@ -103,10 +102,10 @@ const clubSchema = new mongoose.Schema({
     type: [highlightSchema],
     default: [],
   },
-  hire:{
+  hire: {
     type: String,
     default: "nothiring",
-  }
+  },
 });
 
 const Club = mongoose.model("club", clubSchema);

@@ -4,8 +4,8 @@ import { updateEvents } from "../../../APIs/admin";
 import LoadingAnimation from "./../../User/LoadingAnimation";
 
 function Events() {
-  const { club, setClub } = useUserContext();
-  
+  const { club, setClub, user } = useUserContext();
+
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
     startDate: "",
@@ -38,9 +38,16 @@ function Events() {
   };
 
   const addEvent = () => {
-    const { eventName, startDate, endDate, description, eventImages, registrationLink } = eventDetails;
+    const {
+      eventName,
+      startDate,
+      endDate,
+      description,
+      eventImages,
+      registrationLink,
+    } = eventDetails;
     const filledImages = eventImages.filter((link) => link);
-    
+
     if (
       !eventName ||
       !startDate ||
@@ -49,7 +56,9 @@ function Events() {
       filledImages.length < 4 ||
       !registrationLink
     ) {
-      alert("Please fill out all fields and provide at least 4 image URLs and registration link.");
+      alert(
+        "Please fill out all fields and provide at least 4 image URLs and registration link."
+      );
       return;
     }
 
@@ -98,7 +107,12 @@ function Events() {
   };
 
   const update = async () => {
-    const res = await updateEvents(events);
+    console.log(events);
+    const res = await updateEvents({
+      name: user.name,
+      password: user.password,
+      events: events,
+    });
     alert(res.message || "Some error occurred");
   };
 
@@ -192,17 +206,17 @@ function Events() {
         </div>
         <label> Registration Link</label>
         <input
-            type="text"
-            placeholder="Registration Link"
-            value={eventDetails.registrationLink}
-            onChange={(e) =>
-              setEventDetails((prev) => ({
-                ...prev,
-                registrationLink: e.target.value,
-              }))
-            }
-            className="p-3 border border-gray-300 rounded-lg w-full"
-          />
+          type="text"
+          placeholder="Registration Link"
+          value={eventDetails.registrationLink}
+          onChange={(e) =>
+            setEventDetails((prev) => ({
+              ...prev,
+              registrationLink: e.target.value,
+            }))
+          }
+          className="p-3 border border-gray-300 rounded-lg w-full"
+        />
         <div className="mt-6 flex justify-between">
           <button
             onClick={addEvent}
@@ -228,7 +242,10 @@ function Events() {
 
         <div>
           {events.map((event) => (
-            <div key={event.id} className="bg-white rounded-lg shadow-lg p-4 mb-4">
+            <div
+              key={event.id}
+              className="bg-white rounded-lg shadow-lg p-4 mb-4"
+            >
               <h4 className="text-xl font-semibold">{event.eventName}</h4>
               <p>{event.description}</p>
               <div className="flex mt-4 justify-between">

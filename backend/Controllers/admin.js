@@ -1,31 +1,40 @@
 import Codebusters from "./../Models/club.js";
-
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+dotenv.config();
+const saltRounds = parseInt(process.env.SALTED_ROUNDS, 10);
 export const login = async (req, res) => {
   try {
-    let club = await Codebusters.findOne({ name: req.body.name });
-    if (!club)
-      return res.status(201).json({ message: "You are not authorized" });
-    if (club.password == req.body.password)
-      return res.status(200).json({ message: "Logged in successfully" });
-    else return res.status(201).json({ message: "Wrong password" });
+    const { name, password } = req.body;
+    if (!name || !password)
+      return res
+        .status(400)
+        .json({ message: "Please provide the required data" });
+    let club = await Codebusters.findOne({ name: name });
+    if (!club) return res.status(201).json({ message: "Incorrect Username" });
+    else if (!(await bcrypt.compare(password, club.password)))
+      return res.status(201).json({ message: "Wrong password" });
+    return res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     return res.status(500).json({ message: "Authentication failed" });
   }
 };
 
-
 export const updateTeam = async (req, res) => {
   try {
-    const inputTeams = req.body;
-
-    if (!Array.isArray(inputTeams) || inputTeams.length === 0) {
+    const { name, password, members } = req.body;
+    if (!name || !password || !members)
+      return res
+        .status(400)
+        .json({ message: "Please provide the required data" });
+    if (!Array.isArray(members) || members.length === 0) {
       return res.status(400).json({ message: "Invalid or empty input data" });
     }
-    const club = await Codebusters.findOne({ name: 'Codebusters' });
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
-    const newTeams = inputTeams.map((team) => ({
+    let club = await Codebusters.findOne({ name: name });
+    if (!club) return res.status(201).json({ message: "Incorrect Username" });
+    if (!(await bcrypt.compare(password, club.password)))
+      return res.status(201).json({ message: "Wrong password" });
+    const newTeams = members.map((team) => ({
       name: team.name,
       members: team.members.map((member) => ({
         name: member.name,
@@ -35,19 +44,30 @@ export const updateTeam = async (req, res) => {
       })),
     }));
     club.members = newTeams;
-    console.log(club);
     await club.save();
 
-    return res.status(200).json({ message: "Teams added successfully ✅", teams: club.teams });
+    return res
+      .status(200)
+      .json({ message: "Teams added successfully ✅", teams: club.teams });
   } catch (error) {
-    return res.status(500).json({ message: "An error occurred", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
   }
 };
 
-
 export const updateEvents = async (req, res) => {
   try {
-    const allEvents = req.body.map((event) => ({
+    const { name, password, events } = req.body;
+    if (!name || !password || !events)
+      return res
+        .status(400)
+        .json({ message: "Please provide the required data" });
+    let club = await Codebusters.findOne({ name: name });
+    if (!club) return res.status(201).json({ message: "Incorrect Username" });
+    if (!(await bcrypt.compare(password, club.password)))
+      return res.status(201).json({ message: "Wrong password" });
+    const allEvents = events.map((event) => ({
       eventName: event.eventName,
       startDate: event.startDate,
       endDate: event.endDate,
@@ -58,17 +78,10 @@ export const updateEvents = async (req, res) => {
       id: event.id,
     }));
 
-    let club = await Codebusters.findOne({ name: "Codebusters" });
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
-
     club.events = allEvents;
     await club.save();
 
-    return res
-      .status(200)
-      .json({ message: "Events updated ✅", events: allEvents });
+    return res.status(200).json({ message: "Events updated ✅" });
   } catch (error) {
     console.error("Error updating events:", error);
     return res.status(500).json({ message: "An error occurred" });
@@ -77,7 +90,16 @@ export const updateEvents = async (req, res) => {
 
 export const updateAlumnies = async (req, res) => {
   try {
-    const allAlumnies = req.body.map((alumnie) => ({
+    const { name, password, alumnies } = req.body;
+    if (!name || !password || !alumnies)
+      return res
+        .status(400)
+        .json({ message: "Please provide the required data" });
+    let club = await Codebusters.findOne({ name: name });
+    if (!club) return res.status(201).json({ message: "Incorrect Username" });
+    if (!(await bcrypt.compare(password, club.password)))
+      return res.status(201).json({ message: "Wrong password" });
+    const allAlumnies = alumnies.map((alumnie) => ({
       id: alumnie.id,
       name: alumnie.name,
       graduationYear: alumnie.graduationYear,
@@ -87,18 +109,10 @@ export const updateAlumnies = async (req, res) => {
       company: alumnie.company,
       photo: alumnie.photo || null,
     }));
-
-    let club = await Codebusters.findOne({ name: "Codebusters" });
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
-
     club.alumnies = allAlumnies;
     await club.save();
 
-    return res
-      .status(200)
-      .json({ message: "Alumnies updated ✅", alumnies: allAlumnies });
+    return res.status(200).json({ message: "Alumnies updated ✅" });
   } catch (error) {
     console.error("Error updating alumnies:", error);
     return res.status(500).json({ message: "An error occurred" });
@@ -107,12 +121,16 @@ export const updateAlumnies = async (req, res) => {
 
 export const updateHighlights = async (req, res) => {
   try {
-    let club = await Codebusters.findOne({ name: "Codebusters" });
-
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
-    club.highlights = req.body;
+    const { name, password, highlights } = req.body;
+    if (!name || !password || !highlights)
+      return res
+        .status(400)
+        .json({ message: "Please provide the required data" });
+    let club = await Codebusters.findOne({ name: name });
+    if (!club) return res.status(201).json({ message: "Incorrect Username" });
+    if (!(await bcrypt.compare(password, club.password)))
+      return res.status(201).json({ message: "Wrong password" });
+    club.highlights = highlights;
     await club.save();
 
     return res
@@ -122,21 +140,18 @@ export const updateHighlights = async (req, res) => {
     return res.status(500).json({ message: "Some error occurred" });
   }
 };
+
 export const hire = async (req, res) => {
   try {
-    let club = await Codebusters.findOne({ name: "Codebusters" });
-    if (!club) {
-      return res.status(404).json({ message: "Club not found" });
-    }
-
-    // Ensure hireStatus is a Boolean
-    const hireStatus = req.body.hireStatus; 
+    const hireStatus = req.body.hireStatus;
 
     if (typeof hireStatus !== "boolean") {
-      return res.status(400).json({ message: "hireStatus must be a Boolean value" });
+      return res
+        .status(400)
+        .json({ message: "hireStatus must be a Boolean value" });
     }
 
-    club.hire = hireStatus; // Update the hire field with the Boolean value
+    club.hire = hireStatus;
     await club.save();
 
     return res.status(200).json({ message: "Done" });
