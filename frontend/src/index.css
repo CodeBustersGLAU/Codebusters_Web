@@ -1,5 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Permanent+Marker&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Permanent+Marker&display=swap");
+
+::-webkit-scrollbar {
+  width: 12px; /* Scrollbar width */
+  height: 8px; /* Horizontal scrollbar height */
+}
+
+::-webkit-scrollbar-track {
+  background: #5a5c60; /* Track color */
+  border-radius: 4px; /* Optional rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c324a; /* Thumb color */
+  border-radius: 4px; /* Rounded corners for the thumb */
+  border: 2px solid #c6bebe; /* Padding around the thumb */
+}

@@ -22,7 +22,7 @@ function Homepage() {
       <ParticlesComponent />
 
       {/* Content Area */}
-      <div className="relative z-10">
+      <div className="relative">
         {/* Introduction Section */}
         <section className="mt-[7rem] flex flex-col lg:flex-row justify-between items-center p-10 lg:p-20 space-y-10 lg:space-y-0">
           <div className="w-full lg:w-1/2 text-center lg:text-left">
@@ -65,7 +65,7 @@ function Homepage() {
             className="tilt-card mx-auto transition-transform duration-500 ease-out"
           >
             <div className="w-full flex items-center justify-center">
-            {logoLoading && (
+              {logoLoading && (
                 <div className="relative w-[400px] h-[400px] rounded-full flex items-center justify-center bg-black bg-opacity-50">
                   <div className="absolute w-24 h-24 border-4 border-blue-500 rounded-full animate-pulseCircle"></div>
                   <div className="absolute w-16 h-16 border-4 border-blue-400 rounded-full animate-pulseCircle [animation-delay:0.2s]"></div>
@@ -80,7 +80,7 @@ function Homepage() {
                 }`}
                 onLoad={() => setLogoLoading(false)}
               />
-    </div>
+            </div>
           </Tilt>
         </section>
         <motion.section
@@ -209,14 +209,14 @@ function Homepage() {
                         }}
                         className="flex items-center hover:scale-105 transition-transform duration-300"
                       >
-                      <img
-                    src={value.imgSrc}
-                    alt="Icon"
-                    className={`h-8 w-8 mr-3 ${
-                      featureLoading[index] ? "hidden" : "block"
-                    }`}
-                    onLoad={() => handleFeatureLoad(index)}
-                  />
+                        <img
+                          src={value.imgSrc}
+                          alt="Icon"
+                          className={`h-8 w-8 mr-3 ${
+                            featureLoading[index] ? "hidden" : "block"
+                          }`}
+                          onLoad={() => handleFeatureLoad(index)}
+                        />
                         <span>{value.text}</span>
                       </motion.li>
                     ))}

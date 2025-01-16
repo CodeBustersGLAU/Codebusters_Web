@@ -7,20 +7,19 @@ import AlumniCard from "./AlumniCard";
 const AlumniList = () => {
   const { club } = useUserContext();
   if (!club || !club.alumnies) {
-  return (
-  <div className="relative mt">
+    return (
+      <div className="relative mt">
         <ParticlesComponent />
-        <section className="relative z-10 text-gray-200 flex items-center justify-center h-screen w-screen">
-        <LoadingAnimation />
+        <section className="relative text-gray-200 flex items-center justify-center h-screen w-screen">
+          <LoadingAnimation />
         </section>
-
       </div>
     );
   }
   return (
     <div className="relative">
       <ParticlesComponent />
-      <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
+      <section className="relative text-gray-200 py-20 px-6 md:px-20">
         <div className="flex items-center justify-center mt-16">
           <h2
             className="text-6xl font-bold text-center mb-16 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
