@@ -54,7 +54,7 @@ function EventCard({ event, onClick }) {
         <div className="grid grid-cols-2 gap-3 mt-2 sm:mt-8">
           {event.images.slice(0, 4).map((image, index) => (
             <div key={index} className="relative">
-              {loading && <LoadingAnimation />}
+              {loading &&<div className="w-40 h-36 sm:w-40 sm:h-36"><LoadingAnimation /></div>}
               <motion.img
                 src={image}
                 alt={`Event Image ${index + 1}`}
