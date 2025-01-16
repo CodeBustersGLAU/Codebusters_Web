@@ -85,18 +85,20 @@ function UpcomingEventCard({ event }) {
               </motion.div>
             ))}
           </div>
-          <button
-            onClick={handleRegisterClick}
-            className="px-6 mt-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          <motion.button
+            className=" mt-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-lg text-lg shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none disabled:bg-gray-400 transition-all duration-300"
+         
+                  onClick={handleRegisterClick}
+                  whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Register Now
-          </button>
+                  Register Now</motion.button>
         </motion.div>
       </Tilt>
 
       {showModal && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-slate-800 p-6 rounded-lg w-3/4 max-w-4xl overflow-hidden relative z-50">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-[100]">
+          <div className="bg-slate-800 p-6 rounded-lg w-3/4 max-w-4xl overflow-hidden relative z-[100]">
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 text-white text-lg font-semibold bg-red-600 px-4 py-2 rounded-full shadow-lg transition duration-300 transform hover:bg-red-700 hover:scale-105 focus:outline-none"
@@ -120,12 +122,15 @@ function UpcomingEventCard({ event }) {
               {event.description}
             </motion.p>
             <div className="flex justify-between mt-6 mb-4">
-              <button
+              <motion.button
+                className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-lg text-lg shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none disabled:bg-gray-400 transition-all duration-300"
                 onClick={handleRegisterClick}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Register Now
-              </button>
+              </motion.button>
+
             </div>
             <div className="overflow-y-auto max-h-80 mb-4">
               <div className="grid grid-cols-3 gap-4">
@@ -142,15 +147,6 @@ function UpcomingEventCard({ event }) {
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="flex justify-center mt-6">
-              <button
-                onClick={handleRegisterClick}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Register Now
-              </button>
             </div>
           </div>
         </div>

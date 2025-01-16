@@ -7,7 +7,15 @@ import AlumniCard from "./AlumniCard";
 const AlumniList = () => {
   const { club } = useUserContext();
   if (!club || !club.alumnies) {
-    return <LoadingAnimation />;
+  return (
+  <div className="relative mt">
+        <ParticlesComponent />
+        <section className="relative z-10 text-gray-200 flex items-center justify-center h-screen w-screen">
+        <LoadingAnimation />
+        </section>
+
+      </div>
+    );
   }
   return (
     <div className="relative">

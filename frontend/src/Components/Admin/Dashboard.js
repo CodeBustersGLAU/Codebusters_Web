@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ParticlesComponent from "../User/Particles";
 import Members from "./DashboardComponents/Members";
 import Events from "./DashboardComponents/Events";
 import Alumnies from "./DashboardComponents/Alumnies";
 import Highlights from "./DashboardComponents/Highlights";
+import { useUserContext } from "../../context";
+
 const URL = "http://localhost:8000";
+
 function Dashboard() {
+  const { club, setClub } = useUserContext();
   const [view, setView] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +22,7 @@ function Dashboard() {
     setLoading(true);
     try {
       await axios.post(`${URL}/hire`, { hireStatus: true });
+      setClub((prev) => ({ ...prev, hire: "true" }));
       alert("Hiring started");
     } catch (error) {
       alert("Error starting hiring");
@@ -30,6 +35,7 @@ function Dashboard() {
     setLoading(true);
     try {
       await axios.post(`${URL}/hire`, { hireStatus: false });
+      setClub((prev) => ({ ...prev, hire: "false" }));
       alert("Hiring stopped");
     } catch (error) {
       alert("Error stopping hiring");
@@ -37,6 +43,10 @@ function Dashboard() {
       setLoading(false);
     }
   };
+
+  // Ensure button text reflects current hire status
+  const hireButtonText = club.hire === "true" ? "Hiring Started" : "Start Hiring";
+  const stopButtonText = club.hire === "false" ? "Hiring Stopped" : "Stop Hiring";
 
   return (
     <div className="relative">
@@ -47,17 +57,17 @@ function Dashboard() {
           <div className="flex flex-col space-y-4">
             <button
               onClick={startHiring}
-              disabled={loading}
+              disabled={loading || club.hire === "true"}
               className="p-3 bg-green-500 text-white rounded-lg hover:bg-blue-600 transition-all"
             >
-              {loading ? "Starting..." : "Start Hiring"}
+              {loading ? "Starting..." : hireButtonText}
             </button>
             <button
               onClick={stopHiring}
-              disabled={loading}
+              disabled={loading || club.hire === "false"}
               className="p-3 bg-red-800 text-white rounded-lg hover:bg-blue-600 transition-all"
             >
-              {loading ? "Stopping..." : "Stop Hiring"}
+              {loading ? "Stopping..." : stopButtonText}
             </button>
             <button
               className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
 import LoadingAnimation from './LoadingAnimation';
-function EventCard({ event,   onClick }) {
+
+function EventCard({ event, onClick }) {
   const [loading, setLoading] = useState(true);
   const handleImageLoad = () => {
     setLoading(false);
   };
+
   return (
     <Tilt
       options={{ max: 25, scale: 1.05, speed: 400 }}
@@ -31,16 +33,25 @@ function EventCard({ event,   onClick }) {
         >
           {event.title}
         </motion.h3>
-
-        <motion.p
-          className="text-slate-200 text-xs sm:text-sm text-center mt-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          {event.description}
-        </motion.p>
-        <div className="grid grid-cols-2 gap-3 mt-6 sm:mt-8">
+        <div className="overflow-hidden">
+          <motion.p
+            className="text-slate-200 text-xs sm:text-sm text-center mt-2 overflow-hidden text-ellipsis max-h-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            {event.description.slice(0, 42)}
+          </motion.p>
+          <motion.p
+            className="text-slate-200 text-xs sm:text-sm text-center mt-2 overflow-hidden text-ellipsis max-h-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            {event.description.slice(42,84)}
+          </motion.p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 mt-2 sm:mt-8">
           {event.images.slice(0, 4).map((image, index) => (
             <div key={index} className="relative">
               {loading && <LoadingAnimation />}

@@ -52,7 +52,15 @@ const TeamMember = ({ name, imgSrc,position,email }) => (
 const TeamMembers = () => {
   const { club } = useUserContext();
   if (!club || !club.members) {
-    return <LoadingAnimation />;
+    return (
+      <div className="relative mt">
+            <ParticlesComponent />
+            <section className="relative z-10 text-gray-200 flex items-center justify-center h-screen w-screen">
+            <LoadingAnimation />
+            </section>
+    
+          </div>
+        );
   }
 else{
   return (
