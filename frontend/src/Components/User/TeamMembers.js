@@ -32,7 +32,18 @@ const TeamMember = ({ name, imgSrc,position,email }) => (
           onContextMenu={(e) => e.preventDefault()}
         />
         <p className="text-xl font-medium text-white mb-4">{name}</p>
-        <p className="text-[12px] font-medium text-white mb-4">{email}</p>
+        <motion.a
+          href={`mailto:${email}`}
+          className="text-blue-300 text-[10px] mt-2 p-2 rounded-md"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          style={{
+            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+          }}
+        >
+          {email}
+        </motion.a>
 
       </div>
     </Tilt>

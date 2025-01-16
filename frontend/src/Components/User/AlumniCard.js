@@ -28,7 +28,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
         <motion.img
           src={profilePicture}
           alt={`${name}'s Profile`}
-          className="w-24 h-24 rounded-full object-cover mb-4"
+          className="w-32 h-32 rounded-full object-cover mb-4"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.6 }}
@@ -36,7 +36,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
           style={{ display: loading ? "none" : "block" }}
         />
         <motion.h3
-          className="text-xl font-semibold text-white"
+          className="text-xl mb-2 font-semibold text-white"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -44,7 +44,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
           {name}
         </motion.h3>
         <motion.p
-          className="text-gray-400 text-sm"
+          className="text-gray-400 text-[12px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -52,7 +52,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
           Batch of {batch}
         </motion.p>
         <motion.p
-          className="text-gray-200 text-sm mt-2"
+          className="text-gray-200 text-[12px] mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
@@ -60,7 +60,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
           <span className="font-semibold">Profession:</span> {profession}
         </motion.p>
         <motion.p
-          className="text-gray-200 text-sm mt-2"
+          className="text-gray-200 text-[12px] mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
@@ -69,7 +69,7 @@ function AlumniCard({ name, batch, email, profilePicture, bio, company, professi
         </motion.p>
         <motion.a
           href={`mailto:${email}`}
-          className="text-blue-300 text-sm mt-2 p-2 rounded-md"
+          className="text-blue-300 text-[10px] mt-2 p-2 rounded-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}

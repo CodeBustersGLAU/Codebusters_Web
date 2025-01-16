@@ -9,7 +9,7 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 z-50 fixed w-full top-0 left-0 shadow-md">
+    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 z-30 fixed w-full top-0 left-0 shadow-md">
       {/* Logo */}
       <Link to="/">
         <img src={Logo} className="h-12 cursor-pointe " alt="Codebusters Logo" />
