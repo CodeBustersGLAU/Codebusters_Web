@@ -32,6 +32,7 @@ export const updateEvents = async (data) => {
 export const updateAlumnies = async (data) => {
   try {
     let res = await axios.post(`${URL}/updateAlumnies`, data);
+    console.log(data);
     return res.data;
   } catch (error) {
     return error;

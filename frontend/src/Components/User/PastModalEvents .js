@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import LoadingAnimation from "./LoadingAnimation";
 
 function PastModalEvents({ event, onClose }) {
-  if (!event) return null;
+  // State to track loading status of images
+  const [loading, setLoading] = useState(true);
+
+  if (!event) return null;  // Return early if no event data
+
+  const handleImageLoad = () => {
+    setLoading(false);
+  };
 
   return (
     <motion.div
@@ -13,7 +21,7 @@ function PastModalEvents({ event, onClose }) {
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className="bg-slate-800 p-4 rounded-lg w-3/4 max-w-lg sm:max-w-md lg:max-w-xl relative max-h-[80vh] overflow-y-auto"
+        className="bg-slate-800 p-6 rounded-lg w-11/12 max-w-4xl sm:max-w-3xl lg:max-w-3xl relative max-h-[90vh] overflow-y-auto"
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.9 }}
@@ -26,17 +34,23 @@ function PastModalEvents({ event, onClose }) {
           Close
         </button>
 
-        <h2 className="text-2xl sm:text-xl font-semibold text-white mb-3">{event.title}</h2>
+        <h2 className="text-3xl sm:text-2xl font-semibold text-white mb-4 mt-3">{event.title}</h2>
 
-        <p className="text-slate-200 mb-4 text-sm sm:text-base">{event.description}</p>
+        <p className="text-slate-200 mb-6 text-sm sm:text-base">{event.description}</p>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {event.images.slice(0, 10).map((image, index) => (
             <div key={index} className="relative">
+              {loading && (
+                <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50 rounded-md">
+                  <LoadingAnimation />
+                </div>
+              )}
               <img
                 src={image}
                 alt={`Event Image ${index + 1}`}
-                className="w-full h-24 sm:h-32 rounded-md object-cover shadow-lg"
+                className="w-full h-40 sm:h-48 md:h-56 lg:h-64 rounded-md object-cover shadow-lg"
+                onLoad={handleImageLoad} 
               />
             </div>
           ))}
