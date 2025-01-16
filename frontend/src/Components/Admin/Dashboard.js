@@ -45,13 +45,15 @@ function Dashboard() {
   };
 
   // Ensure button text reflects current hire status
-  const hireButtonText = club.hire === "true" ? "Hiring Started" : "Start Hiring";
-  const stopButtonText = club.hire === "false" ? "Hiring Stopped" : "Stop Hiring";
+  const hireButtonText =
+    club.hire === "true" ? "Hiring Started" : "Start Hiring";
+  const stopButtonText =
+    club.hire === "false" ? "Hiring Stopped" : "Stop Hiring";
 
   return (
     <div className="relative">
       <ParticlesComponent />
-      <section className="flex flex-col lg:flex-row relative z-10 text-black pt-16 lg:pt-20">
+      <section className="flex flex-col lg:flex-row relative text-black pt-16 lg:pt-20">
         <div className="bg-blue-300 bg-opacity-50 w-full lg:w-1/4 p-4 rounded-lg shadow-lg mb-6 lg:mb-0">
           <h1 className="text-2xl font-semibold mb-6 text-center">Dashboard</h1>
           <div className="flex flex-col space-y-4">
@@ -97,7 +99,15 @@ function Dashboard() {
         </div>
 
         <div className="bg-opacity-45 w-full lg:w-3/4 p-6 rounded-lg shadow-lg ml-0 lg:ml-4">
-          {view === 0 ? <Members /> : view === 1 ? <Events /> : view === 2 ? <Alumnies /> : <Highlights />}
+          {view === 0 ? (
+            <Members />
+          ) : view === 1 ? (
+            <Events />
+          ) : view === 2 ? (
+            <Alumnies />
+          ) : (
+            <Highlights />
+          )}
         </div>
       </section>
     </div>

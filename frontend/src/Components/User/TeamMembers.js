@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ParticlesComponent from "./ParticlesTwo";
 import LoadingAnimation from "./LoadingAnimation";
 import { useUserContext } from "../../context";
-const TeamMember = ({ name, imgSrc,position,email }) => (
+const TeamMember = ({ name, imgSrc, position, email }) => (
   <motion.div
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,9 @@ const TeamMember = ({ name, imgSrc,position,email }) => (
           boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
         }}
       >
-        <h3 className="text-md font-semibold mb-4 text-white ">[ {position} ]</h3>
+        <h3 className="text-md font-semibold mb-4 text-white ">
+          [ {position} ]
+        </h3>
         <img
           src={imgSrc}
           alt={name}
@@ -44,7 +46,6 @@ const TeamMember = ({ name, imgSrc,position,email }) => (
         >
           {email}
         </motion.a>
-
       </div>
     </Tilt>
   </motion.div>
@@ -54,65 +55,62 @@ const TeamMembers = () => {
   if (!club || !club.members) {
     return (
       <div className="relative mt">
-            <ParticlesComponent />
-            <section className="relative z-10 text-gray-200 flex items-center justify-center h-screen w-screen">
-            <LoadingAnimation />
-            </section>
-    
+        <ParticlesComponent />
+        <section className="relative z-10 text-gray-200 flex items-center justify-center h-screen w-screen">
+          <LoadingAnimation />
+        </section>
+      </div>
+    );
+  } else {
+    return (
+      <div className="relative">
+        <ParticlesComponent />
+        <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
+          <div className="flex items-center justify-center mt-16">
+            <motion.h2
+              className="text-6xl font-bold text-center mb-16 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+              initial={{ opacity: 0, y: -40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              style={{
+                boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+              }}
+            >
+              Our Team
+            </motion.h2>
           </div>
-        );
+          {club.members.map((team, idx) => (
+            <div key={idx} className="mb-8">
+              <div className="flex justify-center items-center">
+                <motion.h3
+                  className="text-4xl font-semibold text-center mb-20 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+                  initial={{ opacity: 0, y: -40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  style={{
+                    boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+                  }}
+                >
+                  {team.name}
+                </motion.h3>
+              </div>
+              <div className="flex flex-wrap justify-around gap-8">
+                {team.members.map((member, idx) => (
+                  <TeamMember
+                    key={idx}
+                    name={member.name}
+                    imgSrc={member.photo}
+                    position={member.position}
+                    email={member.email}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      </div>
+    );
   }
-else{
-  return (
-    <div className="relative">
-      <ParticlesComponent />
-      <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <div className="flex items-center justify-center mt-16">
-          <motion.h2
-            className="text-6xl font-bold text-center mb-16 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            style={{
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-            }}
-          >
-            Our Team
-          </motion.h2>
-        </div>
-        {club.members.map((team, idx) => (
-          <div key={idx} className="mb-8">
-            <div className="flex justify-center items-center">
-              <motion.h3
-                className="text-4xl font-semibold text-center mb-20 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
-                initial={{ opacity: 0, y: -40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                style={{
-                  boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-                }}
-              >
-                {team.name}
-              </motion.h3>
-            </div>
-            <div className="flex flex-wrap justify-around gap-8">
-              {team.members.map((member, idx) => (
-                <TeamMember
-                  key={idx}
-                  name={member.name}
-                  imgSrc={member.photo}
-                  position={member.position}
-                  email={member.email}
-
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
-    </div>
-  );
 };
-}
 
 export default TeamMembers;

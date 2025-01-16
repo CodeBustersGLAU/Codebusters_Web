@@ -11,7 +11,7 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 z-30 fixed w-full top-0 left-0 shadow-md">
+    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 md:z-10 z-40 fixed w-full top-0 left-0 shadow-md">
       <Link to="/">
         <motion.img
           src={Logo}
@@ -81,10 +81,7 @@ function Header() {
         </Link>
       </div>
 
-      <button
-        className="md:hidden text-slate-300"
-        onClick={toggleMenu}
-      >
+      <button className="md:hidden text-slate-300" onClick={toggleMenu}>
         <motion.span
           className="text-4xl"
           initial={{ rotate: 0 }}
@@ -105,7 +102,7 @@ function Header() {
       >
         <Link to="/team-members">
           <motion.button
-            className="w-full py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:border-blue-400"
+            className="w-full py-2 rounded-md border-transparent transition-all duration-300 hover:border-blue-400"
             onClick={() => setIsMenuOpen(false)}
             whileHover={{
               scale: 1.1,
@@ -117,7 +114,7 @@ function Header() {
         </Link>
         <Link to="/joinUs">
           <motion.button
-            className="w-full py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:border-blue-400"
+            className="w-full py-2 rounded-md border-transparent transition-all duration-300 hover:border-blue-400"
             onClick={() => setIsMenuOpen(false)}
             whileHover={{
               scale: 1.3,
@@ -129,7 +126,7 @@ function Header() {
         </Link>
         <Link to="/UpcomingEvents">
           <motion.button
-            className="w-full py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:border-blue-400"
+            className="w-full py-2 rounded-md  border-transparent transition-all duration-300 hover:border-blue-400"
             onClick={() => setIsMenuOpen(false)}
             whileHover={{
               scale: 1.1,
@@ -141,7 +138,7 @@ function Header() {
         </Link>
         <Link to="/past-events">
           <motion.button
-            className="w-full py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:border-blue-400"
+            className="w-full py-2 rounded-md border-transparent transition-all duration-300 hover:border-blue-400"
             onClick={() => setIsMenuOpen(false)}
             whileHover={{
               scale: 1.1,
@@ -153,7 +150,7 @@ function Header() {
         </Link>
         <Link to="/Alumni">
           <motion.button
-            className="w-full py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:border-blue-400"
+            className="w-full py-2 rounded-md border-transparent transition-all duration-300 hover:border-blue-400"
             onClick={() => setIsMenuOpen(false)}
             whileHover={{
               scale: 1.1,
