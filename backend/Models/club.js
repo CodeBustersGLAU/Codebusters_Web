@@ -1,25 +1,19 @@
 import mongoose from "mongoose";
 
-const memberSchema = new mongoose.Schema({
+
+const teamSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
   },
-  email: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-  team: {
-    type: String,
-  },
-  position: {
-    type: String,
+  members: {
+    type: [Object],
+    default: [],
   },
 });
 
 const eventSchema = new mongoose.Schema({
-  name: {
+  eventName: {
     type: String,
   },
   startDate: {
@@ -31,14 +25,15 @@ const eventSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  poster: {
-    type: String,
-  },
-  images: {
+  eventImages: {
     type: [String],
+    default: [],
+    registrationLink: "",
   },
+  registrationLink:{
+    type: String,
+  }
 });
-
 const alumnieSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -49,7 +44,7 @@ const alumnieSchema = new mongoose.Schema({
   graduationYear: {
     type: String,
   },
-  description: {
+  about: {
     type: String,
   },
   profession: {
@@ -75,6 +70,7 @@ const highlightSchema = new mongoose.Schema({
   },
   images: {
     type: [String],
+    default: [],
   },
   id: {
     type: Number,
@@ -92,7 +88,7 @@ const clubSchema = new mongoose.Schema({
     default: "xyz",
   },
   members: {
-    type: [memberSchema],
+    type: [teamSchema],
     default: [],
   },
   events: {
@@ -107,6 +103,10 @@ const clubSchema = new mongoose.Schema({
     type: [highlightSchema],
     default: [],
   },
+  hire:{
+    type: String,
+    default: "nothiring",
+  }
 });
 
 const Club = mongoose.model("club", clubSchema);

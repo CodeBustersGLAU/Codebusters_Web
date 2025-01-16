@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import ParticlesComponent from "./ParticlesTwo";
 import UpcomingEventCard from './upComingEventCard';
 import { motion } from 'framer-motion';
+import { useUserContext } from './../../context';
 import { Tilt } from 'react-tilt';
-import events from './DummyUpComing';
+
 const UpcomingEvents = () => {
-    return (
+  const { club } = useUserContext(); 
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    if (club && club.events) {
+      setEvents(club.events); 
+    }
+  }, [club]);
+  console.log(club);
+  return (
     <div className="relative">
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-10 px-6 sm:px-8 md:px-16 lg:px-20 mb-28">
@@ -23,19 +33,24 @@ const UpcomingEvents = () => {
           </motion.h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {events.map((event, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 * index }}
-            >
-              <UpcomingEventCard event={event} />
-            </motion.div>
-          ))}
+          {events.length > 0 ? (
+            events.map((event, index) => (  
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 * index }}
+              >
+                <UpcomingEventCard event={event} />
+              </motion.div>
+            ))
+          ) : (
+            <p>No upcoming events at the moment.</p> 
+          )}
         </div>
       </section>
     </div>
   );
 }
+
 export default UpcomingEvents;

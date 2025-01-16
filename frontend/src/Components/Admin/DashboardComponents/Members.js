@@ -1,96 +1,107 @@
 import React, { useState } from "react";
 import { updateTeam } from "./../../../APIs/admin";
+import { useUserContext } from "./../../../context";
 
 function Members() {
-  const [teams, setTeams] = useState([]);
+  const { club, setClub } = useUserContext();
+  const [members, setMembers] = useState(club?.members || []);
   const [newTeam, setNewTeam] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [memberDetails, setMemberDetails] = useState({
     name: "",
     email: "",
     position: "",
-    profilePic: null,
-    previewPic: null,
+    photo: "",
   });
+  const [editTeamIndex, setEditTeamIndex] = useState(null);
+  const [editMemberIndex, setEditMemberIndex] = useState(null);
 
+  // Add a new team
   const addTeam = () => {
     if (newTeam.trim() === "") return;
-    setTeams([...teams, { name: newTeam, members: [] }]);
+    const updatedMembers = [...members, { name: newTeam, members: [] }];
+    setMembers(updatedMembers);
+    setClub((prevClub) => ({ ...prevClub, members: updatedMembers }));
     setNewTeam("");
   };
 
-  const handleTeamUpdate = async () => {
-    try {
-      let res = await updateTeam(teams);
-      alert(res.message || "Some error occured");
-    } catch (error) {
-      console.error("Failed to update team:", error);
-    }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setMemberDetails((prev) => ({
-          ...prev,
-          profilePic: file,
-          previewPic: event.target.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
+  // Add a member to a team
   const addMember = () => {
-    const { name, email, position, profilePic } = memberDetails;
-
-    // Check for all necessary fields
-    if (!selectedTeam || !name || !email || !position || !profilePic) {
-      alert("Please fill out all fields and select an image.");
+    const { name, email, position, photo } = memberDetails;
+    if (!selectedTeam || !name || !email || !position || !photo) {
+      alert("Please fill in all fields.");
       return;
     }
 
-    const updatedTeams = teams.map((team) =>
-      team.name === selectedTeam
-        ? { ...team, members: [...team.members, memberDetails] }
-        : team
-    );
-    setTeams(updatedTeams);
-    setMemberDetails({
-      name: "",
-      email: "",
-      position: "",
-      profilePic: null,
-      previewPic: null,
+    const updatedMembers = members.map((team) => {
+      if (team.name === selectedTeam) {
+        return {
+          ...team,
+          members: [...team.members, { name, email, position, photo }],
+        };
+      }
+      return team;
     });
+
+    setMembers(updatedMembers);
+    setClub((prevClub) => ({ ...prevClub, members: updatedMembers }));
+    setMemberDetails({ name: "", email: "", position: "", photo: "" });
+  };
+
+  // Start editing a member
+  const startEditingMember = (teamIndex, memberIndex) => {
+    const memberToEdit = members[teamIndex].members[memberIndex];
+    setMemberDetails(memberToEdit);
+    setEditTeamIndex(teamIndex);
+    setEditMemberIndex(memberIndex);
+  };
+
+  // Save edited member details
+  const saveMemberDetails = () => {
+    const updatedMembers = members.map((team, teamIndex) => {
+      if (teamIndex === editTeamIndex) {
+        const updatedTeam = { ...team };
+        updatedTeam.members[editMemberIndex] = memberDetails;
+        return updatedTeam;
+      }
+      return team;
+    });
+
+    setMembers(updatedMembers);
+    setClub((prevClub) => ({ ...prevClub, members: updatedMembers }));
+    setMemberDetails({ name: "", email: "", position: "", photo: "" });
+    setEditTeamIndex(null);
+    setEditMemberIndex(null);
+  };
+
+  // Update the backend with the latest members
+  const handleTeamUpdate = async () => {
+    try {
+      const res = await updateTeam(members);
+      alert(res.message || "Team updated successfully!");
+    } catch (error) {
+      console.error("Failed to update team:", error);
+      alert("Failed to update team.");
+    }
   };
 
   return (
     <div className="p-10 pl-8 pr-8 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      {/* Header */}
       <h2 className="text-3xl font-bold text-white mb-6 text-center">
-        {" "}
         Manage Teams and Members
       </h2>
-
-      {/* Update Team Button */}
       <div className="text-right mb-4">
-      <button
-  onClick={handleTeamUpdate}
-  className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
->
-  Update Team
-</button>
-
+        <button
+          onClick={handleTeamUpdate}
+          className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
+        >
+          Update Team
+        </button>
       </div>
 
       {/* Add New Team Section */}
       <div className="bg-slate-300 shadow-sm rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-slate-700">
-          Add a New Team
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-slate-700">Add a New Team</h2>
         <div className="flex flex-col sm:flex-row sm:space-x-2 items-center">
           <input
             type="text"
@@ -110,14 +121,17 @@ function Members() {
 
       {/* Add Member Section */}
       <div className="bg-white shadow-sm rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-4">Add Member to a Team</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          {editMemberIndex === null ? "Add Member to a Team" : "Edit Member"}
+        </h2>
         <select
           value={selectedTeam}
           onChange={(e) => setSelectedTeam(e.target.value)}
           className="p-2 border border-gray-300 rounded-lg w-full mb-4 text-sm"
+          disabled={editMemberIndex !== null}
         >
           <option value="">Select Team</option>
-          {teams.map((team, index) => (
+          {members.map((team, index) => (
             <option key={index} value={team.name}>
               {team.name}
             </option>
@@ -155,65 +169,46 @@ function Members() {
             }
             className="p-2 border border-gray-300 rounded-lg w-full text-sm"
           />
-          <div>
-            <label
-              htmlFor="file-upload"
-              className="p-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition duration-200 text-sm"
-            >
-              Add Image
-            </label>
-
-            <input
-              type="file"
-              id="file-upload"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {memberDetails.previewPic && (
-              <img
-                src={memberDetails.previewPic}
-                alt="Preview"
-                className="w-20 h-20 rounded-full mt-2 object-cover border border-gray-300"
-              />
-            )}
-          </div>
+          <input
+            type="text"
+            placeholder="Member Photo URL"
+            value={memberDetails.photo}
+            onChange={(e) =>
+              setMemberDetails((prev) => ({ ...prev, photo: e.target.value }))
+            }
+            className="p-2 border border-gray-300 rounded-lg w-full text-sm"
+          />
         </div>
 
         <button
-          onClick={addMember}
+          onClick={editMemberIndex === null ? addMember : saveMemberDetails}
           className="mt-4 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full text-sm"
         >
-          Add Member
+          {editMemberIndex === null ? "Add Member" : "Save Changes"}
         </button>
       </div>
 
-      {/* Teams and Members List */}
+      {/* Display Teams and Members */}
       <div>
-        <h2 className="text-xl font-semibold mb-4 text-white">
-          Teams and Members
-        </h2>
-        {teams.length === 0 ? (
+        <h2 className="text-xl font-semibold mb-4 text-white">Teams and Members</h2>
+        {members.length === 0 ? (
           <p className="text-white">No teams added yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teams.map((team, index) => (
+            {members.map((team, teamIndex) => (
               <div
-                key={index}
+                key={teamIndex}
                 className="bg-white shadow-sm rounded-lg p-4 hover:shadow-lg transition duration-200"
               >
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {team.name}
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-800">{team.name}</h3>
                 {team.members.length === 0 ? (
                   <p className="text-gray-600 text-sm">No members added yet.</p>
                 ) : (
                   <ul className="mt-3">
-                    {team.members.map((member, i) => (
-                      <li key={i} className="flex items-center space-x-3 mb-3">
+                    {team.members.map((member, memberIndex) => (
+                      <li key={memberIndex} className="flex items-center space-x-3 mb-3">
                         <img
-                          src={member.previewPic}
+                          src={member.photo}
                           alt={member.name}
                           className="w-12 h-12 rounded-full object-cover"
                         />
@@ -221,13 +216,15 @@ function Members() {
                           <p className="font-semibold text-gray-800 text-sm">
                             {member.name}
                           </p>
-                          <p className="text-gray-600 text-xs">
-                            {member.email}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {member.position}
-                          </p>
+                          <p className="text-gray-600 text-xs">{member.email}</p>
+                          <p className="text-sm text-gray-500">{member.position}</p>
                         </div>
+                        <button
+                          onClick={() => startEditingMember(teamIndex, memberIndex)}
+                          className="ml-auto text-sm text-blue-600 underline"
+                        >
+                          Edit
+                        </button>
                       </li>
                     ))}
                   </ul>

@@ -1,28 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ParticlesComponent from "./ParticlesTwo";
 import { motion } from "framer-motion";
-
+import { useUserContext } from "../../context";
 const JoinUs = () => {
-  const [hiring, setHiring] = useState(true);
-  // const hiring=true;
+  const { club } = useUserContext();
   return (
     <div className="relative">
       <ParticlesComponent />
       <section className="relative z-10 text-gray-200 py-20 px-6 md:px-20">
-        <div className=" flex items-center justify-center mt-16">
+        <div className="flex items-center justify-center mt-16">
           <motion.h2
             className="text-4xl font-bold text-center mb-8 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            style={{
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-            }}
+            style={{ boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
           >
             Join Codebusters
           </motion.h2>
         </div>
-        {hiring ? (
+        {club?.hire==='true' ? (
           <>
             <div className="flex items-center justify-center text-center">
               <motion.p
@@ -37,15 +34,13 @@ const JoinUs = () => {
               </motion.p>
             </div>
             <div className="max-w-2xl mx-auto flex-col items-center justify-center">
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <motion.h3
                   className="text-2xl font-semibold text-center mb-4 mt-2 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  style={{
-                    boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-                  }}
+                  style={{ boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
                 >
                   How to Join
                 </motion.h3>
@@ -274,69 +269,35 @@ const JoinUs = () => {
                     htmlFor="whatsapp"
                     className="block text-white font-semibold mb-2"
                   >
-                    WhatsApp Number
+                    WhatsApp Number (Optional)
                   </label>
                   <input
                     type="text"
                     id="whatsapp"
                     name="whatsapp"
-                    required
                     className="w-full p-3 border border-gray-600 rounded-lg bg-blue-100 text-gray-900"
                     placeholder="Enter your WhatsApp number"
                   />
                 </div>
 
-                <motion.button
+                <button
                   type="submit"
-                  className="bg-gray-900 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 w-full"
-                  whileHover={{ scale: 1.05 }}
+                  className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
                 >
                   Submit
-                </motion.button>
+                </button>
               </form>
             </div>
           </>
         ) : (
-          <>
-            <motion.p
-              className="text-lg mb-6 text-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              We are not currently hiring. However, you can still become a part
-              of our community by participating in our events and workshops.
-              We’ll let you know when we are hiring again!
-            </motion.p>
-
-            <motion.h3
-              className="text-2xl font-semibold text-center mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              Why Join Codebusters?
-            </motion.h3>
-            <motion.ul
-              className="list-disc list-inside text-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              <li className="text-lg mb-2">
-                Learn new technologies and coding techniques.
-              </li>
-              <li className="text-lg mb-2">
-                Collaborate with like-minded peers on exciting projects.
-              </li>
-              <li className="text-lg mb-2">
-                Participate in coding competitions and workshops.
-              </li>
-              <li className="text-lg mb-2">
-                Get the chance to lead projects and grow your skills.
-              </li>
-            </motion.ul>
-          </>
+          <motion.p
+            className="text-center text-xl mt-4 text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            We're not currently hiring. Stay tuned for updates!
+          </motion.p>
         )}
       </section>
     </div>

@@ -1,40 +1,28 @@
-import React, { useState } from "react";
-import { updateAlumnies } from "./../../../APIs/admin";
+import React, { useState, useEffect } from "react";
+import { useUserContext } from "./../../../context";
+import { updateAlumnies } from "../../../APIs/admin";
+import LoadingAnimation from "./../../User/LoadingAnimation";
 function Alumnies() {
-  const [alumnies, setAlumnies] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      year: 2020,
-      email: "john.doe@example.com",
-      about: "A passionate coder and leader who co-founded Codebusters Club.",
-      profession: "Software Engineer",
-      company: "TechCorp",
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      year: 2019,
-      email: "jane.smith@example.com",
-      about:
-        "Expert in AI and data modeling, currently innovating at DataWorks.",
-      profession: "Data Scientist",
-      company: "DataWorks",
-      photo: "https://via.placeholder.com/100",
-    },
-  ]);
-
+  const { club } = useUserContext();
+  const [alumnies, setAlumnies] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
-    year: "",
+    graduationYear: "",
     email: "",
     about: "",
     profession: "",
     company: "",
     photo: "",
   });
+  useEffect(() => {
+    if (club && club.alumnies) {
+      setAlumnies(club.alumnies);
+    }
+  }, [club]);
+  if (!club || !club.alumnies) {
+    return <LoadingAnimation />;
+  }
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -42,7 +30,8 @@ function Alumnies() {
   };
 
   const handleDelete = (index) => {
-    setAlumnies(alumnies.filter((_, i) => i !== index));
+    const updatedAlumnies = alumnies.filter((_, i) => i !== index);
+    setAlumnies(updatedAlumnies);
   };
 
   const handleChange = (e) => {
@@ -51,18 +40,18 @@ function Alumnies() {
   };
 
   const handleSave = () => {
-    const updateAlumnies = [...alumnies];
+    const updatedAlumnies = [...alumnies];
     if (editIndex !== null) {
-      updateAlumnies[editIndex] = formData;
+      updatedAlumnies[editIndex] = formData;
     } else {
-      updateAlumnies.push({ ...formData, id: alumnies.length + 1 });
+      updatedAlumnies.push({ ...formData, id: alumnies.length + 1 });
     }
-    setAlumnies(updateAlumnies);
+    setAlumnies(updatedAlumnies);
     setEditIndex(null);
     setFormData({
       name: "",
-      year: "",
       email: "",
+      graduationYear: "",
       about: "",
       profession: "",
       company: "",
@@ -72,7 +61,7 @@ function Alumnies() {
 
   const update = async () => {
     const res = await updateAlumnies(alumnies);
-    alert(res.message || "Some error occured");
+    alert(res.message || "Some error occurred");
   };
 
   return (
@@ -80,6 +69,7 @@ function Alumnies() {
       <h2 className="text-3xl font-bold text-white mb-6 text-center">
         Alumni Management Dashboard
       </h2>
+
       <div className="bg-slate-300 shadow-lg rounded-lg p-6 mt-10">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           {editIndex !== null ? "Edit Alumni Details" : "Add New Alumni"}
@@ -96,9 +86,9 @@ function Alumnies() {
           />
           <input
             type="number"
-            name="year"
+            name="graduationYear"
             placeholder="Graduation Year"
-            value={formData.year}
+            value={formData.graduationYear}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
             required
@@ -161,38 +151,19 @@ function Alumnies() {
         <table className="w-full text-left table-auto border-collapse">
           <thead className="bg-gray-300">
             <tr>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Photo
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Name
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Year
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Email
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                About
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Profession
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Company
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Actions
-              </th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Photo</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Name</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Graduation Year</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Email</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">About</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Profession</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Company</th>
+              <th className="border-b p-3 text-sm font-semibold text-gray-800">Actions</th>
             </tr>
           </thead>
           <tbody>
             {alumnies.map((alumni, index) => (
-              <tr
-                key={alumni.id}
-                className="hover:bg-gray-50 transition duration-300"
-              >
+              <tr key={alumni.id} className="hover:bg-gray-50 transition duration-300">
                 <td className="border-b p-3">
                   <img
                     src={alumni.photo}
@@ -201,7 +172,7 @@ function Alumnies() {
                   />
                 </td>
                 <td className="border-b p-3 text-sm">{alumni.name}</td>
-                <td className="border-b p-3 text-sm">{alumni.year}</td>
+                <td className="border-b p-3 text-sm">{alumni.graduationYear}</td>
                 <td className="border-b p-3 text-sm">{alumni.email}</td>
                 <td className="border-b p-3 text-sm">{alumni.about}</td>
                 <td className="border-b p-3 text-sm">{alumni.profession}</td>
@@ -225,12 +196,13 @@ function Alumnies() {
           </tbody>
         </table>
       </div>
+
       <button
-  onClick={() => update()}
-  className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
->
-  Update Data
-</button>
+        onClick={update}
+        className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
+      >
+        Update Data
+      </button>
     </div>
   );
 }

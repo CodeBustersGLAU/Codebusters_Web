@@ -13,32 +13,37 @@ export const login = async (req, res) => {
   }
 };
 
+
 export const updateTeam = async (req, res) => {
   try {
-    const allMembers = req.body
-      .flatMap((team) => team.members)
-      .map((member) => ({
-        name: member.name,
-        email: member.email,
-        position: member.position,
-        profilePic: member.profilePic || null,
-        previewPic: member.previewPic || null,
-      }));
-    let club = await Codebusters.findOne({ name: "Codebusters" });
+    const inputTeams = req.body;
+
+    if (!Array.isArray(inputTeams) || inputTeams.length === 0) {
+      return res.status(400).json({ message: "Invalid or empty input data" });
+    }
+    const club = await Codebusters.findOne({ name: 'Codebusters' });
     if (!club) {
       return res.status(404).json({ message: "Club not found" });
     }
-
-    club.members = allMembers;
+    const newTeams = inputTeams.map((team) => ({
+      name: team.name,
+      members: team.members.map((member) => ({
+        name: member.name,
+        email: member.email,
+        position: member.position,
+        photo: member.photo,
+      })),
+    }));
+    club.members = newTeams;
+    console.log(club);
     await club.save();
-    return res
-      .status(200)
-      .json({ message: "Members updated ✅", members: allMembers });
+
+    return res.status(200).json({ message: "Teams added successfully ✅", teams: club.teams });
   } catch (error) {
-    // console.error("Error updating members:", error);
-    return res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: "An error occurred", error: error.message });
   }
 };
+
 
 export const updateEvents = async (req, res) => {
   try {
@@ -46,16 +51,10 @@ export const updateEvents = async (req, res) => {
       eventName: event.eventName,
       startDate: event.startDate,
       endDate: event.endDate,
-      eventDescription: event.eventDescription,
-      eventImage: event.eventImage || null,
-      previewImage: event.previewImage || null,
-      formFields: event.formFields || [],
-      subEvents: event.subEvents.map((subEvent) => ({
-        name: subEvent.name,
-        date: subEvent.date,
-        time: subEvent.time,
-        description: subEvent.description,
-      })),
+      description: event.description,
+      eventImages: event.eventImages || null,
+      previewImage: event.eventImages || null,
+      registrationLink: event.registrationLink,
       id: event.id,
     }));
 
@@ -81,7 +80,7 @@ export const updateAlumnies = async (req, res) => {
     const allAlumnies = req.body.map((alumnie) => ({
       id: alumnie.id,
       name: alumnie.name,
-      year: alumnie.year,
+      graduationYear: alumnie.graduationYear,
       email: alumnie.email,
       about: alumnie.about,
       profession: alumnie.profession,
@@ -120,6 +119,29 @@ export const updateHighlights = async (req, res) => {
       .status(200)
       .json({ message: "Highlights updated successfully ✅" });
   } catch (error) {
+    return res.status(500).json({ message: "Some error occurred" });
+  }
+};
+export const hire = async (req, res) => {
+  try {
+    let club = await Codebusters.findOne({ name: "Codebusters" });
+    if (!club) {
+      return res.status(404).json({ message: "Club not found" });
+    }
+
+    // Ensure hireStatus is a Boolean
+    const hireStatus = req.body.hireStatus; 
+
+    if (typeof hireStatus !== "boolean") {
+      return res.status(400).json({ message: "hireStatus must be a Boolean value" });
+    }
+
+    club.hire = hireStatus; // Update the hire field with the Boolean value
+    await club.save();
+
+    return res.status(200).json({ message: "Done" });
+  } catch (error) {
+    console.error("Error in hire route:", error);
     return res.status(500).json({ message: "Some error occurred" });
   }
 };

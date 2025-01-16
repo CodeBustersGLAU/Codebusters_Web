@@ -22,6 +22,7 @@ export const updateTeam = async (data) => {
 export const updateEvents = async (data) => {
   try {
     let res = await axios.post(`${URL}/updateEvents`, data);
+    console.log(res.data);
     return res.data;
   } catch (error) {
     return error;
@@ -45,7 +46,6 @@ export const updateHighlights = async (data) => {
     return error;
   }
 };
-
 export const getClubData = async () => {
   try {
     let res = await axios.post(`${URL}/getClubData`);
