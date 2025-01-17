@@ -4,6 +4,7 @@ import Routes from "./routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import awakeServer from "./serverAwake.js";
 dotenv.config();
 
 const app = express();
@@ -15,9 +16,10 @@ app.use(bodyParser.json({ limit: "50mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use("/", Routes);
-
 Database();
 
+setInterval(awakeServer, 14 * 60 * 1000);
+
 app.listen(process.env.PORT, () => {
-  console.log("Backend connected on http://localhost:8000");
+  console.log("Backend connected");
 });
