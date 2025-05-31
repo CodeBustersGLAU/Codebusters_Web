@@ -1,4 +1,4 @@
-import Redis from "ioredis"
+import { Redis } from '@upstash/redis';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,5 +17,4 @@ const connectRedis = async () => {
     process.exit(1);
   }
 };
-
 export { redisClient, connectRedis };
