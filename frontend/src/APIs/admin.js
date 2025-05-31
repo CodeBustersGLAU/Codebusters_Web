@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "http://localhost:8000";
+const URL = "https://codebusters-web.onrender.com";
 
 export const login = async (data) => {
   try {
@@ -47,6 +47,7 @@ export const updateHighlights = async (data) => {
     return error;
   }
 };
+
 export const getClubData = async () => {
   try {
     let res = await axios.post(`${URL}/getClubData`);
@@ -54,4 +55,22 @@ export const getClubData = async () => {
   } catch (error) {
     return error;
   }
+};
+
+export const startHiring = async (data) => {
+  try {
+    let res = await axios.post(`${URL}/hire`, data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const stopHiring = async (data) => {
+  try {
+    let res = await axios.post(`${URL}/hire`, data);
+    return res.data;
+  } catch (error) {
+   return error;
+  } 
 };

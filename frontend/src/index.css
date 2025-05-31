@@ -19,3 +19,10 @@
   border-radius: 4px; /* Rounded corners for the thumb */
   border: 2px solid #c6bebe; /* Padding around the thumb */
 }
+@font-face {
+  font-family: 'AngryBirds Regular';
+  src: url('../public/fonts/angrybirds-regular-BMn6T-CE.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+

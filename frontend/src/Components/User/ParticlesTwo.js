@@ -7,30 +7,29 @@ const ParticlesComponent = () => {
     return {
       background: {
         color: {
-          value: "#001533",
+          value: "#060516",
         },
-        image: "linear-gradient(45deg, #1e3a8a, #0f172a)",
         position: "center",
         repeat: "no-repeat",
         size: "cover",
       },
       particles: {
         number: {
-          value: 80, // Slightly increased particle count for richness
+          value: 80, 
           density: {
             enable: true,
-            area: 900, // Balanced spread
+            area: 900, 
           },
         },
         color: {
-          value: ["#8e44ad", "#3498db", "#e74c3c"],
+          value: ["#241037", "#123234", "#4d0d12"],
         },
         links: {
           enable: true,
           color: "#cfd8dc",
           distance: 150, // Wider connections
           opacity: 0.4, // Softer link visibility
-          width: 0.8, // Slightly thinner links
+          width: 0.6, // Slightly thinner links
         },
         move: {
           enable: true,
@@ -49,7 +48,7 @@ const ParticlesComponent = () => {
           },
         },
         size: {
-          value: { min: 4, max: 10 }, // Broader size variation
+          value: { min: 4, max: 8 }, // Broader size variation
         },
         opacity: {
           value: { min: 0.3, max: 0.6 },
@@ -75,7 +74,7 @@ const ParticlesComponent = () => {
           },
           onClick: {
             enable: true,
-            mode: "bubble",
+            mode: "push",
           },
         },
         modes: {
@@ -83,13 +82,7 @@ const ParticlesComponent = () => {
             distance: 80, // Subtle repulsion
             duration: 0.3, // Quick response
           },
-          bubble: {
-            distance: 150,
-            size: 15, // Larger bubble sizes
-            duration: 2, // Smoother animation
-            opacity: 0.9,
-            color: "#ffffff",
-          },
+          push: { particles_nb: 2 },
         },
       },
     };

@@ -1,7 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUserContext } from "./../../../context";
 import { updateAlumnies } from "../../../APIs/admin";
 import LoadingAnimation from "./../../User/LoadingAnimation";
+import axios from "axios";
+import {
+  Edit,
+  Delete,
+  Save,
+  Add,
+  CloudUpload,
+  CheckCircle,
+  Error,
+  School,
+  Person,
+  Email,
+  Work,
+  Business,
+  Description
+} from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
+
 function Alumnies() {
   const { club, user } = useUserContext();
   const [alumnies, setAlumnies] = useState([]);
@@ -15,14 +33,47 @@ function Alumnies() {
     company: "",
     photo: "",
   });
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const fileInputRef = useRef(null);
+
   useEffect(() => {
     if (club && club.alumnies) {
       setAlumnies(club.alumnies);
     }
   }, [club]);
+
   if (!club || !club.alumnies) {
     return <LoadingAnimation />;
   }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      setUploadError("");
+      const cloudinaryFormData = new FormData();
+      cloudinaryFormData.append("file", file);
+      cloudinaryFormData.append("upload_preset", "ml_default");
+      
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dthriaot4/image/upload",
+        cloudinaryFormData
+      );
+      
+      setFormData(prev => ({
+        ...prev,
+        photo: response.data.secure_url
+      }));
+    } catch (err) {
+      setUploadError("Failed to upload image");
+      console.error(err);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -30,8 +81,10 @@ function Alumnies() {
   };
 
   const handleDelete = (index) => {
-    const updatedAlumnies = alumnies.filter((_, i) => i !== index);
-    setAlumnies(updatedAlumnies);
+    if (window.confirm("Are you sure you want to delete this alumni?")) {
+      const updatedAlumnies = alumnies.filter((_, i) => i !== index);
+      setAlumnies(updatedAlumnies);
+    }
   };
 
   const handleChange = (e) => {
@@ -40,6 +93,11 @@ function Alumnies() {
   };
 
   const handleSave = () => {
+    if (!formData.name || !formData.email || !formData.graduationYear) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
     const updatedAlumnies = [...alumnies];
     if (editIndex !== null) {
       updatedAlumnies[editIndex] = formData;
@@ -59,175 +117,282 @@ function Alumnies() {
     });
   };
 
-  const update = async () => {
-    const res = await updateAlumnies({
-      name: user.name,
-      password: user.password,
-      alumnies: alumnies,
+  const cancelEdit = () => {
+    setEditIndex(null);
+    setFormData({
+      name: "",
+      email: "",
+      graduationYear: "",
+      about: "",
+      profession: "",
+      company: "",
+      photo: "",
     });
-    alert(res.message || "Some error occurred");
+  };
+
+  const update = async () => {
+    try {
+      const res = await updateAlumnies({
+        name: user.name,
+        password: user.password,
+        alumnies: alumnies,
+      });
+      alert(res.message || "Alumni data updated successfully!");
+    } catch (error) {
+      console.error("Failed to update alumni:", error);
+      alert("Failed to update alumni data.");
+    }
   };
 
   return (
-    <div className="p-4 sm:p-8 lg:p-10 pl-10 pr-10 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      <h2 className="text-3xl font-bold text-white mb-6 text-center">
-        Alumni Management Dashboard
-      </h2>
-
-      <div className="bg-slate-300 shadow-lg rounded-lg p-6 mt-10">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-          {editIndex !== null ? "Edit Alumni Details" : "Add New Alumni"}
-        </h3>
-        <form className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <input
-            type="number"
-            name="graduationYear"
-            placeholder="Graduation Year"
-            value={formData.graduationYear}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <textarea
-            name="about"
-            placeholder="Short Description"
-            value={formData.about}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <input
-            type="text"
-            name="profession"
-            placeholder="Profession"
-            value={formData.profession}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <input
-            type="text"
-            name="company"
-            placeholder="Company"
-            value={formData.company}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
-          <input
-            type="text"
-            name="photo"
-            placeholder="Photo URL"
-            value={formData.photo}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-            required
-          />
+    <div className="p-4 sm:p-8 min-h-[calc(100vh-100px)] bg-gradient-to-br from-gray-900 to-gray-800">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <div className="flex items-center mb-4 md:mb-0">
+            <School className="text-white mr-3" fontSize="large" />
+            <h2 className="text-3xl font-bold text-white">
+              Alumni Management Dashboard
+            </h2>
+          </div>
           <button
-            type="button"
-            onClick={handleSave}
-            className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            onClick={update}
+            className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out flex items-center"
           >
-            {editIndex !== null ? "Save Changes" : "Add Alumni"}
+            <Save className="mr-2" />
+            Update Data
           </button>
-        </form>
-      </div>
+        </div>
 
-      <div className="overflow-x-auto bg-white shadow-lg rounded-lg mt-8">
-        <table className="w-full text-left table-auto border-collapse">
-          <thead className="bg-gray-300">
-            <tr>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Photo
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Name
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Graduation Year
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Email
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                About
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Profession
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Company
-              </th>
-              <th className="border-b p-3 text-sm font-semibold text-gray-800">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {alumnies.map((alumni, index) => (
-              <tr
-                key={alumni.id}
-                className="hover:bg-gray-50 transition duration-300"
+        {/* Add/Edit Form */}
+        <div className="bg-gray-800 rounded-xl p-6 mb-8 shadow-lg">
+          <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
+            {editIndex !== null ? (
+              <>
+                <Edit className="mr-2" />
+                Edit Alumni Details
+              </>
+            ) : (
+              <>
+                <Add className="mr-2" />
+                Add New Alumni
+              </>
+            )}
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <Person className="mr-2" fontSize="small" />
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <School className="mr-2" fontSize="small" />
+                  Graduation Year
+                </label>
+                <input
+                  type="number"
+                  name="graduationYear"
+                  placeholder="Graduation Year"
+                  value={formData.graduationYear}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <Email className="mr-2" fontSize="small" />
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <Work className="mr-2" fontSize="small" />
+                  Profession
+                </label>
+                <input
+                  type="text"
+                  name="profession"
+                  placeholder="Current Profession"
+                  value={formData.profession}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <Business className="mr-2" fontSize="small" />
+                  Company
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Current Company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2 flex items-center">
+                  <Description className="mr-2" fontSize="small" />
+                  About
+                </label>
+                <textarea
+                  name="about"
+                  placeholder="Short Description"
+                  value={formData.about}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  rows="3"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-6">
+            <label className="block text-gray-300 mb-2">Profile Photo</label>
+            <div className="flex items-center space-x-4">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                accept="image/*"
+                className="hidden"
+              />
+              <button
+                onClick={() => fileInputRef.current.click()}
+                className="p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition duration-200 flex items-center"
               >
-                <td className="border-b p-3">
-                  <img
-                    src={alumni.photo}
-                    alt={alumni.name}
-                    className="w-12 h-12 rounded-full mx-auto"
-                  />
-                </td>
-                <td className="border-b p-3 text-sm">{alumni.name}</td>
-                <td className="border-b p-3 text-sm">
-                  {alumni.graduationYear}
-                </td>
-                <td className="border-b p-3 text-sm">{alumni.email}</td>
-                <td className="border-b p-3 text-sm">{alumni.about}</td>
-                <td className="border-b p-3 text-sm">{alumni.profession}</td>
-                <td className="border-b p-3 text-sm">{alumni.company}</td>
-                <td className="border-b p-3 text-sm flex space-x-3">
-                  <button
-                    className="text-blue-500 hover:text-blue-700"
-                    onClick={() => handleEdit(index)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-500 hover:text-red-700"
-                    onClick={() => handleDelete(index)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                <CloudUpload className="mr-2" />
+                {formData.photo ? "Change Photo" : "Upload Photo"}
+              </button>
+              {isUploading && <CircularProgress size={24} />}
+              {formData.photo && !isUploading && (
+                <CheckCircle className="text-green-500" />
+              )}
+              {uploadError && <Error className="text-red-500" />}
+              {formData.photo && (
+                <img
+                  src={formData.photo}
+                  alt="Preview"
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+              )}
+            </div>
+          </div>
+          
+          <div className="flex space-x-4 mt-6">
+            <button
+              onClick={handleSave}
+              className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200 flex items-center justify-center"
+            >
+              <Save className="mr-2" />
+              {editIndex !== null ? "Save Changes" : "Add Alumni"}
+            </button>
+            {editIndex !== null && (
+              <button
+                onClick={cancelEdit}
+                className="flex-1 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition duration-200 flex items-center justify-center"
+              >
+                <Delete className="mr-2" />
+                Cancel
+              </button>
+            )}
+          </div>
+        </div>
 
-      <button
-        onClick={update}
-        className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
-      >
-        Update Data
-      </button>
+        {/* Alumni Table */}
+        <div className="bg-gray-800 rounded-xl p-6 shadow-lg overflow-x-auto">
+          <h3 className="text-xl font-semibold text-white mb-4">Alumni Records</h3>
+          {alumnies.length === 0 ? (
+            <p className="text-gray-400 text-center py-6">No alumni records found</p>
+          ) : (
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-gray-700">
+                <tr>
+                  <th className="p-3 text-sm font-semibold text-gray-300">Photo</th>
+                  <th className="p-3 text-sm font-semibold text-gray-300">Name</th>
+                  <th className="p-3 text-sm font-semibold text-gray-300">Year</th>
+                  <th className="p-3 text-sm font-semibold text-gray-300">Profession</th>
+                  <th className="p-3 text-sm font-semibold text-gray-300">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {alumnies.map((alumni, index) => (
+                  <tr
+                    key={index}
+                    className="border-t border-gray-700 hover:bg-gray-700 transition duration-200"
+                  >
+                    <td className="p-3">
+                      <img
+                        src={alumni.photo || "https://via.placeholder.com/150"}
+                        alt={alumni.name}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    </td>
+                    <td className="p-3 text-white">
+                      <div className="font-medium">{alumni.name}</div>
+                      <div className="text-gray-400 text-sm">{alumni.email}</div>
+                    </td>
+                    <td className="p-3 text-white">{alumni.graduationYear}</td>
+                    <td className="p-3 text-white">
+                      <div>{alumni.profession}</div>
+                      <div className="text-gray-400 text-sm">{alumni.company}</div>
+                    </td>
+                    <td className="p-3">
+                      <div className="flex space-x-3">
+                        <button
+                          onClick={() => handleEdit(index)}
+                          className="text-blue-400 hover:text-blue-300"
+                          title="Edit"
+                        >
+                          <Edit fontSize="small" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(index)}
+                          className="text-red-400 hover:text-red-300"
+                          title="Delete"
+                        >
+                          <Delete fontSize="small" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

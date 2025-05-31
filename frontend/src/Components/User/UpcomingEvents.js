@@ -3,6 +3,7 @@ import ParticlesComponent from "./ParticlesTwo";
 import UpcomingEventCard from "./upComingEventCard";
 import { motion } from "framer-motion";
 import { useUserContext } from "./../../context";
+import GlowingCursor from "./GlowingCursor";
 
 const UpcomingEvents = () => {
   const { club } = useUserContext();
@@ -17,16 +18,14 @@ const UpcomingEvents = () => {
   return (
     <div className="relative">
       <ParticlesComponent />
+      <GlowingCursor/>
       <section className="relative text-gray-200 py-10 px-6 sm:px-8 md:px-16 lg:px-20 mb-28">
-        <div className="flex items-center justify-center mt-28 mb-6 sm:mt-28 sm:mb-10">
+        <div className="flex items-center justify-center mt-28 mb-6 sm:mt-28 md:mt-8 sm:mb-10">
           <motion.h2
-            className="text-3xl sm:text-5xl font-bold text-center mb-7 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+            className="text-5xl sm:text-5xl md:text-6xl font-bold font-angrybirds hover:text-blue-300 text-center mb-7 p-2 rounded-md transition-all duration-500 ease-in-out transform hover:scale-105 cursor-pointer"
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            style={{
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-            }}
           >
             Upcoming Events
           </motion.h2>

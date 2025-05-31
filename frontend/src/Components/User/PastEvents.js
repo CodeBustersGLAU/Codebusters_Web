@@ -5,6 +5,7 @@ import ParticlesComponent from "./ParticlesTwo";
 import { useUserContext } from "../../context";
 import LoadingAnimation from "./LoadingAnimation";
 import PastModalEvents from "./PastModalEvents ";
+import GlowingCursor from "./GlowingCursor";
 
 function PastEvents() {
   const { club } = useUserContext();
@@ -31,16 +32,14 @@ function PastEvents() {
   return (
     <div className="relative">
       <ParticlesComponent />
+      <GlowingCursor/>
       <section className="relative text-gray-200 py-20 px-6 md:px-12 lg:px-20 ">
         <div className="flex justify-center items-center">
           <motion.h2
-            className="text-6xl sm:text-5xl font-bold text-center mb-1 p-4 border-2 border-transparent rounded-md mt-8 transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
+            className="text-5xl md:text-6xl sm:text-5xl mb-2 md:mb-16 lg:mb-16 font-bold font-angrybirds hover:text-blue-300 text-center mb-1 p-4 rounded-md mt-0 transition-all duration-500 ease-in-out transform hover:scale-105 cursor-pointer"
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            style={{
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-            }}
           >
             Our Past Events
           </motion.h2>

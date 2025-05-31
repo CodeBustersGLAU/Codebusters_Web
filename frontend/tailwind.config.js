@@ -8,6 +8,7 @@ module.exports = {
         rubik: ["Rubik", "sans-serif"],
         dosis: ["Dosis", "sans-serif"],
         dosis1: ["Dosis", "serif"],
+        angrybirds: ["AngryBirds Regular", "serif"],
       },
       animation: {
         flip: "flip 0.7s ease-in-out", // Flip animation

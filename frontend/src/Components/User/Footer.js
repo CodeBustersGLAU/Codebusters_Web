@@ -9,7 +9,7 @@ import LogoCodechef from "./../../Assets/Logo/codechef_logo.png";
 import { Link } from "react-router-dom";
 function Footer() {
   return (
-    <footer className="bg-opacity-50 backdrop-blur-md bg-gray-900 text-gray-200 py-10 px-4 sm:px-8 md:px-16 lg:px-20">
+    <footer className="bg-opacity-5 backdrop-blur-sm text-gray-200 py-10 px-4 sm:px-8 md:px-16 lg:px-20">
       <div className="flex flex-col md:flex-row justify-around items-center">
         {/* Logo and Description */}
         <div className="md:w-1/3 text-center md:text-left">
@@ -40,77 +40,94 @@ function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="md:w-1/3 w-full flex flex-col items-center justify-center m-10 md:m-0 selection:bg-blue-200 selection:text-blue-950">
-          <h3 className="text-lg font-semibold mb-4 bg-blue-950 pl-6 pr-6 pt-2 pb-2 rounded-lg bg-opacity-30">
+        <div className="md:w-1/3 w-full  flex flex-col items-center justify-center m-10 md:m-0 selection:bg-blue-200 selection:text-blue-950">
+          <h1 className="text-2xl font-semibold font-sans mb-4 pl-6 pr-6 pt-2 pb-2 rounded-lg bg-opacity-30">
             Quick Links
-          </h3>
-          <ul className="space-y-2 text-slate-300 bg-blue-950 bg-opacity-10 p-4 text-center ml-2 rounded-md">
-            <li>
-              <Link to="/team-members" className="hover:text-white">
+          </h1>
+          <ul className="space-y-2 text-slate-300 bg-opacity-10 p-4 text-center ml-2 rounded-md">
+            <Link to="/team-members">
+              <li
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:text-purple-300/90 hover:scale-110 m-2"
+              >
                 Our Team
-              </Link>
-            </li>
-            <li>
-              <Link to="/team-members" className="hover:text-white">
+              </li>
+            </Link>
+            <Link to="/JoinUs">
+              <li
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:text-purple-300/90 hover:scale-110 m-2"
+              >
                 Join Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/team-members" className="hover:text-white">
+              </li>
+            </Link>
+            <Link to="/UpcomingEvents">
+              <li
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:text-purple-300/90 hover:scale-110 m-2"
+              >
                 Future Events
-              </Link>
-            </li>
-            <li>
-              <Link to="/team-members" className="hover:text-white">
+              </li>
+            </Link>
+            <Link to="/past-events">
+              <li
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:text-purple-300/90 hover:scale-110 m-2"
+              >
                 Highlights
-              </Link>
-            </li>
-            <li>
-              <Link to="/team-members" className="hover:text-white">
+              </li>
+            </Link>
+            <Link to="/alumni">
+              <li
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="hover:text-purple-300/90 hover:scale-110 m-2"
+              >
                 Alumni
-              </Link>
-            </li>
+              </li>
+            </Link>
           </ul>
         </div>
 
         {/* Contact Form */}
         <div className="md:w-1/3 w-full flex flex-col items-center">
-          <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+          <h3 className="text-2xl font-semibold font-angrybirds mb-4">
+            Contact Us
+          </h3>
           <form
             action="https://formspree.io/f/myzydpyr"
             method="POST"
-            className="bg-slate-700 p-4 rounded-lg shadow-md w-full sm:w-80 md:w-72 lg:w-80"
+            className="p-4 md:p-6 lg:p-6 rounded-lg border-2 border-slate-700 shadow-lg w-full sm:w-80 md:w-72 lg:w-80"
           >
-            <h2 className="text-xl font-semibold text-white mb-4">
+            <h2 className="text-xl text-center font-semibold text-slate-200 mb-4">
               Contact us via message
             </h2>
             <label className="block mb-4">
-              <span className="block text-white font-semibold mb-2">
+              <span className="block text-md text-white font-semibold mb-2">
                 Your Email:
               </span>
               <input
                 type="email"
                 name="email"
                 required
-                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-gray-400 bg-blue-100 text-gray-900"
+                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500  bg-blue-50 text-gray-950"
                 placeholder="Enter your email"
               />
             </label>
             <label className="block mb-4">
-              <span className="block text-white font-semibold mb-2">
+              <span className="block text-md text-white font-semibold mb-2">
                 Your Message:
               </span>
               <textarea
                 name="message"
                 required
-                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-gray-400 bg-blue-100 text-gray-900"
+                className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500  bg-blue-50 text-gray-950"
                 placeholder="Enter your message"
                 rows="4"
               ></textarea>
             </label>
             <button
               type="submit"
-              className="bg-gray-900 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 w-full"
+              className="bg-indigo-900 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 w-full"
             >
               Send Message
             </button>

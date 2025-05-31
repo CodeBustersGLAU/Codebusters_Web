@@ -7,74 +7,64 @@ const ParticlesComponent = () => {
     return {
       background: {
         color: {
-          value: "#1a1a1a", // Dark background for the tech theme
-        },
+          value: "#060516", // Dark background for the tech theme
+        }, 
       },
       particles: {
-        number: {
-          value: 100, // Moderate particle count for balance
-          density: {
-            enable: true,
-            area: 800, // Density of particles
-          },
+        number: { value: 150, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: {
+          type: "circle",
+          stroke: { width: 0, color: "#000000" },
+          polygon: { nb_sides: 5 },
+          image: { src: "img/github.svg", width: 100, height: 100 }
         },
-        color: {
-          value: ["#1e90ff", "#00bfff", "#000000"], // Blue shades for a tech and professional look
+        opacity: {
+          value: 1,
+          random: true,
+          anim: { enable: true, speed: 1, opacity_min: 0, sync: false }
         },
-        links: {
-          enable: true, // Enable particle links
-          color: "#ffffff", // White links to contrast against dark background
-          distance: 150, // Distance for link effect
-          opacity: 0.4, // Slight opacity for links
-          width: 1.5, // Thicker links for emphasis
+        size: {
+          value: 2,
+          random: true,
+          anim: { enable: false, speed: 4, size_min: 0.3, sync: false }
+        },
+        line_linked: {
+          enable: false,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
         },
         move: {
           enable: true,
-          speed: 4, // Faster particle movement
-          direction: "none", // Free movement
-          random: true, // Randomized movement for fluidity
-          straight: false,
-          outModes: {
-            default: "bounce", // Particles bounce off edges
-          },
-        },
-        size: {
-          value: { min: 3, max: 6 }, // Particle size range for visual clarity
-        },
-        opacity: {
-          value: { min: 0.4, max: 0.9 }, // Smooth opacity variation
-          animation: {
-            enable: true,
-            speed: 2, // Smooth opacity animation
-            minimumValue: 0.3,
-            sync: false,
-          },
-        },
-        shape: {
-          type: "circle", // Circular particles for a clean look
-        },
+          speed: 9.620472365193136,
+          direction: "top-left",
+          random: true,
+          straight: true,
+          out_mode: "out",
+          bounce: false,
+          attract: {
+            enable: false,
+            rotateX: 1122.388442605866,
+            rotateY: 1202.559045649142
+          }
+        }
       },
       interactivity: {
+        detect_on: "window",
         events: {
-          onHover: {
-            enable: true,
-            mode: "attract", // Attraction effect on hover (particles move towards cursor)
-          },
-          onClick: {
-            enable: true,
-            mode: "push", // New particles are pushed on click
-          },
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
         },
         modes: {
-          attract: {
-            distance: 200, // Distance for attraction effect (particles drawn towards cursor)
-            duration: 0.4, // Smooth duration for attraction
-            factor: 2, // Stronger attraction effect
-          },
-          push: {
-            quantity: 4, // Generate new particles on click
-          },
-        },
+          grab: { distance: 400, line_linked: { opacity: 1 } },
+          bubble: { distance: 250, size: 0, duration: 2, opacity: 0, speed: 3 },
+          repulse: { distance: 105.56403676876612, duration: 0.4 },
+          push: { particles_nb: 4 },
+          remove: { particles_nb: 2 }
+        }
       },
     };
   }, []);

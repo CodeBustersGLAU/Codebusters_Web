@@ -1,7 +1,7 @@
-export const awake = async (data) => {
+import axios from "axios";
+export const awake = async () => {
   let res = axios.post(
     "https://codebusters-web.onrender.com/getClubData",
-    data
   );
 };
 
