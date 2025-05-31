@@ -40,7 +40,7 @@ function UpcomingEventCard({ event }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           style={{
-            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
+            boxShadow: "0 0 5px rgba(116, 225, 240, 0.5)",
             minHeight: "30px",
           }}
           onClick={openModal}
@@ -86,7 +86,7 @@ function UpcomingEventCard({ event }) {
             ))}
           </div>
           <motion.button
-            className=" mt-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-lg text-lg shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none disabled:bg-gray-400 transition-all duration-300"
+            className=" mt-4 bg-indigo-500 text-white px-6 py-3 rounded-lg text-lg shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none disabled:bg-gray-400 transition-all duration-300"
          
                   onClick={handleRegisterClick}
                   whileHover={{ scale: 1.05 }}

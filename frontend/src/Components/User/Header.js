@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./../../Assets/Logo/Codebusters02.png";
+import Logo from "./../../Assets/Logo/codebuster_base_logo.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -11,11 +11,11 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-opacity-70 backdrop-blur-sm bg-slate-950 md:z-10 z-40 fixed w-full top-0 left-0 shadow-md">
-      <Link to="/">
+    <div className="flex justify-between bg-opacity-70 backdrop-blur-sm items-center p-4 md:z-10 z-40 fixed w-full top-0 left-0">
+      <Link to="/home">
         <motion.img
           src={Logo}
-          className="h-12 cursor-pointer"
+          className="h-8 px-4 cursor-pointer md:px-20"
           alt="Codebusters Logo"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -26,7 +26,7 @@ function Header() {
       <div className="hidden md:flex space-x-6 text-white font-semibold mr-20">
         <Link to="/joinUs">
           <motion.button
-            className="px-6 py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:bg-slate-900 hover:border-blue-400"
+            className="px-4 py-2 rounded-md border-2 border-transparent transition-all duration-300 hover:bg-slate-800/75 hover:border-indigo-200"
             whileHover={{
               scale: 1.1,
             }}
@@ -35,9 +35,10 @@ function Header() {
             Join Us
           </motion.button>
         </Link>
+        <div className="border-s my-4 border-indigo-300 h-4 justify-center"></div>
         <Link to="/team-members">
           <motion.button
-            className="px-6 py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:bg-slate-900 hover:border-blue-400"
+            className="px-4 py-2 rounded-md border-2 border-transparent transition-all duration-300 hover:bg-slate-800/75 hover:border-indigo-200"
             whileHover={{
               scale: 1.1,
             }}
@@ -46,9 +47,10 @@ function Header() {
             Our Team
           </motion.button>
         </Link>
+        <div className="border-s my-4 border-indigo-300 h-4 justify-center"></div>
         <Link to="/UpcomingEvents">
           <motion.button
-            className="px-6 py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:bg-slate-900 hover:border-blue-400"
+            className="px-4 py-2 rounded-md border-2 border-transparent transition-all duration-300 hover:bg-slate-800/75 hover:border-indigo-200"
             whileHover={{
               scale: 1.1,
             }}
@@ -57,9 +59,10 @@ function Header() {
             Upcoming Events
           </motion.button>
         </Link>
+        <div className="border-s my-4 border-indigo-300 h-4 justify-center"></div>
         <Link to="/past-events">
           <motion.button
-            className="px-6 py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:bg-slate-900 hover:border-blue-400"
+            className="px-4 py-2 rounded-md border-2 border-transparent transition-all duration-300 hover:bg-slate-800/75 hover:border-indigo-200"
             whileHover={{
               scale: 1.1,
             }}
@@ -68,9 +71,10 @@ function Header() {
             Highlights
           </motion.button>
         </Link>
+        <div className="border-s my-4 border-indigo-300 h-4 justify-center"></div>
         <Link to="/Alumni">
           <motion.button
-            className="px-6 py-2 rounded-md border-b-2 border-transparent transition-all duration-300 hover:bg-slate-900 hover:border-blue-400"
+            className="px-4 py-2 rounded-md border-2 border-transparent transition-all duration-300 hover:bg-slate-800/75 hover:border-indigo-200"
             whileHover={{
               scale: 1.1,
             }}
@@ -88,14 +92,14 @@ function Header() {
           animate={{ rotate: isMenuOpen ? 180 : 0 }}
           transition={{ duration: 0.5 }}
         >
-          {isMenuOpen ? "X" : "☰"}
+          ☰
         </motion.span>
       </button>
 
       <motion.div
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } absolute top-16 left-0 w-full bg-gray-900 text-slate-300 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
+        } absolute top-16 left-0 w-full bg-slate-900 text-slate-300 text-center space-y-4 py-4 md:hidden transition-all duration-300 ease-in-out transform`}
         initial={{ opacity: 0 }}
         animate={{ opacity: isMenuOpen ? 1 : 0 }}
         transition={{ duration: 0.3 }}

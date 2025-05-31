@@ -23,8 +23,8 @@ function Auth() {
 
       <div className="relative z-10">
         <div className="min-h-screen flex items-center justify-center">
-          <div className="bg-white bg-opacity-60 shadow-lg rounded-lg p-8 max-w-md w-full">
-            <h2 className="text-2xl font-bold text-center text-gray-800">
+          <div className="bg-blue-200 bg-opacity-60 shadow-lg rounded-lg p-8 max-w-md w-full">
+            <h2 className="text-2xl font-bold text-center text-gray-900">
               Admin Login
             </h2>
             <div className="mt-6">
@@ -64,11 +64,11 @@ function Auth() {
                     type="checkbox"
                     className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="ml-2 text-sm text-gray-600">
+                  <span className="ml-2 text-sm text-gray-800">
                     Remember me
                   </span>
                 </label>
-                <a href="#" className="text-sm text-blue-600 hover:underline">
+                <a href="#" className="text-sm font-semibold text-blue-600 hover:underline">
                   Forgot password?
                 </a>
               </div>
@@ -79,11 +79,11 @@ function Auth() {
                 Login
               </button>
             </div>
-            <p className="mt-6 text-sm text-center text-gray-600">
+            <p className="mt-6 text-sm text-center text-gray-800">
               Don't have an account?{" "}
               <p
                 href="#"
-                className="text-blue-600 hover:underline mt-2 cursor-pointer"
+                className="text-blue-600 font-semibold hover:underline mt-2 cursor-pointer"
               >
                 Contact to President
               </p>

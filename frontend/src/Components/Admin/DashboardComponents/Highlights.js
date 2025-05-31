@@ -1,7 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUserContext } from "./../../../context";
 import { updateHighlights } from "../../../APIs/admin";
 import LoadingAnimation from "./../../User/LoadingAnimation";
+import axios from "axios";
+import { 
+  Edit, 
+  Delete, 
+  Save, 
+  Add, 
+  Cancel, 
+  CloudUpload, 
+  CheckCircle,
+  Error,
+  Image as ImageIcon, 
+  Event, 
+  CalendarToday, 
+  Description 
+} from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 
 function Highlights() {
   const { club, user } = useUserContext();
@@ -14,6 +30,9 @@ function Highlights() {
     description: "",
     images: Array(10).fill(""),
   });
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const fileInputRefs = useRef([]);
 
   useEffect(() => {
     if (club && club.highlights) {
@@ -25,22 +44,37 @@ function Highlights() {
     return <LoadingAnimation />;
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name.startsWith("image")) {
-      const index = parseInt(name.split("-")[1], 10);
+  const handleCloudinaryUpload = async (file, index) => {
+    try {
+      setIsUploading(true);
+      setUploadError("");
+      const cloudinaryFormData = new FormData();
+      cloudinaryFormData.append("file", file);
+      cloudinaryFormData.append("upload_preset", "ml_default");
+      
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dthriaot4/image/upload",
+        cloudinaryFormData
+      );
+      
       const updatedImages = [...formData.images];
-      updatedImages[index] = value;
-      setFormData({
-        ...formData,
-        images: updatedImages,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      updatedImages[index] = response.data.secure_url;
+      setFormData(prev => ({
+        ...prev,
+        images: updatedImages
+      }));
+    } catch (err) {
+      setUploadError("Failed to upload image");
+      console.error(err);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      handleCloudinaryUpload(file, index);
     }
   };
 
@@ -50,12 +84,15 @@ function Highlights() {
   };
 
   const handleDelete = (index) => {
-    setEvents(events.filter((_, i) => i !== index));
+    if (window.confirm("Are you sure you want to delete this highlight?")) {
+      const updatedEvents = events.filter((_, i) => i !== index);
+      setEvents(updatedEvents);
+    }
   };
 
   const handleSave = () => {
     if (!formData.title || !formData.date || !formData.description) {
-      alert("Please fill out all fields.");
+      alert("Please fill out all required fields.");
       return;
     }
 
@@ -66,7 +103,7 @@ function Highlights() {
         id: events[editIndex].id,
       };
     } else {
-      updatedEvents.push({ ...formData, id: events.length + 1 });
+      updatedEvents.push({ ...formData, id: Date.now() });
     }
     setEvents(updatedEvents);
     resetForm();
@@ -84,195 +121,256 @@ function Highlights() {
   };
 
   const update = async () => {
-    const res = await updateHighlights({
-      name: user.name,
-      password: user.password,
-      highlights: events,
-    });
-    alert(res.message || "Some error occurred");
+    try {
+      const res = await updateHighlights({
+        name: user.name,
+        password: user.password,
+        highlights: events,
+      });
+      alert(res.message || "Highlights updated successfully!");
+    } catch (error) {
+      console.error("Failed to update highlights:", error);
+      alert("Failed to update highlights.");
+    }
   };
 
   return (
-    <div className="p-10 pl-4 pr-4 sm:pl-8 sm:pr-8 md:pl-16 md:pr-16 min-h-[calc(100vh-100px)] bg-slate-800 bg-opacity-50">
-      <h2 className="text-3xl font-bold text-white mb-6 text-center">
-        Club Highlights Dashboard
-      </h2>
-      <div className="bg-slate-200 rounded-lg shadow-lg p-6 mb-8">
-        <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
-          {editIndex !== null ? "Edit Event" : "Add New Event"}
-        </h3>
-        <form className="space-y-4">
-          <div>
-            <label
-              htmlFor="title"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Event Title
-            </label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Event Title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
+    <div className="p-4 md:p-8 min-h-[calc(100vh-100px)] bg-gradient-to-br from-gray-900 to-gray-800">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center mb-8">
+          <Event className="text-white mr-3" fontSize="large" />
+          <h2 className="text-3xl font-bold text-white">
+            Club Highlights Dashboard
+          </h2>
+        </div>
 
-          <div>
-            <label
-              htmlFor="date"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Event Start Date
-            </label>
-            <input
-              type="date"
-              name="date"
-              id="date"
-              value={formData.date}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
+        {/* Highlight Form */}
+        <div className="bg-gray-800 rounded-xl p-6 mb-8 shadow-lg">
+          <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
+            {editIndex !== null ? (
+              <>
+                <Edit className="mr-2" />
+                Edit Highlight
+              </>
+            ) : (
+              <>
+                <Add className="mr-2" />
+                Add New Highlight
+              </>
+            )}
+          </h3>
 
-          <div>
-            <label
-              htmlFor="endDate"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Event End Date
-            </label>
-            <input
-              type="date"
-              name="endDate"
-              id="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="description"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Event Description
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              placeholder="Event Description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="image-urls"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Enter Image URLs (max 10 images)
-            </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              {formData.images.map((image, index) => (
-                <div key={index} className="mb-2">
-                  <label
-                    htmlFor={`image-${index}`}
-                    className="text-sm font-semibold text-gray-700"
-                  >
-                    Image URL #{index + 1}
-                  </label>
-                  <input
-                    type="text"
-                    name={`image-${index}`}
-                    id={`image-${index}`}
-                    value={image}
-                    onChange={handleChange}
-                    placeholder={`Enter Image URL #${index + 1}`}
-                    className="block w-full text-sm p-3 border border-gray-300 rounded-md"
-                  />
-                </div>
-              ))}
+              <label className="block text-gray-300 mb-2 flex items-center">
+                <Event className="mr-2" fontSize="small" />
+                Event Title
+              </label>
+              <input
+                type="text"
+                placeholder="Event Title"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-300 mb-2 flex items-center">
+                <CalendarToday className="mr-2" fontSize="small" />
+                Start Date
+              </label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({...formData, date: e.target.value})}
+                className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-300 mb-2 flex items-center">
+                <CalendarToday className="mr-2" fontSize="small" />
+                End Date
+              </label>
+              <input
+                type="date"
+                value={formData.endDate}
+                onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-gray-300 mb-2 flex items-center">
+                <Description className="mr-2" fontSize="small" />
+                Description
+              </label>
+              <textarea
+                placeholder="Event Description"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                rows="4"
+                required
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-gray-300 mb-2 flex items-center">
+                <ImageIcon className="mr-2" fontSize="small" />
+                Event Images (Max 10)
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {formData.images.map((image, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="file"
+                        ref={el => fileInputRefs.current[index] = el}
+                        onChange={(e) => handleImageChange(e, index)}
+                        accept="image/*"
+                        className="hidden"
+                      />
+                      <button
+                        onClick={() => fileInputRefs.current[index].click()}
+                        className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition duration-200 flex items-center"
+                      >
+                        <CloudUpload className="mr-2" />
+                        Image {index + 1}
+                      </button>
+                      {isUploading && <CircularProgress size={20} />}
+                      {image && !isUploading && (
+                        <CheckCircle className="text-green-500" fontSize="small" />
+                      )}
+                    </div>
+                    {image && (
+                      <div className="flex items-center space-x-2">
+                        <img
+                          src={image}
+                          alt={`Preview ${index + 1}`}
+                          className="h-12 w-12 rounded object-cover"
+                        />
+                        <input
+                          type="text"
+                          value={image}
+                          onChange={(e) => {
+                            const updatedImages = [...formData.images];
+                            updatedImages[index] = e.target.value;
+                            setFormData({...formData, images: updatedImages});
+                          }}
+                          className="flex-1 p-2 border border-gray-600 bg-gray-700 text-white rounded text-xs"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {uploadError && (
+                <p className="text-red-500 text-sm mt-2 flex items-center">
+                  <Error className="mr-1" fontSize="small" />
+                  {uploadError}
+                </p>
+              )}
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleSave}
-            className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            {editIndex !== null ? "Save Changes" : "Add Event"}
-          </button>
-        </form>
-      </div>
-
-      <div>
-        <h3 className="text-2xl font-semibold text-gray-200 mb-6">
-          Highlighted Events
-        </h3>
-        {events.length === 0 ? (
-          <p className="text-gray-100">No events added yet.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {events.map((event) => (
-              <div
-                key={event.id}
-                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300"
+          <div className="flex space-x-4 mt-6">
+            <button
+              onClick={handleSave}
+              className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200 flex items-center justify-center"
+            >
+              <Save className="mr-2" />
+              {editIndex !== null ? "Save Changes" : "Add Highlight"}
+            </button>
+            {editIndex !== null && (
+              <button
+                onClick={resetForm}
+                className="flex-1 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition duration-200 flex items-center justify-center"
               >
-                <h4 className="text-xl font-semibold text-gray-700 mb-2">
-                  {event.title}
-                </h4>
-                <p className="text-gray-500 text-sm mb-4">
-                  {event.date} - {event.endDate}
-                </p>
-                <p className="text-gray-700 mb-4">{event.description}</p>
-                {event.images.length > 0 && (
-                  <div className="flex space-x-2 overflow-hidden">
-                    {event.images.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`Event preview`}
-                        className="w-20 h-20 object-contain rounded-md"
-                      />
-                    ))}
-                  </div>
-                )}
-                <div className="mt-4 flex space-x-2">
-                  <button
-                    onClick={() => handleEdit(events.indexOf(event))}
-                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(events.indexOf(event))}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+                <Cancel className="mr-2" />
+                Cancel
+              </button>
+            )}
           </div>
-        )}
-      </div>
+        </div>
 
-      <button
-        onClick={update}
-        className="bg-gradient-to-r mt-4 from-red-500 via-red-600 to-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-red-300 focus:outline-none transition duration-300 ease-in-out"
-      >
-        Update Data
-      </button>
+        {/* Highlights List */}
+        <div className="bg-gray-800 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+            <Event className="mr-2" />
+            Highlighted Events
+          </h3>
+
+          {events.length === 0 ? (
+            <p className="text-gray-400 text-center py-6">No highlights added yet</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.map((event, index) => (
+                <div
+                  key={event.id}
+                  className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition duration-200"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="text-lg font-semibold text-white">
+                      {event.title}
+                    </h4>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleEdit(index)}
+                        className="text-blue-400 hover:text-blue-300 p-1"
+                        title="Edit"
+                      >
+                        <Edit fontSize="small" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="text-red-400 hover:text-red-300 p-1"
+                        title="Delete"
+                      >
+                        <Delete fontSize="small" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-300 text-sm mb-2">
+                    {new Date(event.date).toLocaleDateString()} - {event.endDate && new Date(event.endDate).toLocaleDateString()}
+                  </p>
+                  
+                  <p className="text-gray-300 mb-3 line-clamp-3">
+                    {event.description}
+                  </p>
+                  
+                  {event.images.filter(img => img).length > 0 && (
+                    <div className="flex space-x-2 overflow-x-auto pb-2">
+                      {event.images.filter(img => img).map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`Event ${idx + 1}`}
+                          className="h-16 w-16 rounded object-cover flex-shrink-0"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {events.length > 0 && (
+            <button
+              onClick={update}
+              className="mt-6 w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition duration-200 flex items-center justify-center"
+            >
+              <Save className="mr-2" />
+              Update Highlights
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

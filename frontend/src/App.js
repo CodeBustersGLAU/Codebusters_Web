@@ -8,19 +8,21 @@ import TeamMembers from "./Components/User/TeamMembers";
 import AlumniList from "./Components/User/Alumni";
 import UpcomingEvents from "./Components/User/UpcomingEvents";
 import JoinUs from "./Components/User/JoinUs";
+import NotFound from "./Components/User/NotFound";
 import LogIn from "./Components/Admin/Auth";
 import Dashboard from "./Components/Admin/Dashboard";
 import EventRegister from "./Components/User/EventRegister";
 import { useUserContext } from "./context";
 import { useEffect } from "react";
 import { getClubData } from "./APIs/admin";
+import MainLoader from "./Components/User/MainLoader";
 
 const Layout = ({ children }) => (
-  <>
+  <div>
     <Header />
     {children}
     <Footer />
-  </>
+  </div>
 );
 
 const ProtectedRoute = ({ element }) => {
@@ -45,13 +47,14 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/"
+              path="/home"
               element={
                 <Layout>
                   <Homepage />
                 </Layout>
               }
             />
+            <Route path="/" element={<MainLoader />} />
             <Route
               path="/past-events"
               element={
@@ -118,6 +121,14 @@ function App() {
                     </Layout>
                   }
                 />
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
               }
             />
           </Routes>

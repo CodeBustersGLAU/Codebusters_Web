@@ -1,8 +1,10 @@
 import React from "react";
 import ParticlesComponent from "./ParticlesTwo";
+import { motion } from "framer-motion";
 import LoadingAnimation from "./LoadingAnimation";
 import { useUserContext } from "../../context";
 import AlumniCard from "./AlumniCard";
+import GlowingCursor from "./GlowingCursor";
 
 const AlumniList = () => {
   const { club } = useUserContext();
@@ -19,16 +21,17 @@ const AlumniList = () => {
   return (
     <div className="relative">
       <ParticlesComponent />
+      <GlowingCursor/>
       <section className="relative text-gray-200 py-20 px-6 md:px-20">
-        <div className="flex items-center justify-center mt-16">
-          <h2
-            className="text-6xl font-bold text-center mb-16 p-2 border-2 border-transparent rounded-md transition-all duration-500 ease-in-out transform hover:border-white hover:shadow-lg hover:scale-105 cursor-pointer"
-            style={{
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)",
-            }}
+        <div className="flex items-center justify-center mt-2">
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold font-angrybirds hover:text-blue-300 text-center mb-16 p-2 rounded-md transition-all duration-500 ease-in-out transform hover:scale-105 cursor-pointer"
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
             Our Alumni
-          </h2>
+          </motion.h2>
         </div>
         <div className="flex flex-wrap justify-center gap-8">
           {club.alumnies.map((alumni, idx) => (
