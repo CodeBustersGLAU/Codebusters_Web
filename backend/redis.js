@@ -1,19 +1,19 @@
-import { createClient } from 'redis';
+import Redis from "ioredis"
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379'
+const redisClient = new Redis({
+  url: process.env.UPSTASH_REDIS_URL,
+  token: process.env.UPSTASH_REDIS_TOKEN,
 });
-redisClient.on('error', (err) => console.log('Redis Client Error', err));
 
 const connectRedis = async () => {
   try {
-    await redisClient.connect();
-    console.log('Redis connected successfully');
+    await redisClient.set('test_connection', 'connected');
+    console.log('Upstash Redis connected successfully');
   } catch (error) {
-    console.error('Redis connection error:', error);
+    console.error('Upstash Redis connection error:', error);
     process.exit(1);
   }
 };
